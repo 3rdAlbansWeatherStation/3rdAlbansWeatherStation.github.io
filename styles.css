@@ -912,7 +912,7 @@ dialog::backdrop {
   font-size: 0.9rem;
 }
 
-/* Phones + iPad portrait / narrow tablets (Pi kiosk is 1024Ã—600 â€” excluded) */
+/* Phones + iPad portrait / narrow tablets (Pi kiosk is 1024?600 ? excluded) */
 @media (max-width: 1023px) {
   html,
   body {
@@ -1132,8 +1132,8 @@ dialog::backdrop {
 }
 
 /*
- * Touch tablets in landscape at â‰¥1024 wide (NOT desktop mouse/keyboard).
- * Pi kiosk is 1024Ã—600 + often fine pointer â€” stays on desktop layout.
+ * Touch tablets in landscape at ?1024 wide (NOT desktop mouse/keyboard).
+ * Pi kiosk is 1024?600 + often fine pointer ? stays on desktop layout.
  */
 @media (min-width: 1024px) and (min-height: 700px) and (max-width: 1400px) and (pointer: coarse) {
   html,
@@ -1235,7 +1235,7 @@ dialog::backdrop {
   }
 }
 
-/* —— GitHub Pages (site/) overrides: scrollable web, no kiosk lock —— */
+/* ?? GitHub Pages (site/) overrides: scrollable web, no kiosk lock ?? */
 html,
 body {
   overflow: auto;
@@ -1302,7 +1302,9 @@ a.info-fab:active {
     var(--scout-navy);
   color: var(--ink);
   box-shadow: var(--shadow);
-  width: min(440px, calc(100vw - 32px));
+  width: min(480px, calc(100vw - 32px));
+  max-height: calc(100vh - 32px);
+  overflow: auto;
 }
 
 #welcome-dialog::backdrop {
@@ -1339,7 +1341,7 @@ a.info-fab:active {
 
 .welcome-body {
   margin: 0 auto;
-  max-width: 34ch;
+  max-width: 38ch;
   color: var(--muted);
   line-height: 1.45;
   font-size: 0.98rem;
@@ -1347,12 +1349,30 @@ a.info-fab:active {
 }
 
 .welcome-privacy {
-  margin: 14px auto 0;
-  max-width: 36ch;
-  color: rgba(200, 214, 239, 0.78);
+  margin: 16px auto 0;
+  max-width: 40ch;
+  text-align: left;
+  color: rgba(200, 214, 239, 0.85);
   font-size: 0.82rem;
   line-height: 1.4;
   font-weight: 600;
+}
+
+.welcome-privacy p {
+  margin: 0 0 8px;
+}
+
+.welcome-privacy p:last-child {
+  margin-bottom: 0;
+}
+
+.welcome-privacy-heading {
+  margin: 0 0 8px !important;
+  color: var(--scout-yellow);
+  font-size: 0.9rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
 }
 
 .welcome-privacy a {

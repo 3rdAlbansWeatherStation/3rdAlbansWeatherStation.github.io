@@ -443,7 +443,7 @@ function wireUi() {
   });
 }
 
-const WELCOME_KEY = "3rdAlbansWeather.welcomeSeen";
+const WELCOME_KEY = "3rdAlbansWeather.welcomeSeen.v2";
 
 function wireWelcome() {
   const dialog = $("welcome-dialog");
