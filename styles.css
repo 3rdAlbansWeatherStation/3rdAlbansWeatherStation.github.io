@@ -243,31 +243,40 @@ button:disabled {
   justify-content: center;
   gap: 0;
   /* Vertical breathing room so the dial stays circular inside the tile */
-  padding: 18px 12px;
+  padding: 20px 14px;
   background: var(--panel);
   border: 1px solid var(--line);
   border-radius: var(--radius);
   box-shadow: var(--shadow);
+  container-type: size;
+  container-name: compass-tile;
 }
 
 .compass {
   position: relative;
-  /* Force a true circle ? never stretch with flex */
-  width: min(78%, 100%);
-  aspect-ratio: 1 / 1;
-  height: auto;
+  /* Equal width+height from the smaller tile axis = true circle (not oval) */
+  --dial: min(78cqmin, calc(100cqi - 28px), calc(100cqb - 40px));
+  width: var(--dial);
+  height: var(--dial);
   flex: 0 0 auto;
-  max-width: 100%;
-  max-height: calc(100% - 12px);
   margin-block: auto;
   border-radius: 50%;
   background:
     radial-gradient(circle at center, rgba(116, 19, 220, 0.28), transparent 58%),
     rgba(0, 24, 60, 0.4);
-  border: 3px solid rgba(255, 230, 39, 0.62);
+  border: 5px solid rgba(255, 230, 39, 0.75);
   box-shadow:
-    inset 0 0 0 1px rgba(255, 255, 255, 0.1),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.12),
     0 0 28px rgba(116, 19, 220, 0.28);
+}
+
+/* Fallback if container queries unsupported */
+@supports not (width: 1cqmin) {
+  .compass {
+    width: min(72%, 240px);
+    height: min(72%, 240px);
+    aspect-ratio: 1 / 1;
+  }
 }
 
 /* Outer tick ring (cardinals + mild intermediates) */
