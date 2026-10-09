@@ -1260,3 +1260,33 @@ body {
 #power-dialog {
   display: none !important;
 }
+
+/* Same corner as Pi Power FAB ? opens Scout group page */
+a.info-fab {
+  position: fixed;
+  right: 14px;
+  bottom: 12px;
+  z-index: 5;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  min-width: 44px;
+  padding: 0 16px;
+  border-radius: 999px;
+  border: 1px solid rgba(116, 19, 220, 0.55);
+  background: var(--scout-purple);
+  color: #ffffff;
+  font: inherit;
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: var(--shadow);
+}
+
+a.info-fab:hover {
+  filter: brightness(1.08);
+}
+
+a.info-fab:active {
+  transform: scale(0.98);
+}
