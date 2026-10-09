@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="dark" />
+    <title>3rd St Albans Weather Station</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito+Sans:opsz,wght@6..12,400;6..12,600;6..12,700;6..12,800;6..12,900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="sky" aria-hidden="true"></div>
+
+    <p class="demo-banner" id="demo-banner" hidden>
+      Demo data — not live station readings yet.
+    </p>
+
+    <header class="top">
+      <div class="brand-block">
+        <img class="scout-logo" src="./scout-logo.png" alt="Scouts St Albans" width="280" height="90" />
+        <div class="brand-line">
+          <p class="brand">3rd St Albans Weather Station</p>
+          <p class="meta" id="updated">—</p>
+        </div>
+      </div>
+      <div class="header-toggles">
+        <div class="view-toggle live-page" id="live-page" role="tablist" aria-label="Live page">
+          <button type="button" class="view-btn live-page-btn active" data-page="1" aria-selected="true">1</button>
+          <button type="button" class="view-btn live-page-btn" data-page="2" aria-selected="false">2</button>
+        </div>
+        <div class="view-toggle history-range" id="history-range" role="tablist" aria-label="History range" hidden>
+          <button type="button" class="view-btn seg active" data-range="week" aria-selected="true">Week</button>
+          <button type="button" class="view-btn seg" data-range="month" aria-selected="false">Month</button>
+          <button type="button" class="view-btn seg" data-range="year" aria-selected="false">Year</button>
+        </div>
+        <div class="view-toggle mode-toggle" role="tablist" aria-label="View">
+          <button type="button" class="view-btn mode-btn active" data-view="live" role="tab" aria-selected="true">Live</button>
+          <button type="button" class="view-btn mode-btn" data-view="historic" role="tab" aria-selected="false">History</button>
+        </div>
+      </div>
+    </header>
+
+    <main id="view-live" class="view live-view">
+      <aside class="live-left">
+        <section class="wind-compass" aria-label="Wind direction and speed">
+          <div class="compass" id="compass">
+            <span class="compass-n">N</span>
+            <span class="compass-e">E</span>
+            <span class="compass-s">S</span>
+            <span class="compass-w">W</span>
+            <div class="compass-ring"></div>
+            <div class="compass-needle" id="wind-needle"></div>
+            <div class="compass-center">
+              <p class="compass-speed">
+                <strong id="wind-speed">--</strong><span class="unit">mph</span>
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel radar live-radar" aria-label="Local radar map">
+          <div class="radar-frame">
+            <iframe
+              title="Windy wind map for St Albans"
+              src="https://embed.windy.com/embed.html?type=map&location=coordinates&metricRain=mm&metricTemp=%C2%B0C&metricWind=mph&zoom=5&overlay=wind&product=ecmwf&level=surface&lat=51.762&lon=-0.345&pressure=true&message=true"
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+              allowfullscreen
+            ></iframe>
+          </div>
+        </section>
+      </aside>
+
+      <div class="live-boxes">
+      <section class="boxes boxes-page" id="boxes-page-1" aria-label="Live weather page 1">
+        <article class="box box-hero box-temp">
+          <span class="box-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4v10.54a4 4 0 1 1-4 0V4a2 2 0 0 1 4 0Z"/></svg>
+          </span>
+          <h3>Outside temp</h3>
+          <p class="kid">How warm it is outside</p>
+          <p class="value"><span id="temp">--</span><span class="unit">°C</span></p>
+        </article>
+        <article class="box box-hero box-feels">
+          <span class="box-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9a4 4 0 0 0-2 7.5"/><path d="M12 3v2"/><path d="m6.6 18.4-1.4 1.4"/><path d="M20 4v10.54a4 4 0 1 1-4 0V4a2 2 0 1 1 4 0Z"/><path d="M4 13H2"/><path d="M6.34 7.34 4.93 5.93"/></svg>
+          </span>
+          <h3>Feels like</h3>
+          <p class="kid">What it feels like on your skin</p>
+          <p class="value"><span id="feels">--</span><span class="unit">°C</span></p>
+        </article>
+        <article class="box box-humidity">
+          <span class="box-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 16.3c2.2 0 4-1.83 4-4.05 0-1.16-.57-2.26-1.71-3.19S7.29 6.75 7 5.3c-.29 1.45-1.14 2.84-2.29 3.76S3 11.1 3 12.25c0 2.22 1.8 4.05 4 4.05z"/><path d="M12.56 6.6A10.97 10.97 0 0 0 14 3.02c.5 2.5 2 4.9 4 6.5s3 3.5 3 5.5a6.98 6.98 0 0 1-11.91 4.97"/></svg>
+          </span>
+          <h3>Humidity</h3>
+          <p class="kid">How damp the air is</p>
+          <p class="value"><span id="humidity">--</span><span class="unit">%</span></p>
+        </article>
+        <article class="box box-rain">
+          <span class="box-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242"/><path d="M16 14v6"/><path d="M8 14v6"/><path d="M12 16v6"/></svg>
+          </span>
+          <h3>Rain today</h3>
+          <p class="kid">How much rain has fallen today</p>
+          <p class="value"><span id="rain">--</span><span class="unit">mm</span></p>
+        </article>
+        <article class="box box-pressure">
+          <span class="box-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 14 4-4"/><path d="M3.34 19a10 10 0 1 1 17.32 0"/></svg>
+          </span>
+          <h3>Pressure</h3>
+          <p class="kid">Air pressing down — helps guess the weather</p>
+          <p class="value"><span id="pressure">--</span><span class="unit">hPa</span></p>
+        </article>
+        <article class="box box-gust">
+          <span class="box-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.7 7.7a2.5 2.5 0 1 1 1.8 4.3H2"/><path d="M9.6 4.6A2 2 0 1 1 11 8H2"/><path d="M12.6 19.4A2 2 0 1 0 14 16H2"/></svg>
+          </span>
+          <h3>Gust</h3>
+          <p class="kid">The strongest recent blast of wind</p>
+          <p class="value"><span id="gust">--</span><span class="unit">mph</span></p>
+        </article>
+        <article class="box box-uv">
+          <span class="box-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+          </span>
+          <h3>UV</h3>
+          <p class="kid">How strong the sun’s UV is (0–15)</p>
+          <p class="value"><span id="uvi">--</span></p>
+        </article>
+        <article class="box box-indoor">
+          <span class="box-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          </span>
+          <h3>Inside the hut</h3>
+          <p class="kid">Temperature and dampness in the hut</p>
+          <div class="value value-stack">
+            <p><span id="indoor-temp">--</span><span class="unit">°C</span></p>
+            <p><span id="indoor-humidity">--</span><span class="unit">%</span></p>
+          </div>
+        </article>
+      </section>
+
+      <section class="boxes boxes-page" id="boxes-page-2" aria-label="Live weather page 2" hidden>
+        <article class="box box-rainrate">
+          <span class="box-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 19.9A7 7 0 1 1 18.7 9H19a4.5 4.5 0 0 1 2.5 8.242"/><path d="m12 13-1.5 3"/><path d="m8 13-1.5 3"/><path d="m16 13-1.5 3"/></svg>
+          </span>
+          <h3>Rain rate</h3>
+          <p class="kid">How hard it is raining now</p>
+          <p class="value"><span id="rain-rate">--</span><span class="unit">mm/h</span></p>
+        </article>
+        <article class="box box-dew">
+          <span class="box-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
+          </span>
+          <h3>Dew point</h3>
+          <p class="kid">When dew would form</p>
+          <p class="value"><span id="dew">--</span><span class="unit">°C</span></p>
+        </article>
+        <article class="box box-solar">
+          <span class="box-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+          </span>
+          <h3>Sunlight</h3>
+          <p class="kid">How bright the daylight is</p>
+          <p class="value"><span id="solar">--</span><span class="unit">klux</span></p>
+        </article>
+        <article class="box box-rainhour">
+          <span class="box-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242"/><path d="M16 14v6"/><path d="M8 14v6"/><path d="M12 16v6"/></svg>
+          </span>
+          <h3>Rain hour</h3>
+          <p class="kid">Rain in the last hour</p>
+          <p class="value"><span id="rain-hour">--</span><span class="unit">mm</span></p>
+        </article>
+        <article class="box box-rainweek">
+          <span class="box-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/><path d="M8 14h.01"/><path d="M12 14h.01"/><path d="M16 14h.01"/><path d="M8 18h.01"/><path d="M12 18h.01"/><path d="M16 18h.01"/></svg>
+          </span>
+          <h3>Rain week</h3>
+          <p class="kid">Rain so far this week</p>
+          <p class="value"><span id="rain-week">--</span><span class="unit">mm</span></p>
+        </article>
+        <article class="box box-windmax">
+          <span class="box-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.7 7.7a2.5 2.5 0 1 1 1.8 4.3H2"/><path d="M9.6 4.6A2 2 0 1 1 11 8H2"/><path d="M12.6 19.4A2 2 0 1 0 14 16H2"/></svg>
+          </span>
+          <h3>Max wind</h3>
+          <p class="kid">Strongest wind today</p>
+          <p class="value"><span id="wind-day-max">--</span><span class="unit">mph</span></p>
+        </article>
+        <article class="box box-sensor">
+          <span class="box-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="16" height="10" x="2" y="7" rx="2" ry="2"/><line x1="22" x2="22" y1="11" y2="13"/><line x1="6" x2="6.01" y1="11" y2="11"/><line x1="10" x2="10.01" y1="11" y2="11"/></svg>
+          </span>
+          <h3>Sensor</h3>
+          <p class="kid">Battery and signal</p>
+          <div class="value value-stack">
+            <p><span id="sensor-battery">--</span></p>
+            <p class="value-sub"><span id="sensor-signal">--</span></p>
+          </div>
+        </article>
+        <article class="box box-condition">
+          <span class="box-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/></svg>
+          </span>
+          <h3>Sky</h3>
+          <p class="kid">A simple word for the weather</p>
+          <p class="value value-text" id="condition-box">--</p>
+        </article>
+      </section>
+      </div>
+    </main>
+
+    <main id="view-historic" class="view historic-view" hidden>
+      <div class="history-layout">
+        <section class="panel rose-panel" aria-label="Wind rose">
+          <h2 class="rose-title">Wind Rose</h2>
+          <div class="rose-canvas-wrap">
+            <canvas id="wind-rose" width="320" height="320" aria-label="Wind direction rose"></canvas>
+          </div>
+          <div class="rose-stats">
+            <div class="rose-stat">
+              <span class="rose-stat-label">Avg</span>
+              <strong id="h-wind-avg">—</strong>
+              <span class="rose-stat-unit">mph</span>
+            </div>
+            <div class="rose-stat">
+              <span class="rose-stat-label">Gust</span>
+              <strong id="h-wind-high">—</strong>
+              <span class="rose-stat-unit">mph</span>
+            </div>
+          </div>
+        </section>
+
+        <article class="panel chart-card chart-slot" aria-label="Reserved">
+          <div class="chart-placeholder">
+            <span class="chart-placeholder-title">More soon</span>
+            <span class="chart-placeholder-note">Extra chart slot</span>
+          </div>
+        </article>
+        <article class="panel chart-card chart-rain">
+          <div class="chart-body">
+            <div class="chart-side left rain">
+              <span class="chart-side-name">Rain</span>
+              <strong class="chart-side-high" id="lbl-rain-high">—</strong>
+              <span class="chart-side-unit">mm</span>
+            </div>
+            <canvas id="chart-rain" class="line-chart" width="640" height="120"></canvas>
+          </div>
+        </article>
+        <article class="panel chart-card chart-wind">
+          <div class="chart-body">
+            <div class="chart-side left wind">
+              <span class="chart-side-name">Wind</span>
+              <strong class="chart-side-high" id="lbl-wind-high">—</strong>
+              <strong class="chart-side-low" id="lbl-wind-low">—</strong>
+              <span class="chart-side-unit">mph</span>
+            </div>
+            <canvas id="chart-wind-pressure" class="line-chart" width="640" height="120"></canvas>
+            <div class="chart-side right pressure">
+              <span class="chart-side-name">Press</span>
+              <strong class="chart-side-high" id="lbl-press-high">—</strong>
+              <strong class="chart-side-low" id="lbl-press-low">—</strong>
+              <span class="chart-side-unit">hPa</span>
+            </div>
+          </div>
+        </article>
+        <article class="panel chart-card chart-temp-hum">
+          <div class="chart-body">
+            <div class="chart-side left temp">
+              <span class="chart-side-name">Temp</span>
+              <strong class="chart-side-high" id="lbl-temp-high">—</strong>
+              <strong class="chart-side-low" id="lbl-temp-low">—</strong>
+              <span class="chart-side-unit">°C</span>
+            </div>
+            <canvas id="chart-temp-hum" class="line-chart" width="960" height="160"></canvas>
+            <div class="chart-side right humidity">
+              <span class="chart-side-name">Humid</span>
+              <strong class="chart-side-high" id="lbl-hum-high">—</strong>
+              <strong class="chart-side-low" id="lbl-hum-low">—</strong>
+              <span class="chart-side-unit">%</span>
+            </div>
+          </div>
+        </article>
+      </div>
+    </main>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
