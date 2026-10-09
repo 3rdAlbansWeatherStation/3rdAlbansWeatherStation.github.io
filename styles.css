@@ -1355,6 +1355,11 @@ a.info-fab:active {
   font-weight: 600;
 }
 
+.welcome-privacy a {
+  color: var(--scout-yellow);
+  font-weight: 700;
+}
+
 .welcome-actions {
   margin-top: 22px;
 }
