@@ -1261,12 +1261,19 @@ body {
   display: none !important;
 }
 
-/* Same corner as Pi Power FAB ? opens Scout group page */
-a.info-fab {
+/* Bottom-right FABs ? Privacy left of Info (Info matches Pi Power corner) */
+.fab-row {
   position: fixed;
   right: 14px;
   bottom: 12px;
   z-index: 5;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+a.info-fab,
+button.privacy-fab {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -1274,25 +1281,38 @@ a.info-fab {
   min-width: 44px;
   padding: 0 16px;
   border-radius: 999px;
-  border: 1px solid rgba(116, 19, 220, 0.55);
-  background: var(--scout-purple);
-  color: #ffffff;
   font: inherit;
   font-weight: 700;
   text-decoration: none;
   box-shadow: var(--shadow);
+  cursor: pointer;
 }
 
-a.info-fab:hover {
+a.info-fab {
+  border: 1px solid rgba(116, 19, 220, 0.55);
+  background: var(--scout-purple);
+  color: #ffffff;
+}
+
+button.privacy-fab {
+  border: 1px solid rgba(8, 132, 134, 0.65);
+  background: var(--scout-teal);
+  color: #ffffff;
+}
+
+a.info-fab:hover,
+button.privacy-fab:hover {
   filter: brightness(1.08);
 }
 
-a.info-fab:active {
+a.info-fab:active,
+button.privacy-fab:active {
   transform: scale(0.98);
 }
 
-/* First-visit welcome */
-#welcome-dialog {
+/* First-visit welcome + privacy statement */
+#welcome-dialog,
+#privacy-dialog {
   border: 1px solid rgba(255, 230, 39, 0.28);
   border-radius: 22px;
   padding: 0;
@@ -1307,7 +1327,8 @@ a.info-fab:active {
   overflow: auto;
 }
 
-#welcome-dialog::backdrop {
+#welcome-dialog::backdrop,
+#privacy-dialog::backdrop {
   background: rgba(0, 24, 60, 0.78);
   backdrop-filter: blur(3px);
 }
@@ -1348,6 +1369,7 @@ a.info-fab:active {
   font-weight: 600;
 }
 
+.welcome-consent,
 .welcome-privacy {
   margin: 16px auto 0;
   max-width: 40ch;
@@ -1356,6 +1378,20 @@ a.info-fab:active {
   font-size: 0.82rem;
   line-height: 1.4;
   font-weight: 600;
+}
+
+.welcome-consent p {
+  margin: 0 0 8px;
+}
+
+.welcome-consent p:last-child {
+  margin-bottom: 0;
+}
+
+.privacy-note {
+  margin-top: 12px !important;
+  color: rgba(200, 214, 239, 0.7);
+  font-style: italic;
 }
 
 .welcome-privacy p {

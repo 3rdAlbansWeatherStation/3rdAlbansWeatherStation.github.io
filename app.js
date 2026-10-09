@@ -443,7 +443,36 @@ function wireUi() {
   });
 }
 
-const WELCOME_KEY = "3rdAlbansWeather.welcomeSeen.v2";
+const CONSENT_KEY = "3rdAlbansWeather.consent.v3";
+const GOAT_SRC = "https://gc.zgo.at/count.js";
+const GOAT_ENDPOINT = "https://3rdalbansweatherstation.goatcounter.com/count";
+
+function hasConsent() {
+  try {
+    return localStorage.getItem(CONSENT_KEY) === "1";
+  } catch {
+    return false;
+  }
+}
+
+function setConsent() {
+  try {
+    localStorage.setItem(CONSENT_KEY, "1");
+  } catch {
+    /* private mode etc. */
+  }
+}
+
+function loadGoatCounter() {
+  if (document.querySelector(`script[data-goatcounter="${GOAT_ENDPOINT}"]`)) {
+    return;
+  }
+  const s = document.createElement("script");
+  s.async = true;
+  s.src = GOAT_SRC;
+  s.dataset.goatcounter = GOAT_ENDPOINT;
+  document.head.appendChild(s);
+}
 
 function wireWelcome() {
   const dialog = $("welcome-dialog");
@@ -451,29 +480,36 @@ function wireWelcome() {
   if (!dialog || !ok) return;
 
   const dismiss = () => {
-    try {
-      localStorage.setItem(WELCOME_KEY, "1");
-    } catch {
-      /* private mode etc. — ignore */
-    }
+    setConsent();
+    loadGoatCounter();
     dialog.close();
   };
 
   ok.addEventListener("click", dismiss);
 
-  let seen = false;
-  try {
-    seen = localStorage.getItem(WELCOME_KEY) === "1";
-  } catch {
-    seen = false;
-  }
-  if (!seen) {
+  if (!hasConsent()) {
     requestAnimationFrame(() => dialog.showModal());
+  } else {
+    loadGoatCounter();
   }
+}
+
+function wirePrivacy() {
+  const dialog = $("privacy-dialog");
+  const openBtn = $("btn-privacy");
+  const closeBtn = $("btn-privacy-close");
+  if (!dialog || !openBtn || !closeBtn) return;
+
+  openBtn.addEventListener("click", () => dialog.showModal());
+  closeBtn.addEventListener("click", () => dialog.close());
+  dialog.addEventListener("click", (e) => {
+    if (e.target === dialog) dialog.close();
+  });
 }
 
 wireUi();
 wireWelcome();
+wirePrivacy();
 startClock();
 setView("live");
 refresh();

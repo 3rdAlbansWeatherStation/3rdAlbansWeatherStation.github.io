@@ -293,12 +293,16 @@
       </div>
     </main>
 
-    <a
-      class="info-fab"
-      href="https://www.scouts.org.uk/groups/10009768?loc=al3%205th&amp;slug=3rd-St-Albans"
-      target="_blank"
-      rel="noopener noreferrer"
-    >Info</a>
+    <div class="fab-row">
+      <button type="button" class="privacy-fab" id="btn-privacy">Privacy</button>
+      <a
+        class="info-fab"
+        href="https://www.scouts.org.uk/groups/10009768?loc=al3%205th&amp;slug=3rd-St-Albans"
+        target="_blank"
+        rel="noopener noreferrer"
+        >Info</a
+      >
+    </div>
 
     <dialog id="welcome-dialog" aria-labelledby="welcome-title">
       <div class="welcome-card">
@@ -310,46 +314,68 @@
           the Scout Hut. It shows current conditions and recent history so
           families, leaders and the community can see what the weather’s doing.
         </p>
+        <div class="welcome-consent">
+          <p class="welcome-privacy-heading">Cookies &amp; privacy</p>
+          <p>
+            We don’t use advertising cookies. To run the site we may store a
+            small preference in your browser (so this message only shows once)
+            and use anonymous page-view counts via GoatCounter.
+          </p>
+          <p>
+            Tap <strong>I understand</strong> to continue. Full details are
+            always available from the <strong>Privacy</strong> button.
+          </p>
+        </div>
+        <div class="welcome-actions">
+          <button type="button" class="welcome-ok" id="btn-welcome-ok">I understand</button>
+        </div>
+      </div>
+    </dialog>
+
+    <dialog id="privacy-dialog" aria-labelledby="privacy-title">
+      <div class="welcome-card privacy-card">
+        <p class="welcome-kicker">Privacy</p>
+        <h2 id="privacy-title">How we use this site</h2>
         <div class="welcome-privacy">
-          <p class="welcome-privacy-heading">Privacy</p>
           <p>
-            We don’t use advertising cookies or track you as a person.
+            <strong>Who we are.</strong> This page is run for 3rd St Albans
+            Scouts as a public weather display for the Scout Hut.
           </p>
           <p>
-            We use
-            <a href="https://www.goatcounter.com/" target="_blank" rel="noopener noreferrer">GoatCounter</a>
-            for simple, anonymous page-view counts (for example which pages are
-            visited and rough country). That helps us know the site is useful.
-          </p>
-          <p>
-            Your browser may store a small “welcome seen” note so this message
-            only appears once.
-          </p>
-          <p>
-            We don’t collect names, emails or details about young people on this
+            <strong>What we show.</strong> Weather readings and charts. We do
+            not ask for names, emails, or details about young people on this
             page.
           </p>
           <p>
-            For the Group on the official Scouts site:
+            <strong>Cookies &amp; storage.</strong> We do not use advertising
+            cookies. Your browser may keep a small “welcome / consent” note so
+            the intro only appears once.
+          </p>
+          <p>
+            <strong>Analytics.</strong> After you accept the intro, we use
+            <a href="https://www.goatcounter.com/" target="_blank" rel="noopener noreferrer">GoatCounter</a>
+            for anonymous page-view counts (for example visits and rough
+            country). It is not used to identify you personally.
+          </p>
+          <p>
+            <strong>Official Group page.</strong>
             <a
               href="https://www.scouts.org.uk/groups/10009768?loc=al3%205th&amp;slug=3rd-St-Albans"
               target="_blank"
               rel="noopener noreferrer"
-              >3rd St Albans Scouts</a
+              >3rd St Albans Scouts on scouts.org.uk</a
             >.
+          </p>
+          <p class="privacy-note">
+            There isn’t much else to say — this is a simple public weather page.
           </p>
         </div>
         <div class="welcome-actions">
-          <button type="button" class="welcome-ok" id="btn-welcome-ok">OK</button>
+          <button type="button" class="welcome-ok" id="btn-privacy-close">Close</button>
         </div>
       </div>
     </dialog>
 
     <script src="./app.js"></script>
-    <script
-      data-goatcounter="https://3rdalbansweatherstation.goatcounter.com/count"
-      async
-      src="https://gc.zgo.at/count.js"
-    ></script>
   </body>
 </html>
