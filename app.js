@@ -443,7 +443,37 @@ function wireUi() {
   });
 }
 
+const WELCOME_KEY = "3rdAlbansWeather.welcomeSeen";
+
+function wireWelcome() {
+  const dialog = $("welcome-dialog");
+  const ok = $("btn-welcome-ok");
+  if (!dialog || !ok) return;
+
+  const dismiss = () => {
+    try {
+      localStorage.setItem(WELCOME_KEY, "1");
+    } catch {
+      /* private mode etc. — ignore */
+    }
+    dialog.close();
+  };
+
+  ok.addEventListener("click", dismiss);
+
+  let seen = false;
+  try {
+    seen = localStorage.getItem(WELCOME_KEY) === "1";
+  } catch {
+    seen = false;
+  }
+  if (!seen) {
+    requestAnimationFrame(() => dialog.showModal());
+  }
+}
+
 wireUi();
+wireWelcome();
 startClock();
 setView("live");
 refresh();

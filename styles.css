@@ -1290,3 +1290,94 @@ a.info-fab:hover {
 a.info-fab:active {
   transform: scale(0.98);
 }
+
+/* First-visit welcome */
+#welcome-dialog {
+  border: 1px solid rgba(255, 230, 39, 0.28);
+  border-radius: 22px;
+  padding: 0;
+  background:
+    radial-gradient(ellipse 90% 60% at 20% 0%, rgba(116, 19, 220, 0.35), transparent 55%),
+    radial-gradient(ellipse 70% 50% at 100% 10%, rgba(8, 132, 134, 0.28), transparent 50%),
+    var(--scout-navy);
+  color: var(--ink);
+  box-shadow: var(--shadow);
+  width: min(440px, calc(100vw - 32px));
+}
+
+#welcome-dialog::backdrop {
+  background: rgba(0, 24, 60, 0.78);
+  backdrop-filter: blur(3px);
+}
+
+.welcome-card {
+  padding: 28px 24px 22px;
+  text-align: center;
+}
+
+.welcome-logo {
+  display: block;
+  width: min(220px, 70%);
+  height: auto;
+  margin: 0 auto 14px;
+}
+
+.welcome-kicker {
+  margin: 0;
+  font-size: 1.55rem;
+  font-weight: 900;
+  letter-spacing: 0.02em;
+  color: var(--scout-yellow);
+}
+
+.welcome-card h2 {
+  margin: 2px 0 14px;
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: #ffffff;
+}
+
+.welcome-body {
+  margin: 0 auto;
+  max-width: 34ch;
+  color: var(--muted);
+  line-height: 1.45;
+  font-size: 0.98rem;
+  font-weight: 600;
+}
+
+.welcome-privacy {
+  margin: 14px auto 0;
+  max-width: 36ch;
+  color: rgba(200, 214, 239, 0.78);
+  font-size: 0.82rem;
+  line-height: 1.4;
+  font-weight: 600;
+}
+
+.welcome-actions {
+  margin-top: 22px;
+}
+
+.welcome-ok {
+  min-width: 140px;
+  min-height: 48px;
+  padding: 0 28px;
+  border: 1px solid rgba(255, 230, 39, 0.55);
+  border-radius: 999px;
+  background: var(--scout-yellow);
+  color: var(--scout-navy);
+  font: inherit;
+  font-weight: 900;
+  font-size: 1.05rem;
+  cursor: pointer;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.25);
+}
+
+.welcome-ok:hover {
+  filter: brightness(1.05);
+}
+
+.welcome-ok:active {
+  transform: scale(0.98);
+}
