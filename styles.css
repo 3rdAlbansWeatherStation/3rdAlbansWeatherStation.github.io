@@ -1183,6 +1183,11 @@ dialog::backdrop {
     justify-content: flex-start;
   }
 
+  /* Mobile: compass only with page 1 metrics */
+  .live-view.is-page-2 .wind-compass {
+    display: none;
+  }
+
   .wind-compass .compass {
     --dial: min(220px, 72vw, calc(100% - 16px));
     width: var(--dial);

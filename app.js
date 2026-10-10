@@ -73,11 +73,13 @@ function setLivePage(page) {
   livePage = String(page) === "2" ? "2" : "1";
   const page1 = $("boxes-page-1");
   const page2 = $("boxes-page-2");
+  const liveView = $("view-live");
   const show1 = livePage === "1";
   page1.hidden = !show1;
   page2.hidden = show1;
   page1.style.display = show1 ? "" : "none";
   page2.style.display = show1 ? "none" : "";
+  if (liveView) liveView.classList.toggle("is-page-2", !show1);
   document.querySelectorAll(".live-page-btn").forEach((btn) => {
     const active = btn.dataset.page === livePage;
     btn.classList.toggle("active", active);
