@@ -278,9 +278,9 @@ button:disabled {
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  gap: 6px;
-  /* Title + dial; vertical room so the dial stays circular */
-  padding: 10px 12px 14px;
+  gap: 3px;
+  /* Tight padding so the dial can stay large with title + Beaufort */
+  padding: 4px 6px 6px;
   background: var(--panel);
   border: 1px solid var(--line);
   border-radius: var(--radius);
@@ -309,8 +309,8 @@ button:disabled {
 
 .compass {
   position: relative;
-  /* Leave vertical room for Wind title + Beaufort line */
-  --dial: min(62cqmin, calc(100cqi - 28px), calc(100cqb - 100px));
+  /* Title + Beaufort; padding is tight so dial can stay large */
+  --dial: min(70cqmin, calc(100cqi - 14px), calc(100cqb - 72px));
   width: var(--dial);
   height: var(--dial);
   flex: 0 0 auto;
@@ -1262,7 +1262,7 @@ dialog::backdrop {
   }
 
   .wind-compass .compass {
-    --dial: min(220px, 72vw, calc(100% - 16px));
+    --dial: min(240px, 78vw, calc(100% - 8px));
     width: var(--dial);
     height: var(--dial);
     margin-inline: auto;
