@@ -601,12 +601,28 @@ function wirePrivacy() {
   });
 }
 
+function wireHelp() {
+  const dialog = $("learn-dialog");
+  const openBtn = $("btn-help");
+  const closeBtn = $("btn-learn-close");
+  if (!dialog || !openBtn || !closeBtn) return;
+  if (openBtn.dataset.wired === "1") return;
+  openBtn.dataset.wired = "1";
+
+  openBtn.addEventListener("click", () => dialog.showModal());
+  closeBtn.addEventListener("click", () => dialog.close());
+  dialog.addEventListener("click", (e) => {
+    if (e.target === dialog) dialog.close();
+  });
+}
+
 function unlockSite() {
   document.body.classList.remove("is-gated");
   const gate = $("gate-dialog");
   if (gate?.open) gate.close();
   wireWelcome();
   wirePrivacy();
+  wireHelp();
 }
 
 function wireGate() {

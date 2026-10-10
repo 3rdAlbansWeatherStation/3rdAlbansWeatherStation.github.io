@@ -11,10 +11,12 @@
       href="https://fonts.googleapis.com/css2?family=Nunito+Sans:opsz,wght@6..12,400;6..12,600;6..12,700;6..12,800;6..12,900&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="./styles.css?v=16" />
+    <link rel="stylesheet" href="./styles.css?v=17" />
   </head>
   <body class="is-gated">
     <div class="sky" aria-hidden="true"></div>
+
+    <button type="button" class="help-fab" id="btn-help" aria-label="What is this weather station?">?</button>
 
     <p class="demo-banner" id="demo-banner" hidden>
       Demo data — not live station readings yet.
@@ -353,6 +355,131 @@
       </div>
     </dialog>
 
+    <dialog id="learn-dialog" aria-labelledby="learn-title">
+      <div class="welcome-card learn-card">
+        <h2 id="learn-title">What’s this weather station?</h2>
+        <div class="learn-body">
+          <p class="learn-lead">
+            We have a weather gadget at the Scout Hut. Outside, sensors measure the
+            air, wind, rain and sun. Inside the hut, another sensor checks how warm
+            and damp it is. Those numbers travel to the internet, then this website
+            shows them — a bit like a school weather station that keeps watching for us.
+          </p>
+          <p>
+            These public numbers update every few minutes from the station’s cloud feed.
+          </p>
+
+          <h3 class="learn-section">Why it matters</h3>
+          <p>
+            Weather scientists (meteorologists) use lots of stations like this. Local
+            readings help check forecasts, spot storms, and see how weather changes
+            from place to place. Scouts can use the same skills: watch, record, compare,
+            and ask “what might happen next?”
+          </p>
+
+          <h3 class="learn-section">What each reading means</h3>
+
+          <article class="learn-topic">
+            <h4>Wind</h4>
+            <p><strong>How it’s captured:</strong> Cups and a vane on the outdoor sensor spin and turn with the breeze.</p>
+            <p><strong>How it’s used:</strong> Shows how strong the wind is and which way it’s coming from — useful for camps, flags, and forecasts.</p>
+          </article>
+          <article class="learn-topic">
+            <h4>Windy map</h4>
+            <p><strong>How it’s captured:</strong> A weather-map picture for the wider area (not our tiny sensor alone).</p>
+            <p><strong>How it’s used:</strong> Helps compare “our hut” with wind nearby across the UK.</p>
+          </article>
+          <article class="learn-topic">
+            <h4>Outside temp</h4>
+            <p><strong>How it’s captured:</strong> A thermometer in the outdoor sensor.</p>
+            <p><strong>How it’s used:</strong> The basic “how warm is it?” reading — frost, heat, and clothing choices.</p>
+          </article>
+          <article class="learn-topic">
+            <h4>Feels like</h4>
+            <p><strong>How it’s captured:</strong> Calculated from temperature plus wind/humidity.</p>
+            <p><strong>How it’s used:</strong> Explains why a breezy day can feel colder than the thermometer says.</p>
+          </article>
+          <article class="learn-topic">
+            <h4>Humidity</h4>
+            <p><strong>How it’s captured:</strong> Measures how much water vapour is in the air.</p>
+            <p><strong>How it’s used:</strong> High = muggy/damp air; low = dry air — links to comfort and foggy weather.</p>
+          </article>
+          <article class="learn-topic">
+            <h4>Rain today</h4>
+            <p><strong>How it’s captured:</strong> A tipping bucket counts raindrops through the day.</p>
+            <p><strong>How it’s used:</strong> Shows how wet today has been — useful for flooding, mud, and outdoor plans.</p>
+          </article>
+          <article class="learn-topic">
+            <h4>Pressure</h4>
+            <p><strong>How it’s captured:</strong> A barometer in the gateway measures air pressing down (we show it in hPa).</p>
+            <p><strong>How it’s used:</strong> Rising or falling pressure often hints at clearer or stormier weather.</p>
+          </article>
+          <article class="learn-topic">
+            <h4>Gust</h4>
+            <p><strong>How it’s captured:</strong> The strongest short blast of wind in the last few seconds.</p>
+            <p><strong>How it’s used:</strong> Gusts can be much stronger than steady wind — important for safety outdoors.</p>
+          </article>
+          <article class="learn-topic">
+            <h4>UV</h4>
+            <p><strong>How it’s captured:</strong> A sensor measures ultraviolet light from the sun (0–15).</p>
+            <p><strong>How it’s used:</strong> Helps with sun safety — UV can be strong even when it doesn’t feel hot.</p>
+          </article>
+          <article class="learn-topic">
+            <h4>Inside the hut</h4>
+            <p><strong>How it’s captured:</strong> Sensors in the gateway for indoor temperature and humidity.</p>
+            <p><strong>How it’s used:</strong> Shows comfort inside the hut, which can be very different from outside.</p>
+          </article>
+          <article class="learn-topic">
+            <h4>Rain rate</h4>
+            <p><strong>How it’s captured:</strong> How fast rain is falling right now (mm per hour).</p>
+            <p><strong>How it’s used:</strong> Tells a shower from a downpour — useful for short-term decisions.</p>
+          </article>
+          <article class="learn-topic">
+            <h4>Dew point</h4>
+            <p><strong>How it’s captured:</strong> Calculated from temperature and humidity.</p>
+            <p><strong>How it’s used:</strong> The temperature where dew (or fog) can form — a clue about moisture in the air.</p>
+          </article>
+          <article class="learn-topic">
+            <h4>Sunlight</h4>
+            <p><strong>How it’s captured:</strong> Measures solar energy hitting the sensor (W/m²).</p>
+            <p><strong>How it’s used:</strong> Shows how strong the daylight/sun energy is — useful with UV.</p>
+          </article>
+          <article class="learn-topic">
+            <h4>Rain hour</h4>
+            <p><strong>How it’s captured:</strong> Rain counted in the last 60 minutes.</p>
+            <p><strong>How it’s used:</strong> Answers “has it just bucketed down?”</p>
+          </article>
+          <article class="learn-topic">
+            <h4>Rain week</h4>
+            <p><strong>How it’s captured:</strong> Rain added up for the week so far.</p>
+            <p><strong>How it’s used:</strong> Good for spotting a wet or dry spell.</p>
+          </article>
+          <article class="learn-topic">
+            <h4>Sky</h4>
+            <p><strong>How it’s captured:</strong> A simple word we make from the readings (not a full forecast).</p>
+            <p><strong>How it’s used:</strong> Quick “what’s it like?” label for kids and leaders.</p>
+          </article>
+
+          <h3 class="learn-section">History charts</h3>
+          <article class="learn-topic">
+            <h4>Wind rose</h4>
+            <p>Shows which directions the wind came from most over the chosen time.</p>
+          </article>
+          <article class="learn-topic">
+            <h4>Charts</h4>
+            <p>
+              Solar, rain, wind/gust, pressure, and temp/humidity charts show how
+              readings changed over a week, month, or year — weather is a story, not
+              just one moment.
+            </p>
+          </article>
+        </div>
+        <div class="welcome-actions">
+          <button type="button" class="welcome-ok" id="btn-learn-close">Close</button>
+        </div>
+      </div>
+    </dialog>
+
     <dialog id="privacy-dialog" aria-labelledby="privacy-title">
       <div class="welcome-card privacy-card">
         <h2 id="privacy-title">Privacy</h2>
@@ -400,6 +527,6 @@
       </div>
     </dialog>
 
-    <script src="./app.js?v=16"></script>
+    <script src="./app.js?v=17"></script>
   </body>
 </html>

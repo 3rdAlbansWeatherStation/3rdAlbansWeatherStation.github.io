@@ -1394,6 +1394,38 @@ body {
   display: none !important;
 }
 
+/* Top-left help (?) — kids guide to the readings */
+.help-fab {
+  position: fixed;
+  top: max(12px, env(safe-area-inset-top, 0px));
+  left: max(12px, env(safe-area-inset-left, 0px));
+  z-index: 6;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 1px solid rgba(255, 230, 39, 0.55);
+  border-radius: 999px;
+  background: var(--scout-yellow);
+  color: var(--scout-navy);
+  font: inherit;
+  font-size: 1.35rem;
+  font-weight: 900;
+  line-height: 1;
+  box-shadow: var(--shadow);
+  cursor: pointer;
+}
+
+.help-fab:hover {
+  filter: brightness(1.05);
+}
+
+.help-fab:active {
+  transform: scale(0.98);
+}
+
 /* Bottom-right FABs ? Privacy left of Info (Info matches Pi Power corner) */
 .fab-row {
   position: fixed;
@@ -1448,7 +1480,8 @@ body.is-gated .sky,
 body.is-gated .demo-banner,
 body.is-gated .top,
 body.is-gated main,
-body.is-gated .fab-row {
+body.is-gated .fab-row,
+body.is-gated .help-fab {
   filter: blur(10px);
   pointer-events: none;
   user-select: none;
@@ -1457,7 +1490,8 @@ body.is-gated .fab-row {
 /* First-visit welcome + privacy statement + preview gate */
 #gate-dialog,
 #welcome-dialog,
-#privacy-dialog {
+#privacy-dialog,
+#learn-dialog {
   border: 1px solid rgba(255, 230, 39, 0.28);
   border-radius: 22px;
   padding: 0;
@@ -1474,9 +1508,76 @@ body.is-gated .fab-row {
 
 #gate-dialog::backdrop,
 #welcome-dialog::backdrop,
-#privacy-dialog::backdrop {
+#privacy-dialog::backdrop,
+#learn-dialog::backdrop {
   background: rgba(0, 24, 60, 0.78);
   backdrop-filter: blur(3px);
+}
+
+#learn-dialog {
+  width: min(560px, calc(100vw - 32px));
+}
+
+.learn-card {
+  text-align: left;
+}
+
+.learn-card h2 {
+  text-align: center;
+}
+
+.learn-body {
+  margin-top: 8px;
+  color: rgba(200, 214, 239, 0.9);
+  font-size: 0.92rem;
+  line-height: 1.45;
+  font-weight: 600;
+}
+
+.learn-body p {
+  margin: 0 0 10px;
+}
+
+.learn-lead {
+  color: #fff;
+  font-size: 0.98rem;
+}
+
+.learn-section {
+  margin: 18px 0 10px;
+  font-size: 0.95rem;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--scout-yellow);
+}
+
+.learn-topic {
+  margin: 0 0 12px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: rgba(0, 24, 60, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.learn-topic h4 {
+  margin: 0 0 6px;
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #fff;
+}
+
+.learn-topic p {
+  margin: 0 0 6px;
+}
+
+.learn-topic p:last-child {
+  margin-bottom: 0;
+}
+
+.learn-topic strong {
+  color: rgba(255, 230, 39, 0.9);
+  font-weight: 800;
 }
 
 #gate-dialog::backdrop {
