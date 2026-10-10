@@ -1,7 +1,6 @@
 /**
- * Public GitHub Pages UI — same design as the Pi kiosk.
- * Loads static JSON from ./data/ (written by Ecowitt cloud GitHub Action).
- * Never put API keys or credentials in this folder.
+ * Public GitHub Pages UI.
+ * Loads static JSON from ./data/.
  */
 
 const REFRESH_MS = 60_000;
