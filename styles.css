@@ -138,10 +138,10 @@ body {
 }
 
 .live-page .view-btn {
-  min-width: 4.2rem;
+  min-width: 5.5rem;
   min-height: 42px;
-  padding: 0 28px;
-  font-size: 1.15rem;
+  padding: 0 18px;
+  font-size: 1.05rem;
   font-weight: 800;
 }
 
@@ -1038,8 +1038,9 @@ dialog::backdrop {
   }
 
   .live-page .view-btn {
-    min-width: 2.6rem;
-    padding: 0 14px;
+    min-width: 0;
+    padding: 0 10px;
+    font-size: 0.82rem;
   }
 
   .mode-toggle .view-btn {
