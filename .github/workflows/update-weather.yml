@@ -1,0 +1,45 @@
+name: Update weather data
+
+on:
+  schedule:
+    # Every 15 minutes (Ecowitt rate limits are low; Pages is static)
+    - cron: "*/15 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-weather
+  cancel-in-progress: true
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Fetch Ecowitt cloud data
+        env:
+          ECOWITT_APPLICATION_KEY: ${{ secrets.ECOWITT_APPLICATION_KEY }}
+          ECOWITT_API_KEY: ${{ secrets.ECOWITT_API_KEY }}
+          ECOWITT_DEVICE_MAC: ${{ secrets.ECOWITT_DEVICE_MAC }}
+        run: node .github/scripts/fetch-ecowitt-data.js
+
+      - name: Commit and push data
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/*.json
+          if git diff --staged --quiet; then
+            echo "No data changes"
+          else
+            git commit -m "Update weather data from Ecowitt cloud"
+            git push
+          fi
