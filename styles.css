@@ -1401,25 +1401,25 @@ body {
 
 button.card-help {
   position: absolute;
-  top: 6px;
-  left: 6px;
+  top: 4px;
+  left: 4px;
   z-index: 3;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 28px;
-  height: 28px;
+  width: 14px;
+  height: 14px;
   padding: 0;
   border: 1px solid rgba(255, 230, 39, 0.55);
   border-radius: 999px;
   background: rgba(255, 230, 39, 0.95);
   color: var(--scout-navy);
   font: inherit;
-  font-size: 0.95rem;
+  font-size: 0.55rem;
   font-weight: 900;
   line-height: 1;
   cursor: pointer;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
 }
 
 button.card-help:hover {
