@@ -1125,7 +1125,7 @@ dialog::backdrop {
   }
 }
 
-/* Phones: hide long title, one box per row, compass + Windy on top */
+/* Phones: hide long title, one box per row; Windy after metric cards */
 @media (max-width: 700px) {
   .brand {
     display: none;
@@ -1136,9 +1136,38 @@ dialog::backdrop {
     grid-auto-rows: minmax(150px, auto);
   }
 
+  .live-view {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  /* Let compass / Windy / boxes reorder independently */
   .live-left {
+    display: contents;
+  }
+
+  .wind-compass,
+  .live-radar {
     --tile: min(100%, 340px);
-    grid-template-columns: 1fr;
+    width: var(--tile);
+    max-width: 100%;
+    height: auto;
+    aspect-ratio: 1 / 1;
+    margin-inline: auto;
+  }
+
+  .wind-compass {
+    order: 1;
+  }
+
+  .live-boxes {
+    order: 2;
+    width: 100%;
+  }
+
+  .live-radar {
+    order: 3;
   }
 }
 
