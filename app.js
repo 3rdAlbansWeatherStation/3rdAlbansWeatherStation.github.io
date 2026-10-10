@@ -60,7 +60,8 @@ let currentView = "live";
 let livePage = "1";
 let refreshTimer;
 let lastHistory = null;
-let lastSteadyWindDeg = 0;
+/** Last trusted vane heading; null until first sample (avoids false North at 0°). */
+let lastSteadyWindDeg = null;
 let chartTipWired = false;
 
 const $ = (id) => document.getElementById(id);
@@ -255,11 +256,14 @@ function renderCurrent(data) {
   const needle = $("wind-needle");
   const speedN = Number(speed) || 0;
   const degN = Number(deg);
-  if (speedN >= WIND_CALM_MS && Number.isFinite(degN)) {
-    lastSteadyWindDeg = degN;
+  // In calm air the vane frets; keep last steady heading. Seed from the first
+  // reported direction (even if calm) so we never invent North at 0°.
+  if (Number.isFinite(degN)) {
+    if (speedN >= WIND_CALM_MS || lastSteadyWindDeg == null) {
+      lastSteadyWindDeg = degN;
+    }
   }
-  const needleDeg =
-    Number.isFinite(degN) && speedN >= WIND_CALM_MS ? degN : lastSteadyWindDeg;
+  const needleDeg = lastSteadyWindDeg != null ? lastSteadyWindDeg : 0;
   const strength = Math.min(Math.max(speedN / 12, 0), 1);
   const needleH = 30 + strength * 16;
   const tipScale = 1 + strength * 0.75;

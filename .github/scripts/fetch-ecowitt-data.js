@@ -334,12 +334,42 @@ function normalizeHistory(data, range) {
   return payload;
 }
 
-async function getJson(url) {
-  const res = await fetch(url, { signal: AbortSignal.timeout(40000) });
-  if (!res.ok) throw new Error(`HTTP ${res.status} for history/realtime`);
-  const body = await res.json();
-  if (body.code !== 0) throw new Error(body.msg || `Ecowitt code ${body.code}`);
-  return body.data || {};
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+async function withRetry(fn, { attempts = 3, delayMs = 2000, label = "request" } = {}) {
+  let lastErr;
+  for (let i = 1; i <= attempts; i += 1) {
+    try {
+      return await fn();
+    } catch (err) {
+      lastErr = err;
+      console.warn(`${label} attempt ${i}/${attempts} failed:`, err.message);
+      if (i < attempts) await sleep(delayMs * i);
+    }
+  }
+  throw lastErr;
+}
+
+async function getJson(url, label = "ecowitt") {
+  return withRetry(
+    async () => {
+      const res = await fetch(url, { signal: AbortSignal.timeout(40000) });
+      console.log(`${label} HTTP`, res.status, res.statusText);
+      if (!res.ok) throw new Error(`HTTP ${res.status} for ${label}`);
+      const body = await res.json();
+      if (body.code !== 0) throw new Error(body.msg || `Ecowitt code ${body.code}`);
+      const data = body.data || {};
+      console.log(
+        `${label} ok`,
+        "keys=",
+        Object.keys(data).join(",") || "(empty)"
+      );
+      return data;
+    },
+    { attempts: 3, delayMs: 2000, label }
+  );
 }
 
 async function fetchRealtime() {
@@ -355,7 +385,10 @@ async function fetchRealtime() {
     rainfall_unitid: "12",
     solar_irradiance_unitid: "16",
   });
-  return getJson(`https://api.ecowitt.net/api/v3/device/real_time?${params}`);
+  return getJson(
+    `https://api.ecowitt.net/api/v3/device/real_time?${params}`,
+    "realtime"
+  );
 }
 
 async function fetchHistoryBody(start, end, cycleType) {
@@ -374,7 +407,10 @@ async function fetchHistoryBody(start, end, cycleType) {
     rainfall_unitid: "12",
     solar_irradiance_unitid: "16",
   });
-  return getJson(`https://api.ecowitt.net/api/v3/device/history?${params}`);
+  return getJson(
+    `https://api.ecowitt.net/api/v3/device/history?${params}`,
+    `history-${cycleType}`
+  );
 }
 
 function pointsSpanMs(points) {
@@ -438,24 +474,40 @@ function dataDir() {
 async function main() {
   const dir = dataDir();
   fs.mkdirSync(dir, { recursive: true });
+  console.log("data dir:", dir);
 
   const current = normalizeRealtime(await fetchRealtime());
-  fs.writeFileSync(path.join(dir, "current.json"), JSON.stringify(current, null, 2) + "\n");
+  const currentPath = path.join(dir, "current.json");
+  fs.writeFileSync(currentPath, JSON.stringify(current, null, 2) + "\n");
   console.log(
     "wrote current.json",
+    "updatedAt=",
+    current.updatedAt,
     "temp=",
     current.outdoor.tempC,
+    "windMs=",
+    current.wind.speedMs,
+    "dir=",
+    current.wind.directionDeg,
     "wm2=",
-    current.solar.wm2
+    current.solar.wm2,
+    "mtime=",
+    fs.statSync(currentPath).mtime.toISOString()
   );
 
   for (const range of ["day", "week", "month", "year"]) {
     const history = await fetchHistoryRange(range);
-    fs.writeFileSync(
-      path.join(dir, `history-${range}.json`),
-      JSON.stringify(history, null, 2) + "\n"
+    const histPath = path.join(dir, `history-${range}.json`);
+    fs.writeFileSync(histPath, JSON.stringify(history, null, 2) + "\n");
+    console.log(
+      `wrote history-${range}.json`,
+      "updatedAt=",
+      history.updatedAt,
+      "points=",
+      history.points.length,
+      "mtime=",
+      fs.statSync(histPath).mtime.toISOString()
     );
-    console.log(`wrote history-${range}.json points=${history.points.length}`);
   }
 }
 

@@ -2,8 +2,8 @@ name: Update weather data
 
 on:
   schedule:
-    # Every 5 minutes (Ecowitt burst limits are the main constraint; Pages is static)
-    - cron: "*/5 * * * *"
+    # Every 5 minutes, offset from :00 to avoid GitHub's busiest cron slots
+    - cron: "3,8,13,18,23,28,33,38,43,48,53,58 * * * *"
   workflow_dispatch:
 
 permissions:
@@ -11,7 +11,8 @@ permissions:
 
 concurrency:
   group: update-weather
-  cancel-in-progress: true
+  # Finish the in-flight fetch instead of cancelling it when the next tick queues
+  cancel-in-progress: false
 
 jobs:
   update:
@@ -31,6 +32,19 @@ jobs:
           ECOWITT_API_KEY: ${{ secrets.ECOWITT_API_KEY }}
           ECOWITT_DEVICE_MAC: ${{ secrets.ECOWITT_DEVICE_MAC }}
         run: node .github/scripts/fetch-ecowitt-data.js
+
+      - name: Log data timestamps
+        run: |
+          node -e "
+            const fs = require('fs');
+            for (const f of ['current.json','history-day.json','history-week.json','history-month.json','history-year.json']) {
+              const p = 'data/' + f;
+              if (!fs.existsSync(p)) { console.log(f, 'MISSING'); continue; }
+              const j = JSON.parse(fs.readFileSync(p, 'utf8'));
+              const st = fs.statSync(p);
+              console.log(f, 'updatedAt=', j.updatedAt || '(none)', 'mtime=', st.mtime.toISOString());
+            }
+          "
 
       - name: Commit and push data
         run: |
