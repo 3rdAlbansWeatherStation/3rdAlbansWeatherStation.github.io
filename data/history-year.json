@@ -1,10 +1,10 @@
 {
   "source": "cloud",
   "range": "year",
-  "updatedAt": "2026-10-10T12:48:52.950Z",
+  "updatedAt": "2026-10-10T13:05:11.155Z",
   "summary": {
     "temp": {
-      "high": 16,
+      "high": 16.1,
       "low": 13,
       "avg": 14.4
     },
@@ -570,6 +570,39 @@
       "gustMs": 2,
       "windDirDeg": 281,
       "wm2": 77.8
+    },
+    {
+      "t": "2026-10-10T12:45:00.000Z",
+      "tempC": 14,
+      "humidity": 49,
+      "pressureHpa": 999.9,
+      "rainMm": 0,
+      "windMs": 0.4,
+      "gustMs": 2,
+      "windDirDeg": 248,
+      "wm2": 415.2
+    },
+    {
+      "t": "2026-10-10T12:50:00.000Z",
+      "tempC": 15,
+      "humidity": 47,
+      "pressureHpa": 999.7,
+      "rainMm": 0,
+      "windMs": 0.4,
+      "gustMs": 2,
+      "windDirDeg": 221,
+      "wm2": 444.4
+    },
+    {
+      "t": "2026-10-10T12:55:00.000Z",
+      "tempC": 16.1,
+      "humidity": 45,
+      "pressureHpa": 999.7,
+      "rainMm": 0,
+      "windMs": 0.2,
+      "gustMs": 1,
+      "windDirDeg": 216,
+      "wm2": 460.2
     }
   ],
   "note": "Showing available cloud history (archive still filling — full week/month later)."
