@@ -601,15 +601,153 @@ function wirePrivacy() {
   });
 }
 
+const CARD_HELP = {
+  wind: {
+    title: "Wind",
+    capture: "Cups and a vane on the outdoor sensor spin and turn with the breeze.",
+    use: "Shows how strong the wind is and which way it’s coming from — useful for camps, flags, and forecasts.",
+  },
+  temp: {
+    title: "Outside temp",
+    capture: "A thermometer in the outdoor sensor.",
+    use: "The basic “how warm is it?” reading — frost, heat, and clothing choices.",
+  },
+  feels: {
+    title: "Feels like",
+    capture: "Calculated from temperature plus wind/humidity.",
+    use: "Explains why a breezy day can feel colder than the thermometer says.",
+  },
+  humidity: {
+    title: "Humidity",
+    capture: "Measures how much water vapour is in the air.",
+    use: "High = muggy/damp air; low = dry air — links to comfort and foggy weather.",
+  },
+  rain: {
+    title: "Rain today",
+    capture: "A tipping bucket counts raindrops through the day.",
+    use: "Shows how wet today has been — useful for flooding, mud, and outdoor plans.",
+  },
+  pressure: {
+    title: "Pressure",
+    capture: "A barometer in the gateway measures air pressing down (we show it in hPa).",
+    use: "Rising or falling pressure often hints at clearer or stormier weather.",
+  },
+  gust: {
+    title: "Gust",
+    capture: "The strongest short blast of wind in the last few seconds.",
+    use: "Gusts can be much stronger than steady wind — important for safety outdoors.",
+  },
+  uv: {
+    title: "UV",
+    capture: "A sensor measures ultraviolet light from the sun (0–15).",
+    use: "Helps with sun safety — UV can be strong even when it doesn’t feel hot.",
+  },
+  indoor: {
+    title: "Inside the hut",
+    capture: "Sensors in the gateway for indoor temperature and humidity.",
+    use: "Shows comfort inside the hut, which can be very different from outside.",
+  },
+  rainrate: {
+    title: "Rain rate",
+    capture: "How fast rain is falling right now (mm per hour).",
+    use: "Tells a shower from a downpour — useful for short-term decisions.",
+  },
+  dew: {
+    title: "Dew point",
+    capture: "Calculated from temperature and humidity.",
+    use: "The temperature where dew (or fog) can form — a clue about moisture in the air.",
+  },
+  solar: {
+    title: "Sunlight",
+    capture: "Measures solar energy hitting the sensor (W/m²).",
+    use: "Shows how strong the daylight/sun energy is — useful with UV.",
+  },
+  rainhour: {
+    title: "Rain hour",
+    capture: "Rain counted in the last 60 minutes.",
+    use: "Answers “has it just bucketed down?”",
+  },
+  rainweek: {
+    title: "Rain week",
+    capture: "Rain added up for the week so far.",
+    use: "Good for spotting a wet or dry spell.",
+  },
+  sky: {
+    title: "Sky",
+    capture: "A simple word we make from the readings (not a full forecast).",
+    use: "Quick “what’s it like?” label for kids and leaders.",
+  },
+  rose: {
+    title: "Wind rose",
+    capture: "Built from wind direction readings over the chosen time.",
+    use: "Shows which directions the wind came from most.",
+  },
+  "chart-solar": {
+    title: "Solar chart",
+    capture: "Sunlight readings from the outdoor sensor over time.",
+    use: "Shows how strong the sun’s energy was across the week, month, or year.",
+  },
+  "chart-rain": {
+    title: "Rain chart",
+    capture: "Rainfall readings from the tipping bucket over time.",
+    use: "Shows wet and dry spells across the chosen period.",
+  },
+  "chart-wind": {
+    title: "Wind & gust chart",
+    capture: "Steady wind and short gust readings over time.",
+    use: "Compares everyday breeze with stronger blasts across the period.",
+  },
+  "chart-pressure": {
+    title: "Pressure chart",
+    capture: "Air pressure readings from the gateway barometer over time.",
+    use: "Rising or falling pressure often hints at clearer or stormier weather.",
+  },
+  "chart-temp-hum": {
+    title: "Temp & humidity chart",
+    capture: "Outside temperature and humidity readings over time.",
+    use: "Shows how warm and damp the air has been across the period.",
+  },
+};
+
+function openCardHelp(key) {
+  const dialog = $("learn-dialog");
+  const title = $("learn-title");
+  const body = $("learn-body");
+  const info = CARD_HELP[key];
+  if (!dialog || !title || !body || !info) return;
+  title.textContent = info.title;
+  body.innerHTML = "";
+  const p1 = document.createElement("p");
+  p1.innerHTML = `<strong>How it’s captured:</strong> ${info.capture}`;
+  const p2 = document.createElement("p");
+  p2.innerHTML = `<strong>How it’s used:</strong> ${info.use}`;
+  body.append(p1, p2);
+  dialog.showModal();
+}
+
 function wireHelp() {
   const dialog = $("learn-dialog");
-  const openBtn = $("btn-help");
   const closeBtn = $("btn-learn-close");
-  if (!dialog || !openBtn || !closeBtn) return;
-  if (openBtn.dataset.wired === "1") return;
-  openBtn.dataset.wired = "1";
+  if (!dialog || !closeBtn) return;
+  if (document.body.dataset.helpWired === "1") return;
+  document.body.dataset.helpWired = "1";
 
-  openBtn.addEventListener("click", () => dialog.showModal());
+  document.querySelectorAll("[data-help]").forEach((el) => {
+    const key = el.dataset.help;
+    if (!CARD_HELP[key] || el.querySelector(":scope > .card-help")) return;
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "card-help";
+    btn.textContent = "?";
+    btn.setAttribute("aria-label", `About ${CARD_HELP[key].title}`);
+    btn.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      openCardHelp(key);
+    });
+    el.appendChild(btn);
+  });
+
   closeBtn.addEventListener("click", () => dialog.close());
   dialog.addEventListener("click", (e) => {
     if (e.target === dialog) dialog.close();

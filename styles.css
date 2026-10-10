@@ -1394,36 +1394,40 @@ body {
   display: none !important;
 }
 
-/* Top-left help (?) — kids guide to the readings */
-.help-fab {
-  position: fixed;
-  top: max(12px, env(safe-area-inset-top, 0px));
-  left: max(12px, env(safe-area-inset-left, 0px));
-  z-index: 6;
+/* Per-card (?) help — top-left of each data card (not Windy) */
+[data-help] {
+  position: relative;
+}
+
+button.card-help {
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  z-index: 3;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 44px;
-  height: 44px;
+  width: 28px;
+  height: 28px;
   padding: 0;
   border: 1px solid rgba(255, 230, 39, 0.55);
   border-radius: 999px;
-  background: var(--scout-yellow);
+  background: rgba(255, 230, 39, 0.95);
   color: var(--scout-navy);
   font: inherit;
-  font-size: 1.35rem;
+  font-size: 0.95rem;
   font-weight: 900;
   line-height: 1;
-  box-shadow: var(--shadow);
   cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
 }
 
-.help-fab:hover {
+button.card-help:hover {
   filter: brightness(1.05);
 }
 
-.help-fab:active {
-  transform: scale(0.98);
+button.card-help:active {
+  transform: scale(0.96);
 }
 
 /* Bottom-right FABs ? Privacy left of Info (Info matches Pi Power corner) */
@@ -1480,8 +1484,7 @@ body.is-gated .sky,
 body.is-gated .demo-banner,
 body.is-gated .top,
 body.is-gated main,
-body.is-gated .fab-row,
-body.is-gated .help-fab {
+body.is-gated .fab-row {
   filter: blur(10px);
   pointer-events: none;
   user-select: none;
@@ -1515,7 +1518,7 @@ body.is-gated .help-fab {
 }
 
 #learn-dialog {
-  width: min(560px, calc(100vw - 32px));
+  width: min(440px, calc(100vw - 32px));
 }
 
 .learn-card {
@@ -1528,55 +1531,22 @@ body.is-gated .help-fab {
 
 .learn-body {
   margin-top: 8px;
-  color: rgba(200, 214, 239, 0.9);
-  font-size: 0.92rem;
+  color: rgba(200, 214, 239, 0.92);
+  font-size: 0.98rem;
   line-height: 1.45;
   font-weight: 600;
 }
 
 .learn-body p {
-  margin: 0 0 10px;
-}
-
-.learn-lead {
-  color: #fff;
-  font-size: 0.98rem;
-}
-
-.learn-section {
-  margin: 18px 0 10px;
-  font-size: 0.95rem;
-  font-weight: 800;
-  letter-spacing: 0.03em;
-  text-transform: uppercase;
-  color: var(--scout-yellow);
-}
-
-.learn-topic {
   margin: 0 0 12px;
-  padding: 10px 12px;
-  border-radius: 12px;
-  background: rgba(0, 24, 60, 0.35);
-  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-.learn-topic h4 {
-  margin: 0 0 6px;
-  font-size: 1.05rem;
-  font-weight: 800;
-  color: #fff;
-}
-
-.learn-topic p {
-  margin: 0 0 6px;
-}
-
-.learn-topic p:last-child {
+.learn-body p:last-child {
   margin-bottom: 0;
 }
 
-.learn-topic strong {
-  color: rgba(255, 230, 39, 0.9);
+.learn-body strong {
+  color: var(--scout-yellow);
   font-weight: 800;
 }
 
