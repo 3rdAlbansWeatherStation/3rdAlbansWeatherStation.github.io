@@ -1,10 +1,6 @@
 /**
- * Fetch Ecowitt cloud → data/*.json for the public GitHub Pages site.
- * Runs in Actions on 3rdAlbansWeatherStation.github.io (secrets in repo).
- * Never logs secret values.
- *
- * Usage (repo root):
- *   node .github/scripts/fetch-ecowitt-data.js
+ * Fetch Ecowitt cloud data into data/*.json for the public site.
+ * Env: ECOWITT_APPLICATION_KEY, ECOWITT_API_KEY, ECOWITT_DEVICE_MAC
  */
 const fs = require("fs");
 const path = require("path");
