@@ -1409,6 +1409,8 @@ button.card-help {
   justify-content: center;
   width: 14px;
   height: 14px;
+  min-width: 14px;
+  min-height: 14px;
   padding: 0;
   border: 1px solid rgba(255, 230, 39, 0.55);
   border-radius: 999px;
