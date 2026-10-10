@@ -20,17 +20,42 @@ function loadHistoryRange() {
 }
 
 function loadHistoryStyle() {
+  // Smooth is the product default while the header toggle is hidden.
+  // A future settings popup can call setHistoryStyle("accurate"|"smooth").
   try {
     const saved = localStorage.getItem(HISTORY_STYLE_KEY);
     if (saved === "smooth" || saved === "accurate") return saved;
   } catch {
     /* ignore */
   }
-  return "accurate";
+  return "smooth";
+}
+
+/** For a future settings popup — persists Accurate | Smooth. */
+function setHistoryStyle(style) {
+  if (style !== "smooth" && style !== "accurate") return;
+  historyStyle = style;
+  try {
+    localStorage.setItem(HISTORY_STYLE_KEY, historyStyle);
+  } catch {
+    /* ignore */
+  }
+  document.querySelectorAll(".history-style .seg").forEach((btn) => {
+    const on = btn.dataset.style === historyStyle;
+    btn.classList.toggle("active", on);
+    btn.setAttribute("aria-selected", on ? "true" : "false");
+  });
+  if (currentView === "historic" && lastHistory) renderHistory(lastHistory);
 }
 
 let historyRange = loadHistoryRange();
-let historyStyle = loadHistoryStyle();
+// Charts use smooth until a settings popup calls setHistoryStyle(...)
+let historyStyle = "smooth";
+try {
+  localStorage.setItem(HISTORY_STYLE_KEY, "smooth");
+} catch {
+  /* ignore */
+}
 let currentView = "live";
 let livePage = "1";
 let refreshTimer;
@@ -126,9 +151,10 @@ function setView(view) {
   historic.style.display = view === "historic" ? "" : "none";
   historyRangeEl.hidden = view !== "historic";
   historyRangeEl.style.display = view === "historic" ? "" : "none";
+  // Chart style toggle stays hidden until a settings popup uses it
   if (historyStyleEl) {
-    historyStyleEl.hidden = view !== "historic";
-    historyStyleEl.style.display = view === "historic" ? "" : "none";
+    historyStyleEl.hidden = true;
+    historyStyleEl.style.display = "none";
   }
   livePageEl.hidden = view !== "live";
   livePageEl.style.display = view === "live" ? "" : "none";
