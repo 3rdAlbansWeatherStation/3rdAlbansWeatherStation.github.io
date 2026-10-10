@@ -1016,17 +1016,35 @@ dialog::backdrop {
   .header-toggles {
     width: 100%;
     justify-content: center;
-    flex-wrap: wrap;
-    gap: 8px;
+    flex-wrap: nowrap;
+    gap: 6px;
+  }
+
+  .view-toggle {
+    padding: 3px;
+    flex-shrink: 1;
+    min-width: 0;
   }
 
   .view-btn {
-    min-height: 44px;
+    min-height: 40px;
+    padding: 0 10px;
+    font-size: 0.88rem;
+  }
+
+  .history-range .view-btn {
+    min-width: 0;
+    padding: 0 9px;
   }
 
   .live-page .view-btn {
-    min-width: 3.4rem;
-    padding: 0 22px;
+    min-width: 2.6rem;
+    padding: 0 14px;
+  }
+
+  .mode-toggle .view-btn {
+    min-width: 0;
+    padding: 0 10px;
   }
 
   .live-view {
@@ -1224,7 +1242,8 @@ dialog::backdrop {
   .header-toggles {
     width: 100%;
     justify-content: center;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
+    gap: 6px;
   }
 
   .live-view {
