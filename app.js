@@ -731,6 +731,53 @@ function openCardHelp(key) {
   dialog.showModal();
 }
 
+function makeHelpButton(key) {
+  const btn = document.createElement("button");
+  btn.type = "button";
+  btn.className = "card-help";
+  btn.textContent = "?";
+  btn.setAttribute("aria-label", `About ${CARD_HELP[key].title}`);
+  btn.style.cssText =
+    "width:16px;height:16px;min-width:16px;min-height:16px;max-width:16px;max-height:16px;padding:0;font-size:11px;line-height:1;box-sizing:border-box;";
+  btn.addEventListener("click", (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    openCardHelp(key);
+  });
+  return btn;
+}
+
+function mountHelpButton(el, key) {
+  if (!CARD_HELP[key] || el.querySelector(".card-help")) return;
+  const btn = makeHelpButton(key);
+
+  // History charts: place ? under the left title (Solar / Rain / Wind / …)
+  if (el.classList.contains("chart-card")) {
+    const side = el.querySelector(".chart-side.left");
+    const name = side?.querySelector(".chart-side-name");
+    if (name) {
+      btn.classList.add("card-help-below-title");
+      const stack = document.createElement("div");
+      stack.className = "chart-side-title-stack";
+      name.parentNode.insertBefore(stack, name);
+      stack.append(name, btn);
+      return;
+    }
+  }
+
+  // Wind rose: under the "Wind Rose" heading
+  if (el.classList.contains("rose-panel")) {
+    const title = el.querySelector(".rose-title");
+    if (title) {
+      btn.classList.add("card-help-below-title");
+      title.insertAdjacentElement("afterend", btn);
+      return;
+    }
+  }
+
+  el.appendChild(btn);
+}
+
 function wireHelp() {
   const dialog = $("learn-dialog");
   const closeBtn = $("btn-learn-close");
@@ -739,22 +786,7 @@ function wireHelp() {
   document.body.dataset.helpWired = "1";
 
   document.querySelectorAll("[data-help]").forEach((el) => {
-    const key = el.dataset.help;
-    if (!CARD_HELP[key] || el.querySelector(":scope > .card-help")) return;
-    const btn = document.createElement("button");
-    btn.type = "button";
-    btn.className = "card-help";
-    btn.textContent = "?";
-    btn.setAttribute("aria-label", `About ${CARD_HELP[key].title}`);
-    // Beat global button min sizes even if CSS cache is stale
-    btn.style.cssText =
-      "width:16px;height:16px;min-width:16px;min-height:16px;max-width:16px;max-height:16px;padding:0;font-size:11px;line-height:1;box-sizing:border-box;";
-    btn.addEventListener("click", (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      openCardHelp(key);
-    });
-    el.appendChild(btn);
+    mountHelpButton(el, el.dataset.help);
   });
 
   closeBtn.addEventListener("click", () => dialog.close());

@@ -1455,6 +1455,29 @@ button.card-help:active {
   transform: scale(0.96);
 }
 
+/* History charts / rose: sit under the left title, not over it */
+.chart-side-title-stack {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 3px;
+  flex: 0 0 auto;
+}
+
+button.card-help.card-help-below-title {
+  position: static !important;
+  top: auto !important;
+  left: auto !important;
+  margin: 0;
+  align-self: flex-start;
+  flex: 0 0 auto;
+}
+
+.rose-panel > button.card-help.card-help-below-title {
+  align-self: center;
+  margin: 0 auto 6px;
+}
+
 /* Bottom-right FABs ? Privacy left of Info (Info matches Pi Power corner) */
 .fab-row {
   position: fixed;
