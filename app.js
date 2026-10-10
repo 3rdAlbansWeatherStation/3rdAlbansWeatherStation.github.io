@@ -17,14 +17,18 @@ const $ = (id) => document.getElementById(id);
 
 const BAND = {
   yellow: "#ffe627",
-  yellowFill: "rgba(255,230,39,0.22)",
+  yellowFill: "rgba(255,230,39,0.12)",
   green: "#25b755",
-  greenFill: "rgba(37,183,85,0.18)",
+  greenFill: "rgba(37,183,85,0.1)",
   orange: "#ff912a",
-  orangeFill: "rgba(255,145,42,0.22)",
+  orangeFill: "rgba(255,145,42,0.12)",
   blue: "#006ddf",
-  blueFill: "rgba(0,109,223,0.2)",
+  blueFill: "rgba(0,109,223,0.12)",
 };
+const CHART_LINE_W = 2.25;
+const CHART_PAD_X = 6;
+const CHART_PAD_TOP = 8;
+const CHART_PAD_BOTTOM = 20;
 
 function dataUrl(name) {
   // Relative paths work on project Pages (…/pi-weather/) and locally
@@ -181,7 +185,10 @@ function prepareCanvas(canvas) {
   return { ctx, cssW, cssH };
 }
 
-function seriesRange(values) {
+function seriesRange(values, fixed) {
+  if (fixed && Number.isFinite(fixed.min) && Number.isFinite(fixed.max)) {
+    return { min: fixed.min, max: fixed.max, span: fixed.max - fixed.min || 1 };
+  }
   const finite = values.filter((v) => v != null && Number.isFinite(v));
   if (!finite.length) return { min: 0, max: 1, span: 1 };
   let min = Math.min(...finite);
@@ -205,21 +212,21 @@ function seriesValues(points, key) {
   });
 }
 
-function seriesCoords(values, cssW, cssH, padX, padY) {
-  const { min, span } = seriesRange(values);
+function seriesCoords(values, cssW, cssH, padX, padTop, padBottom, range) {
+  const { min, span } = range || seriesRange(values);
   return values.map((v, i) => {
     if (v == null || !Number.isFinite(v)) return null;
     const x = padX + (i / Math.max(values.length - 1, 1)) * (cssW - padX * 2);
-    const y = padY + (1 - (v - min) / span) * (cssH - padY * 2);
+    const y = padTop + (1 - (v - min) / span) * (cssH - padTop - padBottom);
     return { x, y };
   });
 }
 
-function drawGrid(ctx, cssW, cssH, padX, padY) {
+function drawGrid(ctx, cssW, cssH, padX, padTop, padBottom) {
   ctx.strokeStyle = "rgba(232,238,245,0.12)";
   ctx.lineWidth = 1;
   for (let i = 0; i < 3; i += 1) {
-    const y = padY + ((cssH - padY * 2) * i) / 2;
+    const y = padTop + ((cssH - padTop - padBottom) * i) / 2;
     ctx.beginPath();
     ctx.moveTo(padX, y);
     ctx.lineTo(cssW - padX, y);
@@ -227,17 +234,41 @@ function drawGrid(ctx, cssW, cssH, padX, padY) {
   }
 }
 
-function strokeSeries(ctx, coords, color, fill, cssH, padY) {
+function drawTimeAxis(ctx, points, cssW, cssH, padX, padBottom) {
+  if (!points.length) return;
+  const t0 = new Date(points[0].t).getTime();
+  const t1 = new Date(points[points.length - 1].t).getTime();
+  const spanMs = Number.isFinite(t0) && Number.isFinite(t1) ? Math.max(0, t1 - t0) : 0;
+  const n = Math.min(5, points.length);
+  ctx.fillStyle = "rgba(232,238,245,0.55)";
+  ctx.font = "600 10px 'Nunito Sans', system-ui, sans-serif";
+  ctx.textBaseline = "top";
+  for (let i = 0; i < n; i += 1) {
+    const idx = n === 1 ? 0 : Math.round((i * (points.length - 1)) / (n - 1));
+    const d = new Date(points[idx].t);
+    if (Number.isNaN(d.getTime())) continue;
+    const label =
+      spanMs > 2 * 864e5
+        ? d.toLocaleDateString(undefined, { day: "numeric", month: "short" })
+        : d.toLocaleTimeString(undefined, { hour: "2-digit", minute: "2-digit" });
+    const x = padX + (idx / Math.max(points.length - 1, 1)) * (cssW - padX * 2);
+    ctx.textAlign = i === 0 ? "left" : i === n - 1 ? "right" : "center";
+    ctx.fillText(label, x, cssH - padBottom + 3);
+  }
+}
+
+function strokeSeries(ctx, coords, color, fill, cssH, padBottom) {
   const pts = coords.filter(Boolean);
   if (!pts.length) return;
+  const baseY = cssH - padBottom;
   if (fill) {
     ctx.beginPath();
     pts.forEach((c, i) => {
       if (i === 0) ctx.moveTo(c.x, c.y);
       else ctx.lineTo(c.x, c.y);
     });
-    ctx.lineTo(pts[pts.length - 1].x, cssH - padY);
-    ctx.lineTo(pts[0].x, cssH - padY);
+    ctx.lineTo(pts[pts.length - 1].x, baseY);
+    ctx.lineTo(pts[0].x, baseY);
     ctx.closePath();
     ctx.fillStyle = fill;
     ctx.fill();
@@ -248,59 +279,51 @@ function strokeSeries(ctx, coords, color, fill, cssH, padY) {
     else ctx.lineTo(c.x, c.y);
   });
   ctx.strokeStyle = color;
-  ctx.lineWidth = 5;
+  ctx.lineWidth = CHART_LINE_W;
   ctx.lineJoin = "round";
   ctx.lineCap = "round";
   ctx.stroke();
 }
 
-function drawDualChart(canvasId, points, leftKey, rightKey, leftStyle, rightStyle) {
+function drawLineChart(canvasId, points, seriesList, opts = {}) {
   const canvas = $(canvasId);
   if (!canvas || $("view-historic").hidden) return;
   const prepared = prepareCanvas(canvas);
   if (!prepared || !points?.length) return;
   const { ctx, cssW, cssH } = prepared;
-  const padX = 6;
-  const padY = 10;
-  drawGrid(ctx, cssW, cssH, padX, padY);
-  const leftVals = seriesValues(points, leftKey);
-  const rightVals = seriesValues(points, rightKey);
-  strokeSeries(
-    ctx,
-    seriesCoords(leftVals, cssW, cssH, padX, padY),
-    leftStyle.color,
-    leftStyle.fill,
-    cssH,
-    padY
-  );
-  strokeSeries(
-    ctx,
-    seriesCoords(rightVals, cssW, cssH, padX, padY),
-    rightStyle.color,
-    rightStyle.fill,
-    cssH,
-    padY
-  );
-}
+  const padX = CHART_PAD_X;
+  const padTop = CHART_PAD_TOP;
+  const padBottom = CHART_PAD_BOTTOM;
+  drawGrid(ctx, cssW, cssH, padX, padTop, padBottom);
 
-function drawRainChart(points) {
-  const canvas = $("chart-rain");
-  if (!canvas || $("view-historic").hidden) return;
-  const prepared = prepareCanvas(canvas);
-  if (!prepared || !points?.length) return;
-  const { ctx, cssW, cssH } = prepared;
-  const padX = 6;
-  const padY = 10;
-  drawGrid(ctx, cssW, cssH, padX, padY);
-  const values = seriesValues(points, "rainMm").map((v) => v ?? 0);
-  strokeSeries(
-    ctx,
-    seriesCoords(values, cssW, cssH, padX, padY),
-    BAND.blue,
-    BAND.blueFill,
-    cssH,
-    padY
-  );
+  const valueSets = seriesList.map((s) => {
+    let vals = seriesValues(points, s.key);
+    if (s.zeroGaps) vals = vals.map((v) => v ?? 0);
+    return vals;
+  });
+
+  let sharedRange = null;
+  if (opts.sharedScale) {
+    const all = [];
+    valueSets.forEach((vals) => {
+      vals.forEach((v) => {
+        if (v != null && Number.isFinite(v)) all.push(v);
+      });
+    });
+    sharedRange = seriesRange(all);
+  }
+
+  seriesList.forEach((s, i) => {
+    strokeSeries(
+      ctx,
+      seriesCoords(valueSets[i], cssW, cssH, padX, padTop, padBottom, sharedRange),
+      s.color,
+      s.fill,
+      cssH,
+      padBottom
+    );
+  });
+  drawTimeAxis(ctx, points, cssW, cssH, padX, padBottom);
 }
 
 function windRoseBins(points) {
@@ -387,9 +410,19 @@ function renderHistory(data) {
 
   const pressures = points.map((p) => Number(p.pressureHpa)).filter((n) => !Number.isNaN(n));
   const winds = points.map((p) => Number(p.windMs)).filter((n) => !Number.isNaN(n));
+  const gusts = points.map((p) => Number(p.gustMs)).filter((n) => !Number.isNaN(n));
+  const solars = points.map((p) => Number(p.wm2)).filter((n) => !Number.isNaN(n));
   const pressHigh = pressures.length ? Math.max(...pressures) : null;
   const pressLow = pressures.length ? Math.min(...pressures) : null;
+  const windHigh = winds.length ? Math.max(...winds) : null;
   const windLow = winds.length ? Math.min(...winds) : null;
+  const gustHigh = gusts.length ? Math.max(...gusts) : null;
+  const solarHigh =
+    s.solarHighWm2 != null
+      ? s.solarHighWm2
+      : solars.length
+        ? Math.max(...solars)
+        : null;
 
   $("lbl-temp-high").textContent = fmtNum(s.temp?.high);
   $("lbl-temp-low").textContent = fmtNum(s.temp?.low);
@@ -397,30 +430,37 @@ function renderHistory(data) {
     s.humidity?.high == null ? "--" : String(s.humidity.high);
   $("lbl-hum-low").textContent =
     s.humidity?.low == null ? "--" : String(s.humidity.low);
-  $("lbl-wind-high").textContent = fmtMph(s.wind?.high);
+  $("lbl-wind-high").textContent = fmtMph(windHigh);
   $("lbl-wind-low").textContent = fmtMph(windLow);
+  $("lbl-gust-high").textContent = fmtMph(gustHigh ?? s.wind?.high);
   $("lbl-press-high").textContent = fmtNum(pressHigh, 0);
   $("lbl-press-low").textContent = fmtNum(pressLow, 0);
   $("lbl-rain-high").textContent = fmtNum(s.rainTotalMm);
+  $("lbl-solar-high").textContent = fmtNum(solarHigh, 0);
 
   drawWindRose(points);
-  drawRainChart(points);
-  drawDualChart(
-    "chart-temp-hum",
+  drawLineChart("chart-solar", points, [
+    { key: "wm2", color: BAND.yellow, fill: BAND.yellowFill, zeroGaps: true },
+  ]);
+  drawLineChart("chart-rain", points, [
+    { key: "rainMm", color: BAND.blue, fill: BAND.blueFill, zeroGaps: true },
+  ]);
+  drawLineChart(
+    "chart-wind-gust",
     points,
-    "tempC",
-    "humidity",
-    { color: BAND.yellow, fill: BAND.yellowFill },
-    { color: BAND.green, fill: null }
+    [
+      { key: "windMs", color: BAND.orange, fill: BAND.orangeFill },
+      { key: "gustMs", color: BAND.yellow, fill: null },
+    ],
+    { sharedScale: true }
   );
-  drawDualChart(
-    "chart-wind-pressure",
-    points,
-    "windMs",
-    "pressureHpa",
-    { color: BAND.orange, fill: BAND.orangeFill },
-    { color: BAND.blue, fill: null }
-  );
+  drawLineChart("chart-pressure", points, [
+    { key: "pressureHpa", color: BAND.blue, fill: BAND.blueFill },
+  ]);
+  drawLineChart("chart-temp-hum", points, [
+    { key: "tempC", color: BAND.yellow, fill: BAND.yellowFill },
+    { key: "humidity", color: BAND.green, fill: null },
+  ]);
 }
 
 async function refresh() {

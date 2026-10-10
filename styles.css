@@ -727,7 +727,7 @@ button:disabled {
   line-height: 1;
 }
 
-.chart-slot {
+.chart-solar {
   grid-row: 1;
   grid-column: 2;
 }
@@ -739,7 +739,12 @@ button:disabled {
 
 .chart-wind {
   grid-row: 2;
-  grid-column: 2 / 4;
+  grid-column: 2;
+}
+
+.chart-pressure {
+  grid-row: 2;
+  grid-column: 3;
 }
 
 .chart-temp-hum {
@@ -763,7 +768,9 @@ button:disabled {
   min-height: 0;
 }
 
-.chart-rain .chart-body {
+.chart-rain .chart-body,
+.chart-solar .chart-body,
+.chart-pressure .chart-body {
   grid-template-columns: auto 1fr;
 }
 
@@ -834,27 +841,14 @@ button:disabled {
   color: var(--scout-blue);
 }
 
-.chart-placeholder {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 4px;
-  border: 2px dashed rgba(255, 255, 255, 0.22);
-  border-radius: 12px;
-  color: var(--muted);
+.chart-side.solar .chart-side-name,
+.chart-side.solar .chart-side-high {
+  color: var(--scout-yellow);
 }
 
-.chart-placeholder-title {
-  font-size: 1.2rem;
-  font-weight: 800;
-  color: #fff;
-}
-
-.chart-placeholder-note {
-  font-size: 0.85rem;
-  font-weight: 600;
+.chart-side.gust .chart-side-name,
+.chart-side.gust .chart-side-high {
+  color: var(--scout-yellow);
 }
 
 .line-chart {
@@ -1131,9 +1125,10 @@ dialog::backdrop {
   }
 
   .rose-panel,
-  .chart-slot,
+  .chart-solar,
   .chart-rain,
   .chart-wind,
+  .chart-pressure,
   .chart-temp-hum {
     grid-row: auto;
     grid-column: auto;

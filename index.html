@@ -222,10 +222,14 @@
           </div>
         </section>
 
-        <article class="panel chart-card chart-slot" aria-label="Reserved">
-          <div class="chart-placeholder">
-            <span class="chart-placeholder-title">More soon</span>
-            <span class="chart-placeholder-note">Extra chart slot</span>
+        <article class="panel chart-card chart-solar" aria-label="Solar">
+          <div class="chart-body">
+            <div class="chart-side left solar">
+              <span class="chart-side-name">Solar</span>
+              <strong class="chart-side-high" id="lbl-solar-high">—</strong>
+              <span class="chart-side-unit">W/m²</span>
+            </div>
+            <canvas id="chart-solar" class="line-chart" width="640" height="120"></canvas>
           </div>
         </article>
         <article class="panel chart-card chart-rain">
@@ -246,13 +250,23 @@
               <strong class="chart-side-low" id="lbl-wind-low">—</strong>
               <span class="chart-side-unit">mph</span>
             </div>
-            <canvas id="chart-wind-pressure" class="line-chart" width="640" height="120"></canvas>
-            <div class="chart-side right pressure">
+            <canvas id="chart-wind-gust" class="line-chart" width="640" height="120"></canvas>
+            <div class="chart-side right gust">
+              <span class="chart-side-name">Gust</span>
+              <strong class="chart-side-high" id="lbl-gust-high">—</strong>
+              <span class="chart-side-unit">mph</span>
+            </div>
+          </div>
+        </article>
+        <article class="panel chart-card chart-pressure">
+          <div class="chart-body">
+            <div class="chart-side left pressure">
               <span class="chart-side-name">Press</span>
               <strong class="chart-side-high" id="lbl-press-high">—</strong>
               <strong class="chart-side-low" id="lbl-press-low">—</strong>
               <span class="chart-side-unit">hPa</span>
             </div>
+            <canvas id="chart-pressure" class="line-chart" width="640" height="120"></canvas>
           </div>
         </article>
         <article class="panel chart-card chart-temp-hum">
