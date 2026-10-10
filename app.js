@@ -6,6 +6,7 @@
 const REFRESH_MS = 60_000;
 const WIND_CALM_MS = 0.5;
 const HISTORY_RANGE_KEY = "3rdAlbansWeather.historyRange";
+const HISTORY_STYLE_KEY = "3rdAlbansWeather.historyStyle";
 const HISTORY_RANGES = ["day", "week", "month", "year"];
 
 function loadHistoryRange() {
@@ -18,12 +19,24 @@ function loadHistoryRange() {
   return "day";
 }
 
+function loadHistoryStyle() {
+  try {
+    const saved = localStorage.getItem(HISTORY_STYLE_KEY);
+    if (saved === "smooth" || saved === "accurate") return saved;
+  } catch {
+    /* ignore */
+  }
+  return "accurate";
+}
+
 let historyRange = loadHistoryRange();
+let historyStyle = loadHistoryStyle();
 let currentView = "live";
 let livePage = "1";
 let refreshTimer;
 let lastHistory = null;
 let lastSteadyWindDeg = 0;
+let chartTipWired = false;
 
 const $ = (id) => document.getElementById(id);
 
@@ -38,9 +51,10 @@ const BAND = {
   blueFill: "rgba(0,109,223,0.12)",
 };
 const CHART_LINE_W = 2.25;
-const CHART_PAD_X = 6;
-const CHART_PAD_TOP = 8;
-const CHART_PAD_BOTTOM = 20;
+const CHART_PAD_LEFT = 34;
+const CHART_PAD_RIGHT = 8;
+const CHART_PAD_TOP = 10;
+const CHART_PAD_BOTTOM = 22;
 
 function dataUrl(name) {
   // Relative paths work on project Pages (…/pi-weather/) and locally
@@ -104,6 +118,7 @@ function setView(view) {
   const live = $("view-live");
   const historic = $("view-historic");
   const historyRangeEl = $("history-range");
+  const historyStyleEl = $("history-style");
   const livePageEl = $("live-page");
   live.hidden = view !== "live";
   historic.hidden = view !== "historic";
@@ -111,6 +126,10 @@ function setView(view) {
   historic.style.display = view === "historic" ? "" : "none";
   historyRangeEl.hidden = view !== "historic";
   historyRangeEl.style.display = view === "historic" ? "" : "none";
+  if (historyStyleEl) {
+    historyStyleEl.hidden = view !== "historic";
+    historyStyleEl.style.display = view === "historic" ? "" : "none";
+  }
   livePageEl.hidden = view !== "live";
   livePageEl.style.display = view === "live" ? "" : "none";
   document.querySelectorAll(".mode-btn").forEach((btn) => {
@@ -230,35 +249,60 @@ function seriesValues(points, key) {
   });
 }
 
-function seriesCoords(values, cssW, cssH, padX, padTop, padBottom, range) {
+function seriesCoords(values, cssW, cssH, padL, padR, padTop, padBottom, range) {
   const { min, span } = range || seriesRange(values);
+  const plotW = cssW - padL - padR;
+  const plotH = cssH - padTop - padBottom;
   return values.map((v, i) => {
     if (v == null || !Number.isFinite(v)) return null;
-    const x = padX + (i / Math.max(values.length - 1, 1)) * (cssW - padX * 2);
-    const y = padTop + (1 - (v - min) / span) * (cssH - padTop - padBottom);
+    const x = padL + (i / Math.max(values.length - 1, 1)) * plotW;
+    const y = padTop + (1 - (v - min) / span) * plotH;
     return { x, y };
   });
 }
 
-function drawGrid(ctx, cssW, cssH, padX, padTop, padBottom) {
-  ctx.strokeStyle = "rgba(232,238,245,0.12)";
-  ctx.lineWidth = 1;
-  for (let i = 0; i < 3; i += 1) {
-    const y = padTop + ((cssH - padTop - padBottom) * i) / 2;
-    ctx.beginPath();
-    ctx.moveTo(padX, y);
-    ctx.lineTo(cssW - padX, y);
-    ctx.stroke();
-  }
+function fmtTick(n, digits = 1) {
+  if (n == null || !Number.isFinite(n)) return "";
+  if (digits <= 0) return String(Math.round(n));
+  const t = Number(n.toFixed(digits));
+  return String(t);
 }
 
-function drawTimeAxis(ctx, points, cssW, cssH, padX, padBottom) {
+function drawYAxis(ctx, range, cssW, cssH, padL, padR, padTop, padBottom, digits = 1) {
+  const { min, max, span } = range;
+  const plotH = cssH - padTop - padBottom;
+  const ticks = [max, (max + min) / 2, min];
+  ctx.strokeStyle = "rgba(232,238,245,0.14)";
+  ctx.lineWidth = 1;
+  ctx.fillStyle = "rgba(232,238,245,0.62)";
+  ctx.font = "600 10px 'Nunito Sans', system-ui, sans-serif";
+  ctx.textAlign = "right";
+  ctx.textBaseline = "middle";
+  ticks.forEach((val, i) => {
+    const y = padTop + (i / 2) * plotH;
+    ctx.beginPath();
+    ctx.moveTo(padL, y);
+    ctx.lineTo(cssW - padR, y);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(padL - 4, y);
+    ctx.lineTo(padL, y);
+    ctx.strokeStyle = "rgba(232,238,245,0.45)";
+    ctx.stroke();
+    ctx.strokeStyle = "rgba(232,238,245,0.14)";
+    ctx.fillText(fmtTick(val, digits), padL - 6, y);
+  });
+  void span;
+}
+
+function drawTimeAxis(ctx, points, cssW, cssH, padL, padR, padBottom) {
   if (!points.length) return;
   const t0 = new Date(points[0].t).getTime();
   const t1 = new Date(points[points.length - 1].t).getTime();
   const spanMs = Number.isFinite(t0) && Number.isFinite(t1) ? Math.max(0, t1 - t0) : 0;
   const n = Math.min(5, points.length);
-  ctx.fillStyle = "rgba(232,238,245,0.55)";
+  const plotW = cssW - padL - padR;
+  const baseY = cssH - padBottom;
   ctx.font = "600 10px 'Nunito Sans', system-ui, sans-serif";
   ctx.textBaseline = "top";
   for (let i = 0; i < n; i += 1) {
@@ -269,22 +313,46 @@ function drawTimeAxis(ctx, points, cssW, cssH, padX, padBottom) {
       spanMs > 2 * 864e5
         ? d.toLocaleDateString(undefined, { day: "numeric", month: "short" })
         : d.toLocaleTimeString(undefined, { hour: "2-digit", minute: "2-digit" });
-    const x = padX + (idx / Math.max(points.length - 1, 1)) * (cssW - padX * 2);
+    const x = padL + (idx / Math.max(points.length - 1, 1)) * plotW;
+    ctx.strokeStyle = "rgba(232,238,245,0.35)";
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(x, baseY);
+    ctx.lineTo(x, baseY + 4);
+    ctx.stroke();
+    ctx.fillStyle = "rgba(232,238,245,0.58)";
     ctx.textAlign = i === 0 ? "left" : i === n - 1 ? "right" : "center";
-    ctx.fillText(label, x, cssH - padBottom + 3);
+    ctx.fillText(label, x, baseY + 5);
   }
 }
 
-function strokeSeries(ctx, coords, color, fill, cssH, padBottom) {
+function traceLine(ctx, pts, smooth) {
+  if (!pts.length) return;
+  ctx.moveTo(pts[0].x, pts[0].y);
+  if (!smooth || pts.length < 3) {
+    for (let i = 1; i < pts.length; i += 1) ctx.lineTo(pts[i].x, pts[i].y);
+    return;
+  }
+  for (let i = 0; i < pts.length - 1; i += 1) {
+    const p0 = pts[i - 1] || pts[i];
+    const p1 = pts[i];
+    const p2 = pts[i + 1];
+    const p3 = pts[i + 2] || p2;
+    const cp1x = p1.x + (p2.x - p0.x) / 6;
+    const cp1y = p1.y + (p2.y - p0.y) / 6;
+    const cp2x = p2.x - (p3.x - p1.x) / 6;
+    const cp2y = p2.y - (p3.y - p1.y) / 6;
+    ctx.bezierCurveTo(cp1x, cp1y, cp2x, cp2y, p2.x, p2.y);
+  }
+}
+
+function strokeSeries(ctx, coords, color, fill, cssH, padBottom, smooth) {
   const pts = coords.filter(Boolean);
   if (!pts.length) return;
   const baseY = cssH - padBottom;
   if (fill) {
     ctx.beginPath();
-    pts.forEach((c, i) => {
-      if (i === 0) ctx.moveTo(c.x, c.y);
-      else ctx.lineTo(c.x, c.y);
-    });
+    traceLine(ctx, pts, smooth);
     ctx.lineTo(pts[pts.length - 1].x, baseY);
     ctx.lineTo(pts[0].x, baseY);
     ctx.closePath();
@@ -292,10 +360,7 @@ function strokeSeries(ctx, coords, color, fill, cssH, padBottom) {
     ctx.fill();
   }
   ctx.beginPath();
-  pts.forEach((c, i) => {
-    if (i === 0) ctx.moveTo(c.x, c.y);
-    else ctx.lineTo(c.x, c.y);
-  });
+  traceLine(ctx, pts, smooth);
   ctx.strokeStyle = color;
   ctx.lineWidth = CHART_LINE_W;
   ctx.lineJoin = "round";
@@ -303,20 +368,82 @@ function strokeSeries(ctx, coords, color, fill, cssH, padBottom) {
   ctx.stroke();
 }
 
+function hideChartTip() {
+  const tip = $("chart-tip");
+  if (tip) tip.hidden = true;
+}
+
+function wireChartTip() {
+  if (chartTipWired) return;
+  chartTipWired = true;
+  const tip = $("chart-tip");
+  if (!tip) return;
+
+  const onMove = (e) => {
+    const canvas = e.currentTarget;
+    const meta = canvas._chartMeta;
+    if (!meta?.points?.length) {
+      tip.hidden = true;
+      return;
+    }
+    const rect = canvas.getBoundingClientRect();
+    const x = ((e.clientX ?? e.touches?.[0]?.clientX) - rect.left) * (canvas.clientWidth / rect.width);
+    const { padL, padR, points, seriesList, valueSets } = meta;
+    const plotW = canvas.clientWidth - padL - padR;
+    if (plotW <= 0) return;
+    const frac = Math.min(1, Math.max(0, (x - padL) / plotW));
+    const idx = Math.round(frac * (points.length - 1));
+    const p = points[idx];
+    if (!p) return;
+    const d = new Date(p.t);
+    const when = Number.isNaN(d.getTime())
+      ? "—"
+      : d.toLocaleString(undefined, {
+          day: "numeric",
+          month: "short",
+          hour: "2-digit",
+          minute: "2-digit",
+        });
+    const lines = [when];
+    seriesList.forEach((s, i) => {
+      const v = valueSets[i]?.[idx];
+      if (v == null || !Number.isFinite(v)) return;
+      const digits = s.yDigits != null ? s.yDigits : 1;
+      const unit = s.unit || "";
+      lines.push(`${s.label || s.key}: ${fmtTick(v, digits)}${unit ? ` ${unit}` : ""}`);
+    });
+    tip.textContent = lines.join("\n");
+    tip.hidden = false;
+    const tx = (e.clientX ?? e.touches?.[0]?.clientX) + 12;
+    const ty = (e.clientY ?? e.touches?.[0]?.clientY) + 12;
+    tip.style.left = `${Math.min(tx, window.innerWidth - tip.offsetWidth - 8)}px`;
+    tip.style.top = `${Math.min(ty, window.innerHeight - tip.offsetHeight - 8)}px`;
+  };
+
+  document.querySelectorAll("canvas.line-chart").forEach((canvas) => {
+    canvas.addEventListener("pointermove", onMove);
+    canvas.addEventListener("pointerleave", hideChartTip);
+    canvas.addEventListener("pointerdown", onMove);
+  });
+}
+
+/** seriesList: [{ key, color, fill, zeroGaps?, asMph?, label, unit, yDigits }] */
 function drawLineChart(canvasId, points, seriesList, opts = {}) {
   const canvas = $(canvasId);
   if (!canvas || $("view-historic").hidden) return;
   const prepared = prepareCanvas(canvas);
   if (!prepared || !points?.length) return;
   const { ctx, cssW, cssH } = prepared;
-  const padX = CHART_PAD_X;
+  const padL = CHART_PAD_LEFT;
+  const padR = CHART_PAD_RIGHT;
   const padTop = CHART_PAD_TOP;
   const padBottom = CHART_PAD_BOTTOM;
-  drawGrid(ctx, cssW, cssH, padX, padTop, padBottom);
+  const smooth = historyStyle === "smooth";
 
   const valueSets = seriesList.map((s) => {
     let vals = seriesValues(points, s.key);
     if (s.zeroGaps) vals = vals.map((v) => v ?? 0);
+    if (s.asMph) vals = vals.map((v) => (v == null ? null : v * 2.236936294));
     return vals;
   });
 
@@ -331,17 +458,32 @@ function drawLineChart(canvasId, points, seriesList, opts = {}) {
     sharedRange = seriesRange(all);
   }
 
+  const axisRange = sharedRange || seriesRange(valueSets[0] || []);
+  const axisDigits = opts.yDigits != null ? opts.yDigits : seriesList[0]?.yDigits ?? 1;
+  drawYAxis(ctx, axisRange, cssW, cssH, padL, padR, padTop, padBottom, axisDigits);
+
   seriesList.forEach((s, i) => {
+    const range = sharedRange || seriesRange(valueSets[i]);
     strokeSeries(
       ctx,
-      seriesCoords(valueSets[i], cssW, cssH, padX, padTop, padBottom, sharedRange),
+      seriesCoords(valueSets[i], cssW, cssH, padL, padR, padTop, padBottom, range),
       s.color,
       s.fill,
       cssH,
-      padBottom
+      padBottom,
+      smooth
     );
   });
-  drawTimeAxis(ctx, points, cssW, cssH, padX, padBottom);
+  drawTimeAxis(ctx, points, cssW, cssH, padL, padR, padBottom);
+
+  canvas._chartMeta = {
+    points,
+    seriesList,
+    valueSets,
+    padL,
+    padR,
+  };
+  wireChartTip();
 }
 
 function windRoseBins(points) {
@@ -449,42 +591,121 @@ function renderHistory(data) {
         ? Math.max(...solars)
         : null;
 
-  $("lbl-temp-high").textContent = fmtNum(s.temp?.high);
-  $("lbl-temp-low").textContent = fmtNum(s.temp?.low);
+  $("lbl-temp-high").textContent =
+    s.temp?.high == null ? "H —" : `H ${fmtNum(s.temp.high)}`;
+  $("lbl-temp-low").textContent =
+    s.temp?.low == null ? "L —" : `L ${fmtNum(s.temp.low)}`;
   $("lbl-hum-high").textContent =
-    s.humidity?.high == null ? "--" : String(s.humidity.high);
+    s.humidity?.high == null ? "H —" : `H ${s.humidity.high}`;
   $("lbl-hum-low").textContent =
-    s.humidity?.low == null ? "--" : String(s.humidity.low);
-  $("lbl-wind-high").textContent = fmtMph(windHigh);
-  $("lbl-wind-low").textContent = fmtMph(windLow);
-  $("lbl-gust-high").textContent = fmtMph(gustHigh ?? s.wind?.high);
-  $("lbl-press-high").textContent = fmtNum(pressHigh, 0);
-  $("lbl-press-low").textContent = fmtNum(pressLow, 0);
-  $("lbl-rain-high").textContent = fmtNum(s.rainTotalMm);
-  $("lbl-solar-high").textContent = fmtNum(solarHigh, 0);
+    s.humidity?.low == null ? "L —" : `L ${s.humidity.low}`;
+  $("lbl-wind-high").textContent =
+    windHigh == null ? "H —" : `H ${fmtMph(windHigh)}`;
+  $("lbl-wind-low").textContent =
+    windLow == null ? "L —" : `L ${fmtMph(windLow)}`;
+  {
+    const g = gustHigh ?? s.wind?.high;
+    $("lbl-gust-high").textContent = g == null ? "H —" : `H ${fmtMph(g)}`;
+  }
+  $("lbl-press-high").textContent =
+    pressHigh == null ? "H —" : `H ${fmtNum(pressHigh, 0)}`;
+  $("lbl-press-low").textContent =
+    pressLow == null ? "L —" : `L ${fmtNum(pressLow, 0)}`;
+  $("lbl-rain-high").textContent =
+    s.rainTotalMm == null ? "Σ —" : `Σ ${fmtNum(s.rainTotalMm)}`;
+  $("lbl-solar-high").textContent =
+    solarHigh == null ? "H —" : `H ${fmtNum(solarHigh, 0)}`;
 
   drawWindRose(points);
-  drawLineChart("chart-solar", points, [
-    { key: "wm2", color: BAND.yellow, fill: BAND.yellowFill, zeroGaps: true },
-  ]);
-  drawLineChart("chart-rain", points, [
-    { key: "rainMm", color: BAND.blue, fill: BAND.blueFill, zeroGaps: true },
-  ]);
+  drawLineChart(
+    "chart-solar",
+    points,
+    [
+      {
+        key: "wm2",
+        color: BAND.yellow,
+        fill: BAND.yellowFill,
+        zeroGaps: true,
+        label: "Solar",
+        unit: "W/m²",
+        yDigits: 0,
+      },
+    ],
+    { yDigits: 0 }
+  );
+  drawLineChart(
+    "chart-rain",
+    points,
+    [
+      {
+        key: "rainMm",
+        color: BAND.blue,
+        fill: BAND.blueFill,
+        zeroGaps: true,
+        label: "Rain",
+        unit: "mm",
+        yDigits: 1,
+      },
+    ],
+    { yDigits: 1 }
+  );
   drawLineChart(
     "chart-wind-gust",
     points,
     [
-      { key: "windMs", color: BAND.orange, fill: BAND.orangeFill },
-      { key: "gustMs", color: BAND.yellow, fill: null },
+      {
+        key: "windMs",
+        color: BAND.orange,
+        fill: BAND.orangeFill,
+        asMph: true,
+        label: "Wind",
+        unit: "mph",
+        yDigits: 1,
+      },
+      {
+        key: "gustMs",
+        color: BAND.yellow,
+        fill: null,
+        asMph: true,
+        label: "Gust",
+        unit: "mph",
+        yDigits: 1,
+      },
     ],
-    { sharedScale: true }
+    { sharedScale: true, yDigits: 1 }
   );
-  drawLineChart("chart-pressure", points, [
-    { key: "pressureHpa", color: BAND.blue, fill: BAND.blueFill },
-  ]);
+  drawLineChart(
+    "chart-pressure",
+    points,
+    [
+      {
+        key: "pressureHpa",
+        color: BAND.blue,
+        fill: BAND.blueFill,
+        label: "Press",
+        unit: "hPa",
+        yDigits: 0,
+      },
+    ],
+    { yDigits: 0 }
+  );
   drawLineChart("chart-temp-hum", points, [
-    { key: "tempC", color: BAND.yellow, fill: BAND.yellowFill },
-    { key: "humidity", color: BAND.green, fill: null },
+    {
+      key: "tempC",
+      color: BAND.yellow,
+      fill: BAND.yellowFill,
+      label: "Temp",
+      unit: "°C",
+      yDigits: 1,
+    },
+    {
+      key: "humidity",
+      color: BAND.green,
+      fill: null,
+      label: "Humid",
+      unit: "%",
+      yDigits: 0,
+    },
   ]);
 }
 
@@ -534,6 +755,27 @@ function wireUi() {
         /* ignore */
       }
       refresh();
+    });
+  });
+
+  document.querySelectorAll(".history-style .seg").forEach((btn) => {
+    const on = btn.dataset.style === historyStyle;
+    btn.classList.toggle("active", on);
+    btn.setAttribute("aria-selected", on ? "true" : "false");
+    btn.addEventListener("click", () => {
+      document.querySelectorAll(".history-style .seg").forEach((b) => {
+        b.classList.remove("active");
+        b.setAttribute("aria-selected", "false");
+      });
+      btn.classList.add("active");
+      btn.setAttribute("aria-selected", "true");
+      historyStyle = btn.dataset.style;
+      try {
+        localStorage.setItem(HISTORY_STYLE_KEY, historyStyle);
+      } catch {
+        /* ignore */
+      }
+      if (lastHistory) renderHistory(lastHistory);
     });
   });
 }

@@ -143,9 +143,33 @@ body {
 }
 
 .history-range[hidden],
+.history-style[hidden],
 .live-page[hidden],
 .boxes-page[hidden] {
   display: none !important;
+}
+
+.history-style .view-btn {
+  min-width: 4.6rem;
+  padding: 0 10px;
+  font-size: 0.9rem;
+}
+
+.chart-tip {
+  position: fixed;
+  z-index: 40;
+  pointer-events: none;
+  padding: 6px 10px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 230, 39, 0.35);
+  background: rgba(0, 32, 75, 0.94);
+  color: #fff;
+  font-size: 0.82rem;
+  font-weight: 700;
+  line-height: 1.35;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+  max-width: min(240px, calc(100vw - 24px));
+  white-space: pre-line;
 }
 
 .live-page .view-btn {
@@ -833,9 +857,9 @@ button:disabled {
 
 .chart-side-high,
 .chart-side-low {
-  font-size: 1.35rem;
+  font-size: 1.15rem;
   font-weight: 800;
-  line-height: 1;
+  line-height: 1.1;
 }
 
 .chart-side-low {

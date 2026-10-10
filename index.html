@@ -11,7 +11,7 @@
       href="https://fonts.googleapis.com/css2?family=Nunito+Sans:opsz,wght@6..12,400;6..12,600;6..12,700;6..12,800;6..12,900&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="./styles.css?v=28" />
+    <link rel="stylesheet" href="./styles.css?v=29" />
   </head>
   <body class="is-gated">
     <div class="sky" aria-hidden="true"></div>
@@ -38,6 +38,10 @@
           <button type="button" class="view-btn seg" data-range="week" aria-selected="false">Week</button>
           <button type="button" class="view-btn seg" data-range="month" aria-selected="false">Month</button>
           <button type="button" class="view-btn seg" data-range="year" aria-selected="false">Year</button>
+        </div>
+        <div class="view-toggle history-style" id="history-style" role="tablist" aria-label="Chart line style" hidden>
+          <button type="button" class="view-btn seg active" data-style="accurate" aria-selected="true">Accurate</button>
+          <button type="button" class="view-btn seg" data-style="smooth" aria-selected="false">Smooth</button>
         </div>
         <div class="view-toggle mode-toggle" role="tablist" aria-label="View">
           <button type="button" class="view-btn mode-btn active" data-view="live" role="tab" aria-selected="true">Live</button>
@@ -291,6 +295,7 @@
       </div>
     </main>
 
+    <div id="chart-tip" class="chart-tip" hidden></div>
     <div class="fab-row">
       <button type="button" class="privacy-fab" id="btn-privacy">Privacy</button>
       <a
@@ -412,6 +417,6 @@
       </div>
     </dialog>
 
-    <script src="./app.js?v=28"></script>
+    <script src="./app.js?v=29"></script>
   </body>
 </html>
