@@ -618,29 +618,29 @@ function renderHistory(data) {
         : null;
 
   $("lbl-temp-high").textContent =
-    s.temp?.high == null ? "H —" : `H ${fmtNum(s.temp.high)}`;
+    s.temp?.high == null ? "▲ —" : `▲ ${fmtNum(s.temp.high)}`;
   $("lbl-temp-low").textContent =
-    s.temp?.low == null ? "L —" : `L ${fmtNum(s.temp.low)}`;
+    s.temp?.low == null ? "▼ —" : `▼ ${fmtNum(s.temp.low)}`;
   $("lbl-hum-high").textContent =
-    s.humidity?.high == null ? "H —" : `H ${s.humidity.high}`;
+    s.humidity?.high == null ? "▲ —" : `▲ ${s.humidity.high}`;
   $("lbl-hum-low").textContent =
-    s.humidity?.low == null ? "L —" : `L ${s.humidity.low}`;
+    s.humidity?.low == null ? "▼ —" : `▼ ${s.humidity.low}`;
   $("lbl-wind-high").textContent =
-    windHigh == null ? "H —" : `H ${fmtMph(windHigh)}`;
+    windHigh == null ? "▲ —" : `▲ ${fmtMph(windHigh)}`;
   $("lbl-wind-low").textContent =
-    windLow == null ? "L —" : `L ${fmtMph(windLow)}`;
+    windLow == null ? "▼ —" : `▼ ${fmtMph(windLow)}`;
   {
     const g = gustHigh ?? s.wind?.high;
-    $("lbl-gust-high").textContent = g == null ? "H —" : `H ${fmtMph(g)}`;
+    $("lbl-gust-high").textContent = g == null ? "▲ —" : `▲ ${fmtMph(g)}`;
   }
   $("lbl-press-high").textContent =
-    pressHigh == null ? "H —" : `H ${fmtNum(pressHigh, 1)}`;
+    pressHigh == null ? "▲ —" : `▲ ${fmtNum(pressHigh, 1)}`;
   $("lbl-press-low").textContent =
-    pressLow == null ? "L —" : `L ${fmtNum(pressLow, 1)}`;
+    pressLow == null ? "▼ —" : `▼ ${fmtNum(pressLow, 1)}`;
   $("lbl-rain-high").textContent =
     s.rainTotalMm == null ? "Σ —" : `Σ ${fmtNum(s.rainTotalMm)}`;
   $("lbl-solar-high").textContent =
-    solarHigh == null ? "H —" : `H ${fmtNum(solarHigh, 0)}`;
+    solarHigh == null ? "▲ —" : `▲ ${fmtNum(solarHigh, 0)}`;
 
   drawWindRose(points);
   drawLineChart(
