@@ -177,6 +177,10 @@ function prepareCanvas(canvas) {
   if (!canvas) return null;
   const ctx = canvas.getContext("2d");
   const dpr = window.devicePixelRatio || 1;
+  // Keep CSS fill so bitmap width/height attrs don't freeze layout on resize.
+  canvas.style.width = "100%";
+  canvas.style.height = "100%";
+  void canvas.offsetWidth;
   const cssW = Math.max(canvas.clientWidth || 320, 40);
   const cssH = Math.max(canvas.clientHeight || 120, 40);
   canvas.width = Math.floor(cssW * dpr);
@@ -852,6 +856,9 @@ wireGate();
 setView("live");
 refresh();
 scheduleRefresh();
+let resizeTimer = null;
 window.addEventListener("resize", () => {
-  if (currentView === "historic" && lastHistory) renderHistory(lastHistory);
+  if (currentView !== "historic" || !lastHistory) return;
+  clearTimeout(resizeTimer);
+  resizeTimer = setTimeout(() => renderHistory(lastHistory), 80);
 });
