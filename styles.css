@@ -240,10 +240,10 @@ button:disabled {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  gap: 0;
-  /* Vertical breathing room so the dial stays circular inside the tile */
-  padding: 20px 14px;
+  justify-content: flex-start;
+  gap: 6px;
+  /* Title + dial; vertical room so the dial stays circular */
+  padding: 10px 12px 14px;
   background: var(--panel);
   border: 1px solid var(--line);
   border-radius: var(--radius);
@@ -252,10 +252,22 @@ button:disabled {
   container-name: compass-tile;
 }
 
+.wind-title {
+  flex: 0 0 auto;
+  margin: 0;
+  width: 100%;
+  text-align: center;
+  font-size: clamp(1.05rem, 2.2vh, 1.35rem);
+  font-weight: 800;
+  letter-spacing: 0.01em;
+  color: #fff;
+  line-height: 1.2;
+}
+
 .compass {
   position: relative;
-  /* Equal width+height from the smaller tile axis = true circle (not oval) */
-  --dial: min(78cqmin, calc(100cqi - 28px), calc(100cqb - 40px));
+  /* Equal width+height; leave room for Wind heading */
+  --dial: min(72cqmin, calc(100cqi - 28px), calc(100cqb - 52px));
   width: var(--dial);
   height: var(--dial);
   flex: 0 0 auto;
@@ -1148,7 +1160,6 @@ dialog::backdrop {
     display: contents;
   }
 
-  .wind-compass,
   .live-radar {
     --tile: min(100%, 340px);
     width: var(--tile);
@@ -1158,8 +1169,24 @@ dialog::backdrop {
     margin-inline: auto;
   }
 
+  /* Same width as metric cards; dial centred inside */
   .wind-compass {
     order: 1;
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    aspect-ratio: auto;
+    min-height: 280px;
+    margin-inline: 0;
+    box-sizing: border-box;
+    justify-content: flex-start;
+  }
+
+  .wind-compass .compass {
+    --dial: min(220px, 72vw, calc(100% - 16px));
+    width: var(--dial);
+    height: var(--dial);
+    margin-inline: auto;
   }
 
   .live-boxes {
