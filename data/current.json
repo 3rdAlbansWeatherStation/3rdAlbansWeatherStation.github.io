@@ -1,40 +1,42 @@
 {
-  "source": "mock",
+  "source": "cloud",
   "station": "3rd Albans Weather",
-  "updatedAt": "2026-10-09T12:41:13.619Z",
+  "updatedAt": "2026-10-10T09:54:16.481Z",
   "outdoor": {
-    "tempC": 16.9,
-    "humidity": 52,
-    "feelsLikeC": 15.9,
-    "dewPointC": 7.3
+    "tempC": 14.3,
+    "humidity": 55,
+    "feelsLikeC": 14.3,
+    "dewPointC": 5.4
   },
   "indoor": {
-    "tempC": 20.4,
-    "humidity": 56
+    "tempC": 19.1,
+    "humidity": 53
   },
   "wind": {
-    "speedMs": 4.6,
-    "gustMs": 2.5,
-    "directionDeg": 34,
-    "dayMaxMs": 8.1
+    "speedMs": 0.8,
+    "gustMs": 2.6,
+    "directionDeg": 269,
+    "dayMaxMs": null
   },
   "rain": {
     "rateMm": 0,
-    "dailyMm": 2.3,
+    "eventMm": 0,
     "hourMm": 0,
-    "weekMm": 5.2
+    "dailyMm": 0,
+    "weekMm": 0,
+    "monthMm": 0,
+    "yearMm": 0
   },
   "pressure": {
-    "relHpa": 1016.6
+    "absHpa": 1000.2,
+    "relHpa": 1000.2
   },
   "solar": {
-    "uvi": 5.4,
-    "lightKlux": 72
+    "uvi": 1,
+    "wm2": 160.1
   },
   "sensor": {
-    "battery": "Good",
-    "signal": "Strong"
+    "status": "OK"
   },
-  "condition": "Fair",
-  "note": "Demo data — not live station readings. No API keys or credentials in this site."
+  "condition": "Fair"
 }

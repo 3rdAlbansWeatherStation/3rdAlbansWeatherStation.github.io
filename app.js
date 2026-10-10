@@ -1,16 +1,17 @@
 /**
  * Public GitHub Pages UI — same design as the Pi kiosk.
- * Loads static JSON from ./data/ (mock until Ecowitt cloud Actions are wired).
+ * Loads static JSON from ./data/ (written by Ecowitt cloud GitHub Action).
  * Never put API keys or credentials in this folder.
  */
 
 const REFRESH_MS = 60_000;
+const WIND_CALM_MS = 0.5;
 let historyRange = "week";
 let currentView = "live";
 let livePage = "1";
 let refreshTimer;
-let clockTimer;
 let lastHistory = null;
+let lastSteadyWindDeg = 0;
 
 const $ = (id) => document.getElementById(id);
 
@@ -30,23 +31,21 @@ function dataUrl(name) {
   return new URL(`./data/${name}`, window.location.href).toString();
 }
 
-function fmtLiveClock(date = new Date()) {
+function fmtUpdatedAt(iso) {
+  if (!iso) return "—";
+  const date = new Date(iso);
+  if (Number.isNaN(date.getTime())) return "—";
   return date.toLocaleString(undefined, {
-    weekday: "long",
+    weekday: "short",
     hour: "2-digit",
     minute: "2-digit",
     second: "2-digit",
   });
 }
 
-function tickClock() {
-  $("updated").textContent = fmtLiveClock();
-}
-
-function startClock() {
-  clearInterval(clockTimer);
-  tickClock();
-  clockTimer = setInterval(tickClock, 1000);
+function fmtNum(n, digits = 1) {
+  if (n == null || Number.isNaN(Number(n))) return "--";
+  return Number(n).toFixed(digits);
 }
 
 /** Display wind in mph; API keeps m/s. */
@@ -114,6 +113,8 @@ function renderCurrent(data) {
   const deg = data.wind?.directionDeg;
   const speed = data.wind?.speedMs;
 
+  $("updated").textContent = fmtUpdatedAt(data.updatedAt);
+
   $("temp").textContent =
     data.outdoor?.tempC == null ? "--" : Number(data.outdoor.tempC).toFixed(1);
   $("feels").textContent =
@@ -135,26 +136,32 @@ function renderCurrent(data) {
   $("rain-rate").textContent =
     data.rain?.rateMm == null ? "--" : Number(data.rain.rateMm).toFixed(1);
   $("solar").textContent =
-    data.solar?.lightKlux == null ? "--" : String(data.solar.lightKlux);
+    data.solar?.wm2 == null ? "--" : Number(data.solar.wm2).toFixed(0);
   $("rain-hour").textContent =
     data.rain?.hourMm == null ? "--" : Number(data.rain.hourMm).toFixed(1);
   $("rain-week").textContent =
     data.rain?.weekMm == null ? "--" : Number(data.rain.weekMm).toFixed(1);
   $("wind-day-max").textContent = fmtMph(data.wind?.dayMaxMs);
-  $("sensor-battery").textContent = data.sensor?.battery || "--";
-  $("sensor-signal").textContent = data.sensor?.signal || "--";
+  $("sensor-status").textContent = data.sensor?.status || "--";
   $("condition-box").textContent = data.condition || "--";
 
   $("wind-speed").textContent = fmtMph(speed);
 
   const needle = $("wind-needle");
   const speedN = Number(speed) || 0;
+  const degN = Number(deg);
+  if (speedN >= WIND_CALM_MS && Number.isFinite(degN)) {
+    lastSteadyWindDeg = degN;
+  }
+  const needleDeg =
+    Number.isFinite(degN) && speedN >= WIND_CALM_MS ? degN : lastSteadyWindDeg;
   const strength = Math.min(Math.max(speedN / 12, 0), 1);
   const needleH = 30 + strength * 16;
   const tipScale = 1 + strength * 0.75;
   needle.style.setProperty("--needle-h", `${needleH.toFixed(1)}%`);
   needle.style.setProperty("--tip-scale", tipScale.toFixed(2));
-  needle.style.transform = `rotate(${Number(deg) || 0}deg)`;
+  needle.style.transform = `rotate(${needleDeg}deg)`;
+  needle.classList.toggle("is-calm", speedN < WIND_CALM_MS);
 
   const banner = $("demo-banner");
   if (banner) {
@@ -177,8 +184,10 @@ function prepareCanvas(canvas) {
 }
 
 function seriesRange(values) {
-  let min = Math.min(...values);
-  let max = Math.max(...values);
+  const finite = values.filter((v) => v != null && Number.isFinite(v));
+  if (!finite.length) return { min: 0, max: 1, span: 1 };
+  let min = Math.min(...finite);
+  let max = Math.max(...finite);
   if (min === max) {
     min -= 1;
     max += 1;
@@ -186,9 +195,22 @@ function seriesRange(values) {
   return { min, max, span: max - min };
 }
 
+function seriesValues(points, key) {
+  let last = null;
+  return points.map((p) => {
+    const raw = p?.[key];
+    if (raw == null || raw === "") return last;
+    const n = Number(raw);
+    if (!Number.isFinite(n)) return last;
+    last = n;
+    return n;
+  });
+}
+
 function seriesCoords(values, cssW, cssH, padX, padY) {
   const { min, span } = seriesRange(values);
   return values.map((v, i) => {
+    if (v == null || !Number.isFinite(v)) return null;
     const x = padX + (i / Math.max(values.length - 1, 1)) * (cssW - padX * 2);
     const y = padY + (1 - (v - min) / span) * (cssH - padY * 2);
     return { x, y };
@@ -208,21 +230,22 @@ function drawGrid(ctx, cssW, cssH, padX, padY) {
 }
 
 function strokeSeries(ctx, coords, color, fill, cssH, padY) {
-  if (!coords.length) return;
+  const pts = coords.filter(Boolean);
+  if (!pts.length) return;
   if (fill) {
     ctx.beginPath();
-    coords.forEach((c, i) => {
+    pts.forEach((c, i) => {
       if (i === 0) ctx.moveTo(c.x, c.y);
       else ctx.lineTo(c.x, c.y);
     });
-    ctx.lineTo(coords[coords.length - 1].x, cssH - padY);
-    ctx.lineTo(coords[0].x, cssH - padY);
+    ctx.lineTo(pts[pts.length - 1].x, cssH - padY);
+    ctx.lineTo(pts[0].x, cssH - padY);
     ctx.closePath();
     ctx.fillStyle = fill;
     ctx.fill();
   }
   ctx.beginPath();
-  coords.forEach((c, i) => {
+  pts.forEach((c, i) => {
     if (i === 0) ctx.moveTo(c.x, c.y);
     else ctx.lineTo(c.x, c.y);
   });
@@ -242,8 +265,8 @@ function drawDualChart(canvasId, points, leftKey, rightKey, leftStyle, rightStyl
   const padX = 6;
   const padY = 10;
   drawGrid(ctx, cssW, cssH, padX, padY);
-  const leftVals = points.map((p) => Number(p[leftKey]) || 0);
-  const rightVals = points.map((p) => Number(p[rightKey]) || 0);
+  const leftVals = seriesValues(points, leftKey);
+  const rightVals = seriesValues(points, rightKey);
   strokeSeries(
     ctx,
     seriesCoords(leftVals, cssW, cssH, padX, padY),
@@ -271,7 +294,7 @@ function drawRainChart(points) {
   const padX = 6;
   const padY = 10;
   drawGrid(ctx, cssW, cssH, padX, padY);
-  const values = points.map((p) => Number(p.rainMm) || 0);
+  const values = seriesValues(points, "rainMm").map((v) => v ?? 0);
   strokeSeries(
     ctx,
     seriesCoords(values, cssW, cssH, padX, padY),
@@ -358,32 +381,35 @@ function drawWindRose(points) {
 
 function renderHistory(data) {
   lastHistory = data;
-  const s = data.summary;
+  const s = data.summary || {};
+  const points = Array.isArray(data.points) ? data.points : [];
 
-  $("h-wind-avg").textContent = fmtMph(s.wind.avg);
-  $("h-wind-high").textContent = fmtMph(s.wind.high);
+  $("h-wind-avg").textContent = fmtMph(s.wind?.avg);
+  $("h-wind-high").textContent = fmtMph(s.wind?.high);
 
-  const pressures = data.points.map((p) => Number(p.pressureHpa) || 0);
-  const pressHigh = Math.max(...pressures);
-  const pressLow = Math.min(...pressures);
-  const winds = data.points.map((p) => Number(p.windMs) || 0);
-  const windLow = Math.min(...winds);
+  const pressures = points.map((p) => Number(p.pressureHpa)).filter((n) => !Number.isNaN(n));
+  const winds = points.map((p) => Number(p.windMs)).filter((n) => !Number.isNaN(n));
+  const pressHigh = pressures.length ? Math.max(...pressures) : null;
+  const pressLow = pressures.length ? Math.min(...pressures) : null;
+  const windLow = winds.length ? Math.min(...winds) : null;
 
-  $("lbl-temp-high").textContent = s.temp.high.toFixed(1);
-  $("lbl-temp-low").textContent = s.temp.low.toFixed(1);
-  $("lbl-hum-high").textContent = String(s.humidity.high);
-  $("lbl-hum-low").textContent = String(s.humidity.low);
-  $("lbl-wind-high").textContent = fmtMph(s.wind.high);
+  $("lbl-temp-high").textContent = fmtNum(s.temp?.high);
+  $("lbl-temp-low").textContent = fmtNum(s.temp?.low);
+  $("lbl-hum-high").textContent =
+    s.humidity?.high == null ? "--" : String(s.humidity.high);
+  $("lbl-hum-low").textContent =
+    s.humidity?.low == null ? "--" : String(s.humidity.low);
+  $("lbl-wind-high").textContent = fmtMph(s.wind?.high);
   $("lbl-wind-low").textContent = fmtMph(windLow);
-  $("lbl-press-high").textContent = pressHigh.toFixed(0);
-  $("lbl-press-low").textContent = pressLow.toFixed(0);
-  $("lbl-rain-high").textContent = s.rainTotalMm.toFixed(1);
+  $("lbl-press-high").textContent = fmtNum(pressHigh, 0);
+  $("lbl-press-low").textContent = fmtNum(pressLow, 0);
+  $("lbl-rain-high").textContent = fmtNum(s.rainTotalMm);
 
-  drawWindRose(data.points);
-  drawRainChart(data.points);
+  drawWindRose(points);
+  drawRainChart(points);
   drawDualChart(
     "chart-temp-hum",
-    data.points,
+    points,
     "tempC",
     "humidity",
     { color: BAND.yellow, fill: BAND.yellowFill },
@@ -391,7 +417,7 @@ function renderHistory(data) {
   );
   drawDualChart(
     "chart-wind-pressure",
-    data.points,
+    points,
     "windMs",
     "pressureHpa",
     { color: BAND.orange, fill: BAND.orangeFill },
@@ -510,7 +536,6 @@ function wirePrivacy() {
 wireUi();
 wireWelcome();
 wirePrivacy();
-startClock();
 setView("live");
 refresh();
 scheduleRefresh();
