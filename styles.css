@@ -1404,24 +1404,31 @@ button.card-help {
   top: 4px;
   left: 4px;
   z-index: 3;
+  box-sizing: border-box;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 14px;
-  height: 14px;
-  min-width: 14px;
-  min-height: 14px;
-  padding: 0;
-  border: 1px solid rgba(255, 230, 39, 0.55);
+  width: 16px !important;
+  height: 16px !important;
+  min-width: 16px !important;
+  min-height: 16px !important;
+  max-width: 16px !important;
+  max-height: 16px !important;
+  padding: 0 !important;
+  margin: 0;
+  border: 1px solid rgba(255, 230, 39, 0.65);
   border-radius: 999px;
   background: rgba(255, 230, 39, 0.95);
   color: var(--scout-navy);
-  font: inherit;
-  font-size: 0.55rem;
+  font-family: "Nunito Sans", system-ui, sans-serif;
+  font-size: 11px !important;
   font-weight: 900;
-  line-height: 1;
+  line-height: 1 !important;
+  letter-spacing: 0;
   cursor: pointer;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.28);
+  appearance: none;
+  -webkit-appearance: none;
 }
 
 button.card-help:hover {

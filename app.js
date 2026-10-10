@@ -740,6 +740,9 @@ function wireHelp() {
     btn.className = "card-help";
     btn.textContent = "?";
     btn.setAttribute("aria-label", `About ${CARD_HELP[key].title}`);
+    // Beat global button min sizes even if CSS cache is stale
+    btn.style.cssText =
+      "width:16px;height:16px;min-width:16px;min-height:16px;max-width:16px;max-height:16px;padding:0;font-size:11px;line-height:1;box-sizing:border-box;";
     btn.addEventListener("click", (e) => {
       e.preventDefault();
       e.stopPropagation();
