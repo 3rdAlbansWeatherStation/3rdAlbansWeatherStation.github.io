@@ -1438,7 +1438,19 @@ button.privacy-fab:active {
   transform: scale(0.98);
 }
 
-/* First-visit welcome + privacy statement */
+/* Temporary soft gate — blur page until unlocked (session) */
+body.is-gated .sky,
+body.is-gated .demo-banner,
+body.is-gated .top,
+body.is-gated main,
+body.is-gated .fab-row {
+  filter: blur(10px);
+  pointer-events: none;
+  user-select: none;
+}
+
+/* First-visit welcome + privacy statement + preview gate */
+#gate-dialog,
 #welcome-dialog,
 #privacy-dialog {
   border: 1px solid rgba(255, 230, 39, 0.28);
@@ -1455,10 +1467,59 @@ button.privacy-fab:active {
   overflow: auto;
 }
 
+#gate-dialog::backdrop,
 #welcome-dialog::backdrop,
 #privacy-dialog::backdrop {
   background: rgba(0, 24, 60, 0.78);
   backdrop-filter: blur(3px);
+}
+
+#gate-dialog::backdrop {
+  background: rgba(0, 18, 48, 0.88);
+  backdrop-filter: blur(6px);
+}
+
+.gate-card {
+  text-align: center;
+}
+
+.gate-label {
+  display: block;
+  margin: 18px auto 8px;
+  max-width: 280px;
+  text-align: left;
+  font-size: 0.85rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--scout-yellow);
+}
+
+.gate-input {
+  display: block;
+  width: min(280px, 100%);
+  margin: 0 auto;
+  box-sizing: border-box;
+  padding: 12px 14px;
+  border: 1px solid rgba(255, 230, 39, 0.35);
+  border-radius: 12px;
+  background: rgba(0, 24, 60, 0.55);
+  color: #fff;
+  font: inherit;
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+.gate-input:focus {
+  outline: 2px solid rgba(255, 230, 39, 0.65);
+  outline-offset: 2px;
+}
+
+.gate-error {
+  margin: 10px 0 0;
+  color: var(--scout-red, #ed3f23);
+  font-size: 0.9rem;
+  font-weight: 700;
 }
 
 .welcome-card {

@@ -11,9 +11,9 @@
       href="https://fonts.googleapis.com/css2?family=Nunito+Sans:opsz,wght@6..12,400;6..12,600;6..12,700;6..12,800;6..12,900&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="./styles.css?v=14" />
+    <link rel="stylesheet" href="./styles.css?v=15" />
   </head>
-  <body>
+  <body class="is-gated">
     <div class="sky" aria-hidden="true"></div>
 
     <p class="demo-banner" id="demo-banner" hidden>
@@ -300,6 +300,31 @@
       >
     </div>
 
+    <dialog id="gate-dialog" aria-labelledby="gate-title">
+      <form class="welcome-card gate-card" id="gate-form" method="dialog">
+        <img class="welcome-logo" src="./scout-logo.png" alt="Scouts" width="240" height="77" />
+        <p class="welcome-kicker">3rd St Albans</p>
+        <h2 id="gate-title">Preview access</h2>
+        <p class="welcome-body">
+          This public weather page is in preview. Enter the access password to continue.
+        </p>
+        <label class="gate-label" for="gate-password">Password</label>
+        <input
+          id="gate-password"
+          class="gate-input"
+          type="password"
+          name="password"
+          autocomplete="current-password"
+          required
+          autofocus
+        />
+        <p class="gate-error" id="gate-error" hidden>Incorrect password. Try again.</p>
+        <div class="welcome-actions">
+          <button type="submit" class="welcome-ok" id="btn-gate-submit">Continue</button>
+        </div>
+      </form>
+    </dialog>
+
     <dialog id="welcome-dialog" aria-labelledby="welcome-title">
       <div class="welcome-card">
         <img class="welcome-logo" src="./scout-logo.png" alt="Scouts" width="240" height="77" />
@@ -375,6 +400,6 @@
       </div>
     </dialog>
 
-    <script src="./app.js?v=14"></script>
+    <script src="./app.js?v=15"></script>
   </body>
 </html>

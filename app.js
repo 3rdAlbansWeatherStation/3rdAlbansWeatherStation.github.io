@@ -508,6 +508,10 @@ function wireUi() {
 }
 
 const CONSENT_KEY = "3rdAlbansWeather.consent.v3";
+const GATE_KEY = "3rdAlbansWeather.gate.v1";
+/** SHA-256 of the preview access password (plaintext is not stored in this repo). */
+const GATE_HASH =
+  "1f29e0c45ddd7a3a343efbb1b366be6aaf8d4bd0ce8e86fc731879d5bb801e78";
 const GOAT_SRC = "https://gc.zgo.at/count.js";
 const GOAT_ENDPOINT = "https://3rdalbansweatherstation.goatcounter.com/count";
 
@@ -525,6 +529,30 @@ function setConsent() {
   } catch {
     /* private mode etc. */
   }
+}
+
+function isGateUnlocked() {
+  try {
+    return sessionStorage.getItem(GATE_KEY) === "1";
+  } catch {
+    return false;
+  }
+}
+
+function setGateUnlocked() {
+  try {
+    sessionStorage.setItem(GATE_KEY, "1");
+  } catch {
+    /* private mode etc. */
+  }
+}
+
+async function sha256Hex(text) {
+  const data = new TextEncoder().encode(text);
+  const digest = await crypto.subtle.digest("SHA-256", data);
+  return [...new Uint8Array(digest)]
+    .map((b) => b.toString(16).padStart(2, "0"))
+    .join("");
 }
 
 function loadGoatCounter() {
@@ -571,9 +599,59 @@ function wirePrivacy() {
   });
 }
 
+function unlockSite() {
+  document.body.classList.remove("is-gated");
+  const gate = $("gate-dialog");
+  if (gate?.open) gate.close();
+  wireWelcome();
+  wirePrivacy();
+}
+
+function wireGate() {
+  const dialog = $("gate-dialog");
+  const form = $("gate-form");
+  const input = $("gate-password");
+  const err = $("gate-error");
+  if (!dialog || !form || !input) {
+    unlockSite();
+    return;
+  }
+
+  if (isGateUnlocked()) {
+    unlockSite();
+    return;
+  }
+
+  document.body.classList.add("is-gated");
+  dialog.addEventListener("cancel", (e) => e.preventDefault());
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    if (err) err.hidden = true;
+    const typed = String(input.value || "");
+    let ok = false;
+    try {
+      ok = (await sha256Hex(typed)) === GATE_HASH;
+    } catch {
+      ok = false;
+    }
+    if (!ok) {
+      if (err) err.hidden = false;
+      input.value = "";
+      input.focus();
+      return;
+    }
+    setGateUnlocked();
+    unlockSite();
+  });
+
+  requestAnimationFrame(() => {
+    dialog.showModal();
+    input.focus();
+  });
+}
+
 wireUi();
-wireWelcome();
-wirePrivacy();
+wireGate();
 setView("live");
 refresh();
 scheduleRefresh();
