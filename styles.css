@@ -341,7 +341,7 @@ button:disabled {
   inset: 7px;
   border-radius: 50%;
   background: repeating-conic-gradient(
-    from -2deg,
+    from -0.6deg,
     rgba(255, 230, 39, 0.55) 0deg 1.2deg,
     transparent 1.2deg 45deg
   );
