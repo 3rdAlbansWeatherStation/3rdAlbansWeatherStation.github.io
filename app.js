@@ -634,9 +634,9 @@ function renderHistory(data) {
     $("lbl-gust-high").textContent = g == null ? "H —" : `H ${fmtMph(g)}`;
   }
   $("lbl-press-high").textContent =
-    pressHigh == null ? "H —" : `H ${fmtNum(pressHigh, 0)}`;
+    pressHigh == null ? "H —" : `H ${fmtNum(pressHigh, 1)}`;
   $("lbl-press-low").textContent =
-    pressLow == null ? "L —" : `L ${fmtNum(pressLow, 0)}`;
+    pressLow == null ? "L —" : `L ${fmtNum(pressLow, 1)}`;
   $("lbl-rain-high").textContent =
     s.rainTotalMm == null ? "Σ —" : `Σ ${fmtNum(s.rainTotalMm)}`;
   $("lbl-solar-high").textContent =
@@ -710,10 +710,10 @@ function renderHistory(data) {
         fill: BAND.blueFill,
         label: "Press",
         unit: "hPa",
-        yDigits: 0,
+        yDigits: 1,
       },
     ],
-    { yDigits: 0 }
+    { yDigits: 1 }
   );
   drawLineChart("chart-temp-hum", points, [
     {
