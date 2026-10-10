@@ -2,8 +2,8 @@ name: Update weather data
 
 on:
   schedule:
-    # Every 15 minutes (Ecowitt rate limits are low; Pages is static)
-    - cron: "*/15 * * * *"
+    # Every 5 minutes (Ecowitt burst limits are the main constraint; Pages is static)
+    - cron: "*/5 * * * *"
   workflow_dispatch:
 
 permissions:

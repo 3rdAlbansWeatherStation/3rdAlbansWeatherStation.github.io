@@ -9,7 +9,7 @@ Same Scouts look when we choose to match it; **no Power controls**. Never deploy
 
 - Loads only `./data/*.json` (weather readings for display).
 - **Never** put Ecowitt API keys, hub passwords, Wi‑Fi keys, or the Scout Hut credentials document in this folder.
-- Live data: GitHub Action on **`3rdAlbansWeatherStation.github.io`** runs `.github/scripts/fetch-ecowitt-data.js` every **15 minutes** (and on manual dispatch), using repository **Actions secrets**:
+- Live data: GitHub Action on **`3rdAlbansWeatherStation.github.io`** runs `.github/scripts/fetch-ecowitt-data.js` every **5 minutes** (and on manual dispatch), using repository **Actions secrets**:
   - `ECOWITT_APPLICATION_KEY`
   - `ECOWITT_API_KEY`
   - `ECOWITT_DEVICE_MAC`
