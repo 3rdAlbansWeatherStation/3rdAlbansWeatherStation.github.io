@@ -141,8 +141,6 @@ function renderCurrent(data) {
     data.rain?.hourMm == null ? "--" : Number(data.rain.hourMm).toFixed(1);
   $("rain-week").textContent =
     data.rain?.weekMm == null ? "--" : Number(data.rain.weekMm).toFixed(1);
-  $("wind-day-max").textContent = fmtMph(data.wind?.dayMaxMs);
-  $("sensor-status").textContent = data.sensor?.status || "--";
   $("condition-box").textContent = data.condition || "--";
 
   $("wind-speed").textContent = fmtMph(speed);
