@@ -289,7 +289,8 @@ button:disabled {
   container-name: compass-tile;
 }
 
-.wind-title {
+.wind-title,
+.wind-beaufort {
   flex: 0 0 auto;
   margin: 0;
   width: 100%;
@@ -301,10 +302,15 @@ button:disabled {
   line-height: 1.2;
 }
 
+.wind-beaufort {
+  padding-inline: 4px;
+  flex-shrink: 0;
+}
+
 .compass {
   position: relative;
-  /* Equal width+height; leave room for Wind heading */
-  --dial: min(72cqmin, calc(100cqi - 28px), calc(100cqb - 52px));
+  /* Leave vertical room for Wind title + Beaufort line */
+  --dial: min(62cqmin, calc(100cqi - 28px), calc(100cqb - 100px));
   width: var(--dial);
   height: var(--dial);
   flex: 0 0 auto;

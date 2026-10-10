@@ -114,6 +114,48 @@ function fmtMph(ms, digits = 1) {
   return mph == null ? "--" : mph.toFixed(digits);
 }
 
+/** Beaufort force from sustained wind (mph). */
+const BEAUFORT_LABELS = [
+  "calm",
+  "light air",
+  "light breeze",
+  "gentle breeze",
+  "moderate breeze",
+  "fresh breeze",
+  "strong breeze",
+  "near gale",
+  "gale",
+  "severe gale",
+  "storm",
+  "violent storm",
+  "hurricane force",
+];
+
+function beaufortFromMph(mph) {
+  if (mph == null || Number.isNaN(Number(mph))) return null;
+  const n = Number(mph);
+  if (n < 1) return 0;
+  if (n <= 3) return 1;
+  if (n <= 7) return 2;
+  if (n <= 12) return 3;
+  if (n <= 18) return 4;
+  if (n <= 24) return 5;
+  if (n <= 31) return 6;
+  if (n <= 38) return 7;
+  if (n <= 46) return 8;
+  if (n <= 54) return 9;
+  if (n <= 63) return 10;
+  if (n <= 72) return 11;
+  return 12;
+}
+
+function fmtBeaufort(ms) {
+  const mph = msToMph(ms);
+  const force = beaufortFromMph(mph);
+  if (force == null) return "—";
+  return `Force ${force} — ${BEAUFORT_LABELS[force]}`;
+}
+
 async function getJson(url) {
   const res = await fetch(url, { cache: "no-store" });
   if (!res.ok) throw new Error(`${url} → ${res.status}`);
@@ -207,6 +249,8 @@ function renderCurrent(data) {
   $("condition-box").textContent = data.condition || "--";
 
   $("wind-speed").textContent = fmtMph(speed);
+  const beaufortEl = $("wind-beaufort");
+  if (beaufortEl) beaufortEl.textContent = fmtBeaufort(speed);
 
   const needle = $("wind-needle");
   const speedN = Number(speed) || 0;
@@ -902,7 +946,7 @@ const CARD_HELP = {
   wind: {
     title: "Wind",
     capture: "Cups and a vane on the outdoor sensor spin and turn with the breeze.",
-    use: "Shows how strong the wind is and which way it’s coming from — useful for camps, flags, and forecasts.",
+    use: "Shows how strong the wind is and which way it’s coming from — useful for camps, flags, and forecasts. Under the compass we also show the Beaufort scale (Force 0–12): a simple way to describe wind strength in words (for example Force 3 — gentle breeze), which weather observers and Scout badges use for “wind force”.",
   },
   temp: {
     title: "Outside temp",
