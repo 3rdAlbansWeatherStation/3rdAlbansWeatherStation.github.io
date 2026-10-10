@@ -53,7 +53,18 @@ jobs:
           git add data/*.json
           if git diff --staged --quiet; then
             echo "No data changes"
-          else
-            git commit -m "Update weather data from Ecowitt cloud"
-            git push
+            exit 0
           fi
+          git commit -m "Update weather data from Ecowitt cloud"
+          # Another run or a site publish may have advanced main — rebase and retry
+          for i in 1 2 3; do
+            git pull --rebase origin main
+            if git push origin HEAD:main; then
+              echo "Push ok (attempt $i)"
+              exit 0
+            fi
+            echo "Push rejected (attempt $i), retrying..."
+            sleep $((i * 2))
+          done
+          echo "Push failed after retries"
+          exit 1
