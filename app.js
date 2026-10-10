@@ -695,8 +695,8 @@ const CARD_HELP = {
   },
   "chart-rain": {
     title: "Rain chart",
-    capture: "Rainfall readings from the tipping bucket over time.",
-    use: "Shows wet and dry spells across the chosen period.",
+    capture: "Rainfall amounts from the tipping bucket across each time step (mm fallen, not rain rate).",
+    use: "Shows how much rain fell across the chosen period; the side total is the sum.",
   },
   "chart-wind": {
     title: "Wind & gust chart",

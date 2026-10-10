@@ -133,6 +133,9 @@ function summarize(points) {
   const avg = (arr) =>
     arr.length ? Number((arr.reduce((a, b) => a + b, 0) / arr.length).toFixed(1)) : null;
   const peak = [...wind, ...gust];
+  const rainSum = rain.length
+    ? Number(rain.reduce((a, b) => a + b, 0).toFixed(1))
+    : null;
   return {
     temp: {
       high: temps.length ? Math.max(...temps) : null,
@@ -144,7 +147,8 @@ function summarize(points) {
       low: hum.length ? Math.min(...hum) : null,
       avg: hum.length ? Math.round(avg(hum)) : null,
     },
-    rainTotalMm: rain.length ? Number(Math.max(...rain).toFixed(1)) : null,
+    // Period rainfall (sum of per-interval tipper amounts), not peak rain rate
+    rainTotalMm: rainSum,
     solarHighWm2: solar.length ? Math.max(...solar) : null,
     wind: {
       high: peak.length ? Math.max(...peak) : null,
@@ -153,12 +157,76 @@ function summarize(points) {
   };
 }
 
+/** Nearest list value within maxSkewSec of ts (unix seconds). */
+function nearestNum(list, ts, maxSkewSec = 900) {
+  if (!list || typeof list !== "object") return null;
+  const exact = num(list[String(ts)]);
+  if (exact != null) return exact;
+  let best = null;
+  let bestSkew = Infinity;
+  for (const [k, v] of Object.entries(list)) {
+    const t = Number(k);
+    if (!Number.isFinite(t)) continue;
+    const skew = Math.abs(t - ts);
+    if (skew <= maxSkewSec && skew < bestSkew) {
+      const n = num(v);
+      if (n != null) {
+        best = n;
+        bestSkew = skew;
+      }
+    }
+  }
+  return best;
+}
+
+/**
+ * Interval rain (mm) from cumulative yearly tipper totals.
+ * Yearly resets → negative delta clamped to 0 for that step.
+ */
+function applyYearlyRainDeltas(points) {
+  let prevYearly = null;
+  for (const p of points) {
+    const y = p._yearlyMm;
+    if (y == null || prevYearly == null) {
+      p.rainMm = 0;
+    } else {
+      const delta = y - prevYearly;
+      p.rainMm = Number((delta > 0 ? delta : 0).toFixed(2));
+    }
+    if (y != null) prevYearly = y;
+    delete p._yearlyMm;
+  }
+  return points;
+}
+
+/** Downsample; sum rain in each bin, take max for gust/wind/solar. */
 function downsample(points, maxPoints = 180) {
   if (points.length <= maxPoints) return points;
   const out = [];
   const step = points.length / maxPoints;
+  let prevIdx = 0;
   for (let i = 0; i < maxPoints; i += 1) {
-    out.push(points[Math.min(points.length - 1, Math.floor(i * step))]);
+    const idx = Math.min(points.length - 1, Math.floor(i * step));
+    const p = { ...points[idx] };
+    if (i > 0 && idx > prevIdx) {
+      let rainSum = 0;
+      let maxGust = null;
+      let maxWind = null;
+      let maxSolar = null;
+      for (let j = prevIdx + 1; j <= idx; j += 1) {
+        const q = points[j];
+        if (q.rainMm != null) rainSum += q.rainMm;
+        if (q.gustMs != null) maxGust = maxGust == null ? q.gustMs : Math.max(maxGust, q.gustMs);
+        if (q.windMs != null) maxWind = maxWind == null ? q.windMs : Math.max(maxWind, q.windMs);
+        if (q.wm2 != null) maxSolar = maxSolar == null ? q.wm2 : Math.max(maxSolar, q.wm2);
+      }
+      p.rainMm = Number(rainSum.toFixed(2));
+      if (maxGust != null) p.gustMs = maxGust;
+      if (maxWind != null) p.windMs = maxWind;
+      if (maxSolar != null) p.wm2 = maxSolar;
+    }
+    out.push(p);
+    prevIdx = idx;
   }
   return out;
 }
@@ -176,7 +244,8 @@ function normalizeHistory(data, range) {
   const gustList = listMap(wind.wind_gust);
   const dirList = listMap(wind.wind_direction);
   const pressList = listMap(pressure.relative);
-  const rainList = listMap(rainfall.rain_rate);
+  // Cumulative year tipper (mm) — interval rain = positive deltas
+  const yearlyRainList = listMap(rainfall.yearly);
   const solarList = listMap(solar.solar);
 
   const stamps = Object.keys(tempList).length
@@ -192,17 +261,18 @@ function normalizeHistory(data, range) {
       return {
         t: new Date(ts * 1000).toISOString(),
         tempC: num(tempList[key]),
-        humidity: num(humList[key]),
-        pressureHpa: num(pressList[key]),
-        rainMm: num(rainList[key]),
-        windMs: num(windList[key]),
-        gustMs: num(gustList[key]),
-        windDirDeg: num(dirList[key]),
-        wm2: num(solarList[key]),
+        humidity: num(humList[key]) ?? nearestNum(humList, ts),
+        pressureHpa: num(pressList[key]) ?? nearestNum(pressList, ts),
+        _yearlyMm: num(yearlyRainList[key]) ?? nearestNum(yearlyRainList, ts),
+        windMs: num(windList[key]) ?? nearestNum(windList, ts),
+        gustMs: num(gustList[key]) ?? nearestNum(gustList, ts),
+        windDirDeg: num(dirList[key]) ?? nearestNum(dirList, ts),
+        wm2: num(solarList[key]) ?? nearestNum(solarList, ts),
       };
     })
     .filter((p) => p.tempC != null || p.humidity != null);
 
+  applyYearlyRainDeltas(points);
   const sampled = downsample(points);
   const payload = {
     source: "cloud",
