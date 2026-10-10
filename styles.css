@@ -627,8 +627,24 @@ button:disabled {
 .historic-view {
   min-height: 0;
   display: grid;
-  grid-template-rows: 1fr;
+  grid-template-rows: auto 1fr;
   gap: 0;
+}
+
+.history-note {
+  margin: 0 0 8px;
+  padding: 8px 12px;
+  border-radius: 10px;
+  background: rgba(255, 230, 39, 0.12);
+  border: 1px solid rgba(255, 230, 39, 0.28);
+  color: rgba(232, 238, 245, 0.92);
+  font-size: 0.88rem;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.history-note[hidden] {
+  display: none !important;
 }
 
 .history-range .view-btn {

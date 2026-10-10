@@ -260,6 +260,21 @@ async function fetchHistoryBody(start, end, cycleType) {
   return getJson(`https://api.ecowitt.net/api/v3/device/history?${params}`);
 }
 
+function pointsSpanMs(points) {
+  if (!points || points.length < 2) return 0;
+  const t0 = new Date(points[0].t).getTime();
+  const t1 = new Date(points[points.length - 1].t).getTime();
+  if (!Number.isFinite(t0) || !Number.isFinite(t1)) return 0;
+  return Math.max(0, t1 - t0);
+}
+
+async function fetchDenseRecent(range) {
+  const endRecent = new Date();
+  const startRecent = new Date(endRecent.getTime() - 48 * 3600 * 1000);
+  const data = await fetchHistoryBody(startRecent, endRecent, "5min");
+  return normalizeHistory(data, range);
+}
+
 async function fetchHistoryRange(range) {
   const days = range === "year" ? 365 : range === "month" ? 30 : 7;
   const cycleType = range === "year" ? "4hour" : range === "month" ? "30min" : "5min";
@@ -269,14 +284,22 @@ async function fetchHistoryRange(range) {
   let data = await fetchHistoryBody(start, end, cycleType);
   let payload = normalizeHistory(data, range);
 
-  if (payload.points.length < 5) {
-    const endRecent = new Date();
-    const startRecent = new Date(endRecent.getTime() - 24 * 3600 * 1000);
-    data = await fetchHistoryBody(startRecent, endRecent, "5min");
-    payload = normalizeHistory(data, range);
+  // Keep Week / Month / Year consistent while the cloud archive is still short.
+  const spanMs = pointsSpanMs(payload.points);
+  const archiveShort =
+    payload.points.length < 12 || spanMs < 2 * 864e5;
+
+  if (archiveShort) {
+    const dense = await fetchDenseRecent(range);
+    if (
+      dense.points.length > payload.points.length ||
+      payload.points.length < 5
+    ) {
+      payload = dense;
+    }
     if (payload.points.length) {
       payload.note =
-        "Showing available cloud history (archive still filling — full week/month later).";
+        "Showing available history while the station archive fills (same recent data for Week / Month / Year until enough days exist).";
     }
   }
   return payload;

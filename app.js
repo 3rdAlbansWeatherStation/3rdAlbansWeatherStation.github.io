@@ -406,6 +406,13 @@ function renderHistory(data) {
   const s = data.summary || {};
   const points = Array.isArray(data.points) ? data.points : [];
 
+  const noteEl = $("history-note");
+  if (noteEl) {
+    const note = typeof data?.note === "string" ? data.note.trim() : "";
+    noteEl.textContent = note;
+    noteEl.hidden = !note;
+  }
+
   $("h-wind-avg").textContent = fmtMph(s.wind?.avg);
   $("h-wind-high").textContent = fmtMph(s.wind?.high);
 
