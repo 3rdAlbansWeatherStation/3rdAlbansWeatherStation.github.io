@@ -1,21 +1,21 @@
 {
   "source": "cloud",
   "range": "year",
-  "updatedAt": "2026-10-10T10:25:18.275Z",
+  "updatedAt": "2026-10-10T09:54:19.612Z",
   "summary": {
     "temp": {
-      "high": 14.7,
+      "high": 14,
       "low": 13,
-      "avg": 13.7
+      "avg": 13.3
     },
     "humidity": {
       "high": 60,
-      "low": 53,
-      "avg": 58
+      "low": 56,
+      "avg": 59
     },
     "rainTotalMm": 0,
     "wind": {
-      "high": 0.9,
+      "high": 0.8,
       "avg": 0.4
     }
   },
@@ -154,60 +154,6 @@
       "rainMm": 0,
       "windMs": 0.5,
       "windDirDeg": 251
-    },
-    {
-      "t": "2026-10-10T09:50:00.000Z",
-      "tempC": 14.3,
-      "humidity": 55,
-      "pressureHpa": 1000.2,
-      "rainMm": 0,
-      "windMs": 0.5,
-      "windDirDeg": 237
-    },
-    {
-      "t": "2026-10-10T09:55:00.000Z",
-      "tempC": 14.4,
-      "humidity": 55,
-      "pressureHpa": 1000.2,
-      "rainMm": 0,
-      "windMs": 0.1,
-      "windDirDeg": 276
-    },
-    {
-      "t": "2026-10-10T10:00:00.000Z",
-      "tempC": 14.5,
-      "humidity": 55,
-      "pressureHpa": 1000,
-      "rainMm": 0,
-      "windMs": 0.3,
-      "windDirDeg": 267
-    },
-    {
-      "t": "2026-10-10T10:05:00.000Z",
-      "tempC": 14.7,
-      "humidity": 53,
-      "pressureHpa": 1000.1,
-      "rainMm": 0,
-      "windMs": 0.9,
-      "windDirDeg": 258
-    },
-    {
-      "t": "2026-10-10T10:10:00.000Z",
-      "tempC": 14.4,
-      "humidity": 54,
-      "pressureHpa": 1000.1,
-      "rainMm": 0,
-      "windMs": 0.2,
-      "windDirDeg": 224
-    },
-    {
-      "t": "2026-10-10T10:15:00.000Z",
-      "tempC": 14.3,
-      "humidity": 54,
-      "pressureHpa": 1000.2,
-      "rainMm": 0,
-      "windMs": 0.5,
-      "windDirDeg": 215
     }
   ],
   "note": "Showing available cloud history (archive still filling — full week/month later)."
