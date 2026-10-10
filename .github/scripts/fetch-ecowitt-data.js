@@ -32,6 +32,53 @@ function formatEcowittDate(date) {
   return `${g("year")}-${g("month")}-${g("day")} ${g("hour")}:${g("minute")}:${g("second")}`;
 }
 
+function londonYmd(date = new Date()) {
+  const parts = new Intl.DateTimeFormat("en-GB", {
+    timeZone: "Europe/London",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  }).formatToParts(date);
+  const g = (type) => parts.find((p) => p.type === type)?.value;
+  return `${g("year")}-${g("month")}-${g("day")}`;
+}
+
+function dateFromLondonWall(ymd, hms = "00:00:00") {
+  const want = `${ymd} ${hms}`;
+  const parseWall = (str) => {
+    const [date, time] = str.split(" ");
+    const [yy, mm, dd] = date.split("-").map(Number);
+    const [hh, mi, ss] = time.split(":").map(Number);
+    return Date.UTC(yy, mm - 1, dd, hh, mi, ss || 0);
+  };
+  let utc = parseWall(want);
+  for (let i = 0; i < 4; i += 1) {
+    const shown = formatEcowittDate(new Date(utc));
+    const delta = parseWall(want) - parseWall(shown);
+    utc += delta;
+    if (delta === 0) break;
+  }
+  return new Date(utc);
+}
+
+function rangeWindow(range) {
+  const end = new Date();
+  if (range === "day") {
+    return {
+      start: dateFromLondonWall(londonYmd(end), "00:00:00"),
+      end,
+      cycleType: "5min",
+    };
+  }
+  const days = range === "year" ? 365 : range === "month" ? 30 : 7;
+  const cycleType = range === "year" ? "4hour" : range === "month" ? "30min" : "5min";
+  return {
+    start: new Date(end.getTime() - days * 24 * 3600 * 1000),
+    end,
+    cycleType,
+  };
+}
+
 function num(v) {
   if (v == null || v === "") return null;
   const n = Number(v);
@@ -346,13 +393,15 @@ async function fetchDenseRecent(range) {
 }
 
 async function fetchHistoryRange(range) {
-  const days = range === "year" ? 365 : range === "month" ? 30 : 7;
-  const cycleType = range === "year" ? "4hour" : range === "month" ? "30min" : "5min";
-  const end = new Date();
-  const start = new Date(end.getTime() - days * 24 * 3600 * 1000);
+  const { start, end, cycleType } = rangeWindow(range);
 
   let data = await fetchHistoryBody(start, end, cycleType);
   let payload = normalizeHistory(data, range);
+
+  // Day is already London midnight → now @ 5min — do not widen to 48h.
+  if (range === "day") {
+    return payload;
+  }
 
   // Keep Week / Month / Year consistent while the cloud archive is still short.
   const spanMs = pointsSpanMs(payload.points);
@@ -369,7 +418,7 @@ async function fetchHistoryRange(range) {
     }
     if (payload.points.length) {
       payload.note =
-        "Showing available history while the station archive fills (same recent data for Week / Month / Year until enough days exist).";
+        "Showing available history while the station archive fills (same recent data for Week / Month / Year until enough days exist). Day still shows today only.";
     }
   }
   return payload;
@@ -400,7 +449,7 @@ async function main() {
     current.solar.wm2
   );
 
-  for (const range of ["week", "month", "year"]) {
+  for (const range of ["day", "week", "month", "year"]) {
     const history = await fetchHistoryRange(range);
     fs.writeFileSync(
       path.join(dir, `history-${range}.json`),

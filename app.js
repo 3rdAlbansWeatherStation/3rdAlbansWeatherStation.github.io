@@ -5,7 +5,20 @@
 
 const REFRESH_MS = 60_000;
 const WIND_CALM_MS = 0.5;
-let historyRange = "week";
+const HISTORY_RANGE_KEY = "3rdAlbansWeather.historyRange";
+const HISTORY_RANGES = ["day", "week", "month", "year"];
+
+function loadHistoryRange() {
+  try {
+    const saved = localStorage.getItem(HISTORY_RANGE_KEY);
+    if (HISTORY_RANGES.includes(saved)) return saved;
+  } catch {
+    /* ignore */
+  }
+  return "day";
+}
+
+let historyRange = loadHistoryRange();
 let currentView = "live";
 let livePage = "1";
 let refreshTimer;
@@ -477,9 +490,7 @@ function renderHistory(data) {
 
 async function refresh() {
   try {
-    const range = ["week", "month", "year"].includes(historyRange)
-      ? historyRange
-      : "week";
+    const range = HISTORY_RANGES.includes(historyRange) ? historyRange : "day";
     const [current, history] = await Promise.all([
       getJson(dataUrl("current.json")),
       getJson(dataUrl(`history-${range}.json`)),
@@ -506,6 +517,9 @@ function wireUi() {
   });
 
   document.querySelectorAll(".history-range .seg").forEach((btn) => {
+    const on = btn.dataset.range === historyRange;
+    btn.classList.toggle("active", on);
+    btn.setAttribute("aria-selected", on ? "true" : "false");
     btn.addEventListener("click", () => {
       document.querySelectorAll(".history-range .seg").forEach((b) => {
         b.classList.remove("active");
@@ -514,6 +528,11 @@ function wireUi() {
       btn.classList.add("active");
       btn.setAttribute("aria-selected", "true");
       historyRange = btn.dataset.range;
+      try {
+        localStorage.setItem(HISTORY_RANGE_KEY, historyRange);
+      } catch {
+        /* ignore */
+      }
       refresh();
     });
   });
@@ -695,7 +714,7 @@ const CARD_HELP = {
   "chart-solar": {
     title: "Solar chart",
     capture: "Sunlight readings from the outdoor sensor over time.",
-    use: "Shows how strong the sun’s energy was across the week, month, or year.",
+    use: "Shows how strong the sun’s energy was across the day, week, month, or year.",
   },
   "chart-rain": {
     title: "Rain chart",

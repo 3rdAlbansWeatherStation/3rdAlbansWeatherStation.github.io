@@ -661,7 +661,8 @@ button:disabled {
 }
 
 .history-range .view-btn {
-  min-width: 4.2rem;
+  min-width: 3.4rem;
+  padding: 0 12px;
 }
 
 .history-layout {

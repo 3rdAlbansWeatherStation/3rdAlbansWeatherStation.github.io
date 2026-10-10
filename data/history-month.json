@@ -1,7 +1,7 @@
 {
   "source": "cloud",
   "range": "month",
-  "updatedAt": "2026-10-10T14:19:51.454Z",
+  "updatedAt": "2026-10-10T14:35:32.593Z",
   "summary": {
     "temp": {
       "high": 16.7,
@@ -143,5 +143,5 @@
       "rainMm": 0
     }
   ],
-  "note": "Showing available history while the station archive fills (same recent data for Week / Month / Year until enough days exist)."
+  "note": "Showing available history while the station archive fills (same recent data for Week / Month / Year until enough days exist). Day still shows today only."
 }
