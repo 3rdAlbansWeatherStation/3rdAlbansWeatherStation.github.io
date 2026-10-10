@@ -217,23 +217,25 @@ button:disabled {
 }
 
 .live-left {
-  /* Fit two square tiles under the header inside the kiosk viewport */
-  --tile: min(42vh, calc((100vh - 140px) / 2));
+  /* Match full height of metric boxes: two equal square rows (compass + Windy) */
   display: grid;
-  grid-template-rows: var(--tile) var(--tile);
+  grid-template-rows: 1fr 1fr;
   gap: 10px;
-  width: var(--tile);
   min-height: 0;
-  height: fit-content;
-  align-self: start;
+  height: 100%;
+  align-self: stretch;
+  width: max-content;
+  max-width: 100%;
 }
 
 .wind-compass,
 .live-radar {
   min-height: 0;
-  width: var(--tile);
-  height: var(--tile);
+  height: 100%;
+  width: auto;
+  aspect-ratio: 1 / 1;
   overflow: hidden;
+  justify-self: start;
 }
 
 .wind-compass {
