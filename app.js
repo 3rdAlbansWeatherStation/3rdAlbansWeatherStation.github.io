@@ -1090,12 +1090,29 @@ function mountHelpButton(el, key) {
   if (!CARD_HELP[key] || el.querySelector(".card-help")) return;
   const btn = makeHelpButton(key);
 
-  // History charts: place ? under the left title (Solar / Rain / Wind / …)
+  // Live metric boxes: ? inline after the title (Outside temp ?)
+  if (el.classList.contains("box")) {
+    const h3 = el.querySelector("h3");
+    if (h3) {
+      h3.appendChild(btn);
+      return;
+    }
+  }
+
+  // Wind compass: inline after "Wind"
+  if (el.classList.contains("wind-compass")) {
+    const title = el.querySelector(".wind-title");
+    if (title) {
+      title.appendChild(btn);
+      return;
+    }
+  }
+
+  // History charts: ? inline after the left title (Solar / Rain / …)
   if (el.classList.contains("chart-card")) {
     const side = el.querySelector(".chart-side.left");
     const name = side?.querySelector(".chart-side-name");
     if (name) {
-      btn.classList.add("card-help-below-title");
       const stack = document.createElement("div");
       stack.className = "chart-side-title-stack";
       name.parentNode.insertBefore(stack, name);
@@ -1104,12 +1121,11 @@ function mountHelpButton(el, key) {
     }
   }
 
-  // Wind rose: under the "Wind Rose" heading
+  // Wind rose: inline in the heading
   if (el.classList.contains("rose-panel")) {
     const title = el.querySelector(".rose-title");
     if (title) {
-      btn.classList.add("card-help-below-title");
-      title.insertAdjacentElement("afterend", btn);
+      title.appendChild(btn);
       return;
     }
   }
