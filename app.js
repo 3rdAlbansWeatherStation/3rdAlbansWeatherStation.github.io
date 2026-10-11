@@ -184,6 +184,52 @@ function setLivePage(page) {
   });
 }
 
+function prefersReducedMotion() {
+  return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+}
+
+function syncTogglePill(toggle) {
+  if (!toggle) return;
+  const pill = toggle.querySelector(".view-toggle-pill");
+  const active = toggle.querySelector(".view-btn.active");
+  if (!pill || !active || toggle.hidden) return;
+  const left = active.offsetLeft;
+  pill.style.width = `${active.offsetWidth}px`;
+  pill.style.transform = `translateX(${left}px)`;
+}
+
+function popValue(el) {
+  if (!el || prefersReducedMotion()) return;
+  el.classList.remove("value-pop");
+  void el.offsetWidth;
+  el.classList.add("value-pop");
+}
+
+function popHistoryAggregates() {
+  document
+    .querySelectorAll(
+      "#view-historic .chart-side-high, #view-historic .chart-side-low, #h-wind-avg, #h-wind-high"
+    )
+    .forEach(popValue);
+}
+
+function revealChart(canvas) {
+  if (!canvas) return;
+  if (prefersReducedMotion()) {
+    canvas.style.transition = "";
+    canvas.style.clipPath = "";
+    return;
+  }
+  canvas.style.transition = "none";
+  canvas.style.clipPath = "inset(0 100% 0 0)";
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      canvas.style.transition = "clip-path 400ms ease-out";
+      canvas.style.clipPath = "inset(0 0% 0 0)";
+    });
+  });
+}
+
 function setView(view) {
   currentView = view;
   const live = $("view-live");
@@ -191,10 +237,20 @@ function setView(view) {
   const historyRangeEl = $("history-range");
   const historyStyleEl = $("history-style");
   const livePageEl = $("live-page");
-  live.hidden = view !== "live";
-  historic.hidden = view !== "historic";
-  live.style.display = view === "live" ? "" : "none";
-  historic.style.display = view === "historic" ? "" : "none";
+
+  live?.classList.toggle("is-active", view === "live");
+  historic?.classList.toggle("is-active", view === "historic");
+  live?.setAttribute("aria-hidden", view === "live" ? "false" : "true");
+  historic?.setAttribute("aria-hidden", view === "historic" ? "false" : "true");
+  if (live) {
+    live.hidden = false;
+    live.style.display = "";
+  }
+  if (historic) {
+    historic.hidden = false;
+    historic.style.display = "";
+  }
+
   historyRangeEl.hidden = view !== "historic";
   historyRangeEl.style.display = view === "historic" ? "" : "none";
   // Chart style toggle stays hidden until a settings popup uses it
@@ -209,6 +265,8 @@ function setView(view) {
     btn.classList.toggle("active", active);
     btn.setAttribute("aria-selected", active ? "true" : "false");
   });
+  syncTogglePill($("mode-toggle"));
+  requestAnimationFrame(() => syncTogglePill($("history-range")));
   if (view === "live") setLivePage(livePage);
   if (view === "historic") {
     requestAnimationFrame(() => {
@@ -520,7 +578,7 @@ function wireChartTip() {
 /** seriesList: [{ key, color, fill, zeroGaps?, asMph?, label, unit, yDigits }] */
 function drawLineChart(canvasId, points, seriesList, opts = {}) {
   const canvas = $(canvasId);
-  if (!canvas || $("view-historic").hidden) return;
+  if (!canvas || currentView !== "historic") return;
   const prepared = prepareCanvas(canvas);
   if (!prepared || !points?.length) return;
   const { ctx, cssW, cssH } = prepared;
@@ -596,6 +654,7 @@ function drawLineChart(canvasId, points, seriesList, opts = {}) {
     padL,
     padR,
   };
+  revealChart(canvas);
   wireChartTip();
 }
 
@@ -613,7 +672,7 @@ function windRoseBins(points) {
 
 function drawWindRose(points) {
   const canvas = $("wind-rose");
-  if (!canvas || $("view-historic").hidden) return;
+  if (!canvas || currentView !== "historic") return;
   const prepared = prepareCanvas(canvas);
   if (!prepared) return;
   const { ctx, cssW, cssH } = prepared;
@@ -671,6 +730,7 @@ function drawWindRose(points) {
   ctx.fill();
   ctx.strokeStyle = "rgba(8,132,134,0.8)";
   ctx.stroke();
+  revealChart(canvas);
 }
 
 function renderHistory(data) {
@@ -728,6 +788,7 @@ function renderHistory(data) {
     s.rainTotalMm == null ? "Σ —" : `Σ ${fmtNum(s.rainTotalMm)}`;
   $("lbl-solar-high").textContent =
     solarHigh == null ? "▲ —" : `▲ ${fmtNum(solarHigh, 0)}`;
+  popHistoryAggregates();
 
   drawWindRose(points);
   drawLineChart(
@@ -870,6 +931,7 @@ function wireUi() {
       });
       btn.classList.add("active");
       btn.setAttribute("aria-selected", "true");
+      syncTogglePill($("history-range"));
       historyRange = btn.dataset.range;
       try {
         localStorage.setItem(HISTORY_RANGE_KEY, historyRange);
@@ -1255,8 +1317,14 @@ wireGate();
 setView("live");
 refresh();
 scheduleRefresh();
+requestAnimationFrame(() => {
+  syncTogglePill($("mode-toggle"));
+  syncTogglePill($("history-range"));
+});
 let resizeTimer = null;
 window.addEventListener("resize", () => {
+  syncTogglePill($("mode-toggle"));
+  syncTogglePill($("history-range"));
   if (currentView !== "historic" || !lastHistory) return;
   clearTimeout(resizeTimer);
   resizeTimer = setTimeout(() => renderHistory(lastHistory), 80);

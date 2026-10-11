@@ -65,16 +65,39 @@ body {
     linear-gradient(165deg, #0047a0 0%, var(--scout-navy) 45%, #002456 100%);
 }
 
-.top,
-.view {
+.top {
   position: relative;
-  z-index: 1;
+  z-index: 2;
+}
+
+.view-stack {
+  position: relative;
+  min-height: 0;
+  height: 100%;
+  overflow: hidden;
 }
 
 .view {
   min-height: 0;
   height: 100%;
   overflow: hidden;
+}
+
+.view-stack > .view {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 180ms ease, visibility 180ms ease;
+  z-index: 0;
+}
+
+.view-stack > .view.is-active {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  z-index: 1;
 }
 
 /* Class display:grid must not override the HTML hidden attribute */
@@ -138,11 +161,29 @@ body {
 }
 
 .view-toggle {
+  position: relative;
   display: inline-flex;
   padding: 4px;
   border-radius: 999px;
   background: rgba(0, 0, 0, 0.28);
   border: 1px solid var(--line);
+}
+
+.view-toggle-pill {
+  position: absolute;
+  top: 4px;
+  left: 0;
+  z-index: 0;
+  height: calc(100% - 8px);
+  border-radius: 999px;
+  background: var(--scout-purple);
+  transition: transform 150ms ease-in-out, width 150ms ease-in-out;
+  pointer-events: none;
+}
+
+.view-toggle .view-btn {
+  position: relative;
+  z-index: 1;
 }
 
 .history-range[hidden],
@@ -196,8 +237,12 @@ body {
 }
 
 .view-btn.active {
-  background: var(--scout-purple);
+  background: transparent;
   color: #ffffff;
+}
+
+.view-toggle:not(:has(.view-toggle-pill)) .view-btn.active {
+  background: var(--scout-purple);
 }
 
 button {
@@ -676,13 +721,13 @@ button:disabled {
   min-height: 0;
   height: 100%;
   display: grid;
-  grid-template-rows: auto 1fr;
+  grid-template-rows: 1fr auto;
   gap: 0;
   overflow: hidden;
 }
 
 .history-note {
-  margin: 0 0 8px;
+  margin: 8px 0 0;
   padding: 8px 12px;
   border-radius: 10px;
   background: rgba(255, 230, 39, 0.12);
@@ -695,6 +740,39 @@ button:disabled {
 
 .history-note[hidden] {
   display: none !important;
+}
+
+@keyframes value-pop {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.value-pop {
+  animation: value-pop 150ms ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .view-stack > .view {
+    transition: none;
+  }
+
+  .view-toggle-pill {
+    transition: none;
+  }
+
+  .value-pop {
+    animation: none;
+  }
+
+  .line-chart {
+    transition: none !important;
+  }
 }
 
 .history-range .view-btn {
@@ -1011,12 +1089,6 @@ button:disabled {
   display: block;
 }
 
-.history-note {
-  margin: 10px 0 0;
-  color: var(--muted);
-  font-size: 0.8rem;
-}
-
 dialog {
   border: 1px solid var(--line);
   border-radius: 20px;
@@ -1080,6 +1152,30 @@ dialog::backdrop {
     padding-left: max(12px, env(safe-area-inset-left, 0px));
     min-height: 100dvh;
     grid-template-rows: auto auto;
+  }
+
+  /* Stacked absolute views need document flow on scrollable phones */
+  .view-stack {
+    height: auto;
+    overflow: visible;
+  }
+
+  .view-stack > .view {
+    position: relative;
+    inset: auto;
+    height: auto;
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transition: none;
+  }
+
+  .view-stack > .view:not(.is-active) {
+    display: none !important;
+  }
+
+  .view-stack > .view.is-active {
+    display: block !important;
   }
 
   .top {
