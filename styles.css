@@ -1872,32 +1872,87 @@ body.is-gated .fab-row {
 }
 
 .learn-card {
+  position: relative;
   text-align: left;
+  padding-top: 22px;
 }
 
 .learn-card h2 {
   text-align: center;
+  padding-inline: 28px;
+}
+
+.dialog-close-x {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 2;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  min-width: 36px;
+  min-height: 36px;
+  padding: 0;
+  margin: 0;
+  border: 1px solid rgba(255, 230, 39, 0.45);
+  border-radius: 999px;
+  background: rgba(0, 24, 60, 0.55);
+  color: var(--scout-yellow);
+  font-size: 1.45rem;
+  font-weight: 500;
+  line-height: 1;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.dialog-close-x:hover,
+.dialog-close-x:focus-visible {
+  background: rgba(255, 230, 39, 0.12);
+  border-color: rgba(255, 230, 39, 0.85);
+  outline: none;
+}
+
+.dialog-close-x:active {
+  transform: scale(0.96);
 }
 
 .learn-body {
   margin-top: 8px;
   color: rgba(200, 214, 239, 0.92);
   font-size: 0.98rem;
-  line-height: 1.45;
   font-weight: 600;
+  text-align: left;
 }
 
-.learn-body p {
-  margin: 0 0 12px;
+.learn-block {
+  margin: 0 0 22px;
 }
 
-.learn-body p:last-child {
+.learn-block:last-child {
   margin-bottom: 0;
 }
 
-.learn-body strong {
+.learn-label {
+  margin: 0 0 6px;
   color: var(--scout-yellow);
+  font-size: 0.92rem;
   font-weight: 800;
+  letter-spacing: 0.01em;
+  line-height: 1.3;
+  text-align: left;
+}
+
+.learn-text {
+  margin: 0;
+  color: rgba(232, 238, 245, 0.92);
+  font-size: 0.98rem;
+  font-weight: 600;
+  line-height: 1.5;
+  text-align: left;
 }
 
 #gate-dialog::backdrop {

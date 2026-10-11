@@ -1185,11 +1185,20 @@ function openCardHelp(key) {
   if (!dialog || !title || !body || !info) return;
   title.textContent = info.title;
   body.innerHTML = "";
-  const p1 = document.createElement("p");
-  p1.innerHTML = `<strong>How it’s captured:</strong> ${info.capture}`;
-  const p2 = document.createElement("p");
-  p2.innerHTML = `<strong>How it’s used:</strong> ${info.use}`;
-  body.append(p1, p2);
+  const addBlock = (label, text) => {
+    const block = document.createElement("div");
+    block.className = "learn-block";
+    const lab = document.createElement("p");
+    lab.className = "learn-label";
+    lab.textContent = label;
+    const p = document.createElement("p");
+    p.className = "learn-text";
+    p.textContent = text;
+    block.append(lab, p);
+    body.appendChild(block);
+  };
+  addBlock("How it’s captured", info.capture);
+  addBlock("How it’s used", info.use);
   dialog.showModal();
 }
 
