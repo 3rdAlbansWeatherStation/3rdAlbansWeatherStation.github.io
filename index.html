@@ -11,7 +11,7 @@
       href="https://fonts.googleapis.com/css2?family=Nunito+Sans:opsz,wght@6..12,400;6..12,600;6..12,700;6..12,800;6..12,900&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="./styles.css?v=34" />
+    <link rel="stylesheet" href="./styles.css?v=35" />
   </head>
   <body class="is-gated">
     <div class="sky" aria-hidden="true"></div>
@@ -243,8 +243,10 @@
           <div class="chart-body">
             <div class="chart-side left rain">
               <span class="chart-side-name">Rain</span>
-              <strong class="chart-side-high" id="lbl-rain-high">—</strong>
-              <span class="chart-side-unit">mm</span>
+              <div class="chart-side-sum">
+                <strong class="chart-side-high" id="lbl-rain-high">—</strong>
+                <span class="chart-side-unit">mm</span>
+              </div>
             </div>
             <canvas id="chart-rain" class="line-chart" width="640" height="120"></canvas>
           </div>
@@ -418,6 +420,6 @@
       </div>
     </dialog>
 
-    <script src="./app.js?v=34"></script>
+    <script src="./app.js?v=35"></script>
   </body>
 </html>

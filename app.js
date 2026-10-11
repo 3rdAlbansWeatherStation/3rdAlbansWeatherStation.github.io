@@ -75,12 +75,15 @@ const BAND = {
   orangeFill: "rgba(255,145,42,0.12)",
   blue: "#006ddf",
   blueFill: "rgba(0,109,223,0.12)",
+  /* Lightened scout blue — readable on navy */
+  blueBright: "#5eb1ff",
+  blueBrightFill: "rgba(94,177,255,0.16)",
 };
 const CHART_LINE_W = 2.25;
 const CHART_PAD_LEFT = 34;
 const CHART_PAD_RIGHT = 8;
 const CHART_PAD_TOP = 10;
-const CHART_PAD_BOTTOM = 22;
+const CHART_PAD_BOTTOM = 28;
 
 function dataUrl(name) {
   // Relative paths work on project Pages (…/pi-weather/) and locally
@@ -342,29 +345,42 @@ function fmtTick(n, digits = 1) {
   return String(t);
 }
 
-function drawYAxis(ctx, range, cssW, cssH, padL, padR, padTop, padBottom, digits = 1) {
+function drawYAxis(ctx, range, cssW, cssH, padL, padR, padTop, padBottom, digits = 1, opts = {}) {
   const { min, max, span } = range;
   const plotH = cssH - padTop - padBottom;
   const ticks = [max, (max + min) / 2, min];
-  ctx.strokeStyle = "rgba(232,238,245,0.14)";
+  const side = opts.side === "right" ? "right" : "left";
+  const labelColor = opts.color || "rgba(232,238,245,0.62)";
+  const drawGrid = opts.grid !== false;
   ctx.lineWidth = 1;
-  ctx.fillStyle = "rgba(232,238,245,0.62)";
   ctx.font = "600 10px 'Nunito Sans', system-ui, sans-serif";
-  ctx.textAlign = "right";
   ctx.textBaseline = "middle";
+  ctx.textAlign = side === "right" ? "left" : "right";
   ticks.forEach((val, i) => {
     const y = padTop + (i / 2) * plotH;
-    ctx.beginPath();
-    ctx.moveTo(padL, y);
-    ctx.lineTo(cssW - padR, y);
-    ctx.stroke();
-    ctx.beginPath();
-    ctx.moveTo(padL - 4, y);
-    ctx.lineTo(padL, y);
+    if (drawGrid && side === "left") {
+      ctx.strokeStyle = "rgba(232,238,245,0.14)";
+      ctx.beginPath();
+      ctx.moveTo(padL, y);
+      ctx.lineTo(cssW - padR, y);
+      ctx.stroke();
+    }
     ctx.strokeStyle = "rgba(232,238,245,0.45)";
+    ctx.beginPath();
+    if (side === "right") {
+      ctx.moveTo(cssW - padR, y);
+      ctx.lineTo(cssW - padR + 4, y);
+    } else {
+      ctx.moveTo(padL - 4, y);
+      ctx.lineTo(padL, y);
+    }
     ctx.stroke();
-    ctx.strokeStyle = "rgba(232,238,245,0.14)";
-    ctx.fillText(fmtTick(val, digits), padL - 6, y);
+    ctx.fillStyle = labelColor;
+    ctx.fillText(
+      fmtTick(val, digits),
+      side === "right" ? cssW - padR + 6 : padL - 6,
+      y
+    );
   });
   void span;
 }
@@ -509,7 +525,7 @@ function drawLineChart(canvasId, points, seriesList, opts = {}) {
   if (!prepared || !points?.length) return;
   const { ctx, cssW, cssH } = prepared;
   const padL = CHART_PAD_LEFT;
-  const padR = CHART_PAD_RIGHT;
+  const padR = opts.dualYAxis ? CHART_PAD_LEFT : CHART_PAD_RIGHT;
   const padTop = CHART_PAD_TOP;
   const padBottom = CHART_PAD_BOTTOM;
   const smooth = historyStyle === "smooth";
@@ -532,9 +548,32 @@ function drawLineChart(canvasId, points, seriesList, opts = {}) {
     sharedRange = seriesRange(all);
   }
 
-  const axisRange = sharedRange || seriesRange(valueSets[0] || []);
-  const axisDigits = opts.yDigits != null ? opts.yDigits : seriesList[0]?.yDigits ?? 1;
-  drawYAxis(ctx, axisRange, cssW, cssH, padL, padR, padTop, padBottom, axisDigits);
+  const leftRange = sharedRange || seriesRange(valueSets[0] || []);
+  const leftDigits = opts.yDigits != null ? opts.yDigits : seriesList[0]?.yDigits ?? 1;
+  drawYAxis(ctx, leftRange, cssW, cssH, padL, padR, padTop, padBottom, leftDigits, {
+    side: "left",
+    color: opts.leftAxisColor || "rgba(232,238,245,0.62)",
+    grid: true,
+  });
+  if (opts.dualYAxis && seriesList[1] && !sharedRange) {
+    const rightDigits = seriesList[1].yDigits != null ? seriesList[1].yDigits : 0;
+    drawYAxis(
+      ctx,
+      seriesRange(valueSets[1] || []),
+      cssW,
+      cssH,
+      padL,
+      padR,
+      padTop,
+      padBottom,
+      rightDigits,
+      {
+        side: "right",
+        color: opts.rightAxisColor || "rgba(232,238,245,0.62)",
+        grid: false,
+      }
+    );
+  }
 
   seriesList.forEach((s, i) => {
     const range = sharedRange || seriesRange(valueSets[i]);
@@ -754,8 +793,8 @@ function renderHistory(data) {
     [
       {
         key: "pressureHpa",
-        color: BAND.blue,
-        fill: BAND.blueFill,
+        color: BAND.blueBright,
+        fill: BAND.blueBrightFill,
         label: "Press",
         unit: "hPa",
         yDigits: 1,
@@ -763,24 +802,33 @@ function renderHistory(data) {
     ],
     { yDigits: 1 }
   );
-  drawLineChart("chart-temp-hum", points, [
+  drawLineChart(
+    "chart-temp-hum",
+    points,
+    [
+      {
+        key: "tempC",
+        color: BAND.yellow,
+        fill: BAND.yellowFill,
+        label: "Temp",
+        unit: "°C",
+        yDigits: 1,
+      },
+      {
+        key: "humidity",
+        color: BAND.green,
+        fill: null,
+        label: "Humid",
+        unit: "%",
+        yDigits: 0,
+      },
+    ],
     {
-      key: "tempC",
-      color: BAND.yellow,
-      fill: BAND.yellowFill,
-      label: "Temp",
-      unit: "°C",
-      yDigits: 1,
-    },
-    {
-      key: "humidity",
-      color: BAND.green,
-      fill: null,
-      label: "Humid",
-      unit: "%",
-      yDigits: 0,
-    },
-  ]);
+      dualYAxis: true,
+      leftAxisColor: BAND.yellow,
+      rightAxisColor: BAND.green,
+    }
+  );
 }
 
 async function refresh() {

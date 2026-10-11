@@ -4,6 +4,8 @@
   --scout-teal: #088486;
   --scout-navy: #003982;
   --scout-blue: #006ddf;
+  /* Lighter scout blue for charts on navy (contrast) */
+  --scout-blue-bright: #5eb1ff;
   --scout-green: #25b755;
   --scout-yellow: #ffe627;
   --scout-orange: #ff912a;
@@ -106,7 +108,7 @@ body {
 .brand-line {
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
+  align-items: baseline;
   gap: 10px 14px;
   min-width: 0;
 }
@@ -115,7 +117,7 @@ body {
   margin: 0;
   font-family: var(--font-display);
   font-size: clamp(1.55rem, 3.2vw, 2.15rem);
-  line-height: 1;
+  line-height: 1.1;
   font-weight: 900;
 }
 
@@ -124,7 +126,7 @@ body {
   color: var(--muted);
   font-size: clamp(1.05rem, 2vw, 1.35rem);
   font-weight: 600;
-  line-height: 1;
+  line-height: 1.1;
   white-space: nowrap;
 }
 
@@ -904,12 +906,24 @@ button:disabled {
 .chart-side.pressure .chart-side-name,
 .chart-side.pressure .chart-side-high,
 .chart-side.pressure .chart-side-low {
-  color: var(--scout-blue);
+  color: var(--scout-blue-bright);
 }
 
 .chart-side.rain .chart-side-name,
-.chart-side.rain .chart-side-high {
+.chart-side.rain .chart-side-high,
+.chart-side.rain .chart-side-unit {
   color: var(--scout-blue);
+}
+
+.chart-side-sum {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.28em;
+}
+
+.chart-side.rain {
+  justify-content: flex-start;
+  gap: 8px;
 }
 
 .chart-side.solar .chart-side-name,
