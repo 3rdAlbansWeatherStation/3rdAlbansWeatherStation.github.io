@@ -304,6 +304,7 @@
 
     <div id="chart-tip" class="chart-tip" hidden></div>
     <div class="fab-row">
+      <button type="button" class="station-fab" id="btn-station">Weather Station</button>
       <button type="button" class="privacy-fab" id="btn-privacy">Privacy</button>
       <a
         class="info-fab"
@@ -377,6 +378,21 @@
       </div>
     </dialog>
 
+    <dialog id="station-dialog" aria-labelledby="station-title">
+      <div class="welcome-card station-card">
+        <h2 id="station-title">Weather Station</h2>
+        <img
+          class="station-photo"
+          src="./ecowitt.jpg"
+          alt="Ecowitt weather station at the Scout Hut"
+          loading="lazy"
+        />
+        <div class="welcome-actions">
+          <button type="button" class="welcome-ok" id="btn-station-close">Close</button>
+        </div>
+      </div>
+    </dialog>
+
     <dialog id="privacy-dialog" aria-labelledby="privacy-title">
       <div class="welcome-card privacy-card">
         <h2 id="privacy-title">Privacy</h2>
@@ -424,6 +440,6 @@
       </div>
     </dialog>
 
-    <script src="./app.js?v=36"></script>
+    <script src="./app.js?v=37"></script>
   </body>
 </html>

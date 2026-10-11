@@ -1710,7 +1710,8 @@ button.card-help:active {
 }
 
 a.info-fab,
-button.privacy-fab {
+button.privacy-fab,
+button.station-fab {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -1737,14 +1738,38 @@ button.privacy-fab {
   color: #ffffff;
 }
 
+button.station-fab {
+  border: 1px solid rgba(0, 109, 223, 0.65);
+  background: var(--scout-blue);
+  color: #ffffff;
+}
+
 a.info-fab:hover,
-button.privacy-fab:hover {
+button.privacy-fab:hover,
+button.station-fab:hover {
   filter: brightness(1.08);
 }
 
 a.info-fab:active,
-button.privacy-fab:active {
+button.privacy-fab:active,
+button.station-fab:active {
   transform: scale(0.98);
+}
+
+.station-card {
+  width: min(560px, calc(100vw - 32px));
+}
+
+.station-photo {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: min(70vh, 520px);
+  object-fit: contain;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  background: rgba(0, 0, 0, 0.25);
+  margin: 4px 0 12px;
 }
 
 /* Temporary soft gate — blur page until unlocked (session) */

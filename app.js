@@ -1056,6 +1056,19 @@ function wirePrivacy() {
   });
 }
 
+function wireStation() {
+  const dialog = $("station-dialog");
+  const openBtn = $("btn-station");
+  const closeBtn = $("btn-station-close");
+  if (!dialog || !openBtn || !closeBtn) return;
+
+  openBtn.addEventListener("click", () => dialog.showModal());
+  closeBtn.addEventListener("click", () => dialog.close());
+  dialog.addEventListener("click", (e) => {
+    if (e.target === dialog) dialog.close();
+  });
+}
+
 const CARD_HELP = {
   wind: {
     title: "Wind",
@@ -1266,6 +1279,7 @@ function unlockSite() {
   if (gate?.open) gate.close();
   wireWelcome();
   wirePrivacy();
+  wireStation();
   wireHelp();
 }
 
