@@ -1756,22 +1756,6 @@ button.station-fab:active {
   transform: scale(0.98);
 }
 
-.station-card {
-  width: min(560px, calc(100vw - 32px));
-}
-
-.station-photo {
-  display: block;
-  width: 100%;
-  height: auto;
-  max-height: min(70vh, 520px);
-  object-fit: contain;
-  border-radius: 12px;
-  border: 1px solid var(--line);
-  background: rgba(0, 0, 0, 0.25);
-  margin: 4px 0 12px;
-}
-
 /* Temporary soft gate — blur page until unlocked (session) */
 body.is-gated .sky,
 body.is-gated .demo-banner,
@@ -1787,7 +1771,8 @@ body.is-gated .fab-row {
 #gate-dialog,
 #welcome-dialog,
 #privacy-dialog,
-#learn-dialog {
+#learn-dialog,
+#station-dialog {
   border: 1px solid rgba(255, 230, 39, 0.28);
   border-radius: 22px;
   padding: 0;
@@ -1799,15 +1784,87 @@ body.is-gated .fab-row {
   box-shadow: var(--shadow);
   width: min(480px, calc(100vw - 32px));
   max-height: calc(100vh - 32px);
+  max-height: calc(100dvh - 32px);
   overflow: auto;
 }
 
 #gate-dialog::backdrop,
 #welcome-dialog::backdrop,
 #privacy-dialog::backdrop,
-#learn-dialog::backdrop {
+#learn-dialog::backdrop,
+#station-dialog::backdrop {
   background: rgba(0, 24, 60, 0.78);
   backdrop-filter: blur(3px);
+}
+
+#station-dialog {
+  width: min(520px, calc(100vw - 24px));
+  max-height: calc(100dvh - 24px);
+  overflow: hidden;
+}
+
+.station-card {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  width: 100%;
+  max-height: calc(100dvh - 24px);
+  padding: 20px 18px 16px;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.station-card h2 {
+  flex: 0 0 auto;
+  margin: 0 0 12px;
+}
+
+.station-photo {
+  display: block;
+  flex: 0 1 auto;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  max-height: min(56dvh, 420px);
+  object-fit: contain;
+  object-position: center;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  background: rgba(0, 0, 0, 0.25);
+  margin: 0 0 14px;
+}
+
+.station-card .welcome-actions {
+  flex: 0 0 auto;
+  margin-top: auto;
+}
+
+@media (max-width: 700px) {
+  #station-dialog {
+    width: calc(100vw - 20px);
+    max-height: calc(100dvh - 20px);
+    margin: auto;
+  }
+
+  .station-card {
+    padding: 14px 12px 12px;
+    max-height: calc(100dvh - 20px);
+  }
+
+  .station-card h2 {
+    margin-bottom: 8px;
+    font-size: 1.15rem;
+  }
+
+  .station-photo {
+    max-height: min(42dvh, 280px);
+    margin-bottom: 10px;
+  }
+
+  button.station-fab {
+    padding: 0 12px;
+    font-size: 0.88rem;
+  }
 }
 
 #learn-dialog {
