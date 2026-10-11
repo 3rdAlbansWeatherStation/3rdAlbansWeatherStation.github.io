@@ -1243,17 +1243,20 @@ dialog::backdrop {
     margin-inline: auto;
   }
 
-  /* Same width as metric cards; dial centred inside */
+  /* Same width as metric cards; dial slightly smaller so Beaufort fits */
   .wind-compass {
     order: 1;
     width: 100%;
     max-width: 100%;
     height: auto;
     aspect-ratio: auto;
-    min-height: 280px;
+    min-height: 0;
     margin-inline: 0;
     box-sizing: border-box;
     justify-content: flex-start;
+    overflow: visible;
+    padding: 4px 6px 8px;
+    gap: 4px;
   }
 
   /* Mobile: compass only with page 1 metrics */
@@ -1262,10 +1265,15 @@ dialog::backdrop {
   }
 
   .wind-compass .compass {
-    --dial: min(240px, 78vw, calc(100% - 8px));
+    --dial: min(200px, 68vw, calc(100% - 8px));
     width: var(--dial);
     height: var(--dial);
     margin-inline: auto;
+    margin-block: 0;
+  }
+
+  .wind-compass .wind-beaufort {
+    font-size: clamp(0.95rem, 3.6vw, 1.15rem);
   }
 
   .live-boxes {
