@@ -45,7 +45,9 @@ function setHistoryStyle(style) {
     btn.classList.toggle("active", on);
     btn.setAttribute("aria-selected", on ? "true" : "false");
   });
-  if (currentView === "historic" && lastHistory) renderHistory(lastHistory);
+  if (currentView === "historic" && lastHistory) {
+    renderHistory(lastHistory, { motion: false });
+  }
 }
 
 let historyRange = loadHistoryRange();
@@ -60,6 +62,10 @@ let currentView = "live";
 let livePage = "1";
 let refreshTimer;
 let lastHistory = null;
+/** History JSON updatedAt from last render — used to skip repeat chart motion. */
+let lastHistoryStamp = null;
+/** When true, next chart draw runs reveal + value-pop. */
+let historyMotion = false;
 /** Last trusted vane heading; null until first sample (avoids false North at 0°). */
 let lastSteadyWindDeg = null;
 let chartTipWired = false;
@@ -215,7 +221,7 @@ function popHistoryAggregates() {
 
 function revealChart(canvas) {
   if (!canvas) return;
-  if (prefersReducedMotion()) {
+  if (!historyMotion || prefersReducedMotion()) {
     canvas.style.transition = "";
     canvas.style.clipPath = "";
     return;
@@ -228,6 +234,14 @@ function revealChart(canvas) {
       canvas.style.clipPath = "inset(0 0% 0 0)";
     });
   });
+}
+
+/** motion: true | false | "if-new" (animate only when updatedAt changed) */
+function resolveHistoryMotion(data, motion) {
+  const stamp = data?.updatedAt != null ? String(data.updatedAt) : "";
+  if (motion === true) return true;
+  if (motion === "if-new") return Boolean(stamp && stamp !== lastHistoryStamp);
+  return false;
 }
 
 function setView(view) {
@@ -270,8 +284,8 @@ function setView(view) {
   if (view === "live") setLivePage(livePage);
   if (view === "historic") {
     requestAnimationFrame(() => {
-      if (lastHistory) renderHistory(lastHistory);
-      else refresh();
+      if (lastHistory) renderHistory(lastHistory, { motion: true });
+      else refresh({ historyMotion: true });
     });
   }
 }
@@ -733,8 +747,12 @@ function drawWindRose(points) {
   revealChart(canvas);
 }
 
-function renderHistory(data) {
+function renderHistory(data, opts = {}) {
+  const motion = opts.motion === undefined ? false : opts.motion;
+  historyMotion = resolveHistoryMotion(data, motion);
   lastHistory = data;
+  lastHistoryStamp =
+    data?.updatedAt != null ? String(data.updatedAt) : lastHistoryStamp;
   const s = data.summary || {};
   const points = Array.isArray(data.points) ? data.points : [];
 
@@ -788,7 +806,7 @@ function renderHistory(data) {
     s.rainTotalMm == null ? "Σ —" : `Σ ${fmtNum(s.rainTotalMm)}`;
   $("lbl-solar-high").textContent =
     solarHigh == null ? "▲ —" : `▲ ${fmtNum(solarHigh, 0)}`;
-  popHistoryAggregates();
+  if (historyMotion) popHistoryAggregates();
 
   drawWindRose(points);
   drawLineChart(
@@ -890,9 +908,10 @@ function renderHistory(data) {
       rightAxisColor: BAND.green,
     }
   );
+  historyMotion = false;
 }
 
-async function refresh() {
+async function refresh(opts = {}) {
   try {
     const range = HISTORY_RANGES.includes(historyRange) ? historyRange : "day";
     const [current, history] = await Promise.all([
@@ -900,7 +919,13 @@ async function refresh() {
       getJson(dataUrl(`history-${range}.json`)),
     ]);
     renderCurrent(current);
-    renderHistory(history);
+    const motion =
+      opts.historyMotion === true
+        ? true
+        : currentView === "historic"
+          ? "if-new"
+          : false;
+    renderHistory(history, { motion });
   } catch (err) {
     console.error(err);
   }
@@ -938,7 +963,7 @@ function wireUi() {
       } catch {
         /* ignore */
       }
-      refresh();
+      refresh({ historyMotion: true });
     });
   });
 
@@ -959,7 +984,7 @@ function wireUi() {
       } catch {
         /* ignore */
       }
-      if (lastHistory) renderHistory(lastHistory);
+      if (lastHistory) renderHistory(lastHistory, { motion: true });
     });
   });
 }
@@ -1350,5 +1375,5 @@ window.addEventListener("resize", () => {
   syncTogglePill($("history-range"));
   if (currentView !== "historic" || !lastHistory) return;
   clearTimeout(resizeTimer);
-  resizeTimer = setTimeout(() => renderHistory(lastHistory), 80);
+  resizeTimer = setTimeout(() => renderHistory(lastHistory, { motion: false }), 80);
 });
