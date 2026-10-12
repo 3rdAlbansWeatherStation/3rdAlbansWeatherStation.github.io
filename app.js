@@ -1094,6 +1094,23 @@ function wireStation() {
   });
 }
 
+function wireHowItWorks() {
+  const dialog = $("how-dialog");
+  const openBtn = $("btn-how");
+  const closeBtn = $("btn-how-close");
+  if (!dialog || !openBtn || !closeBtn) return;
+
+  openBtn.addEventListener("click", () => {
+    dialog.showModal();
+    const scroller = dialog.querySelector(".how-scroll");
+    if (scroller) scroller.scrollLeft = 0;
+  });
+  closeBtn.addEventListener("click", () => dialog.close());
+  dialog.addEventListener("click", (e) => {
+    if (e.target === dialog) dialog.close();
+  });
+}
+
 const CARD_HELP = {
   wind: {
     title: "Wind",
@@ -1314,6 +1331,7 @@ function unlockSite() {
   wireWelcome();
   wirePrivacy();
   wireStation();
+  wireHowItWorks();
   wireHelp();
 }
 

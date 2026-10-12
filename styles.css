@@ -1779,6 +1779,11 @@ button.bottom-bar-btn {
   background: var(--scout-teal);
 }
 
+#btn-how {
+  border: 1px solid rgba(37, 183, 85, 0.65);
+  background: var(--scout-green);
+}
+
 a.bottom-bar-btn {
   border: 1px solid rgba(116, 19, 220, 0.55);
   background: var(--scout-purple);
@@ -1846,7 +1851,8 @@ body.is-gated .bottom-bar {
 #welcome-dialog,
 #privacy-dialog,
 #learn-dialog,
-#station-dialog {
+#station-dialog,
+#how-dialog {
   border: 1px solid rgba(255, 230, 39, 0.28);
   border-radius: 22px;
   padding: 0;
@@ -1866,7 +1872,8 @@ body.is-gated .bottom-bar {
 #welcome-dialog::backdrop,
 #privacy-dialog::backdrop,
 #learn-dialog::backdrop,
-#station-dialog::backdrop {
+#station-dialog::backdrop,
+#how-dialog::backdrop {
   background: rgba(0, 24, 60, 0.78);
   backdrop-filter: blur(3px);
 }
@@ -1875,6 +1882,115 @@ body.is-gated .bottom-bar {
   width: min(520px, calc(100vw - 24px));
   max-height: calc(100dvh - 24px);
   overflow: hidden;
+}
+
+#how-dialog {
+  width: min(960px, calc(100vw - 24px));
+  max-height: calc(100dvh - 24px);
+  overflow: hidden;
+}
+
+.how-card {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  width: 100%;
+  max-height: calc(100dvh - 24px);
+  padding: 20px 18px 16px;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.how-card h2 {
+  flex: 0 0 auto;
+  margin: 0 0 8px;
+}
+
+.how-swipe-hint {
+  display: none;
+  margin: 0 0 8px;
+  color: var(--scout-yellow);
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.how-scroll {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  background: rgba(0, 0, 0, 0.25);
+  mask-image: linear-gradient(to right, #000 0%, #000 calc(100% - 28px), transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, #000 0%, #000 calc(100% - 28px), transparent 100%);
+}
+
+.how-graphic {
+  display: block;
+  height: min(52dvh, 480px);
+  width: auto;
+  max-width: none;
+  object-fit: contain;
+  object-position: left center;
+}
+
+.how-caption {
+  flex: 0 0 auto;
+  margin: 12px 0 0;
+  color: var(--muted);
+  font-size: 0.92rem;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.how-card .welcome-actions {
+  flex: 0 0 auto;
+  margin-top: 12px;
+}
+
+@media (min-width: 900px) {
+  .how-scroll {
+    mask-image: none;
+    -webkit-mask-image: none;
+  }
+
+  .how-graphic {
+    width: 100%;
+    height: auto;
+    max-height: min(56dvh, 520px);
+  }
+}
+
+@media (max-width: 700px) {
+  #how-dialog {
+    width: calc(100vw - 16px);
+    max-height: calc(100dvh - 16px);
+    margin: auto;
+  }
+
+  .how-card {
+    padding: 14px 12px 12px;
+    max-height: calc(100dvh - 16px);
+  }
+
+  .how-card h2 {
+    font-size: 1.15rem;
+  }
+
+  .how-swipe-hint {
+    display: block;
+  }
+
+  .how-graphic {
+    height: min(38dvh, 260px);
+  }
+
+  .how-caption {
+    font-size: 0.85rem;
+  }
 }
 
 .station-card {
