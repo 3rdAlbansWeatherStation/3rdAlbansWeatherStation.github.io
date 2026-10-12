@@ -1174,8 +1174,14 @@ dialog::backdrop {
     display: none !important;
   }
 
-  .view-stack > .view.is-active {
-    display: block !important;
+  /* Keep Live as column flex so compass / boxes / Windy order works */
+  .view-stack > .view.is-active.live-view {
+    display: flex !important;
+    flex-direction: column;
+  }
+
+  .view-stack > .view.is-active.historic-view {
+    display: grid !important;
   }
 
   .top {
@@ -1402,6 +1408,7 @@ dialog::backdrop {
     width: 100%;
   }
 
+  /* Windy last on phones: compass → metrics → map */
   .live-radar {
     order: 3;
   }
