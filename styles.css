@@ -954,15 +954,26 @@ button:disabled {
 .chart-side {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: flex-start;
-  min-width: 3.6rem;
+  gap: 4px;
+  min-width: 0;
   padding: 2px 0;
 }
 
 .chart-side.right {
   align-items: flex-end;
   text-align: right;
+}
+
+/* Drop min/max numerals — title + unit only (rain keeps its total) */
+.chart-side-high,
+.chart-side-low {
+  display: none;
+}
+
+.chart-side.rain .chart-side-high {
+  display: inline;
 }
 
 .chart-side-name {
@@ -1446,12 +1457,15 @@ dialog::backdrop {
     overflow: hidden;
   }
 
-  /* Keep min/max beside the graph; slim columns so dual-side charts stay wide */
+  /* Title + unit only — narrow side rails, wide graphs */
   .chart-side {
-    min-width: 3.2rem;
-    max-width: 3.6rem;
+    min-width: 0;
+    max-width: 4.25rem;
     gap: 2px;
-    justify-content: space-between;
+  }
+
+  .chart-side.rain {
+    max-width: 5rem;
   }
 
   .chart-wind .chart-body,
@@ -1467,17 +1481,16 @@ dialog::backdrop {
   }
 
   .chart-side-name {
-    font-size: 0.72rem;
+    font-size: 0.78rem;
   }
 
-  .chart-side-high,
-  .chart-side-low {
-    font-size: 0.78rem;
+  .chart-side.rain .chart-side-high {
+    font-size: 0.88rem;
     line-height: 1.1;
   }
 
   .chart-side-unit {
-    font-size: 0.62rem;
+    font-size: 0.65rem;
   }
 
   .chart-card button.card-help {
