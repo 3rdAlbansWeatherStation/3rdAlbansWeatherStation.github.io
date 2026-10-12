@@ -162,6 +162,28 @@ body {
   align-items: center;
   gap: 10px;
   flex-shrink: 0;
+  margin-left: auto;
+}
+
+/* Day/Week/… sits beside Live/History on desktop; own centred row on phones */
+.header-history-row {
+  display: none;
+  align-items: center;
+  gap: 8px;
+}
+
+.header-history-row:has(#history-range:not([hidden])) {
+  display: flex;
+}
+
+@media (min-width: 701px) {
+  .top:has(#history-range:not([hidden])) .header-history-row {
+    margin-left: auto;
+  }
+
+  .top:has(#history-range:not([hidden])) .header-toggles {
+    margin-left: 0;
+  }
 }
 
 .view-toggle {
@@ -1366,8 +1388,8 @@ dialog::backdrop {
   }
 
   /*
-   * History: keep Live/History (and Page) beside the logo.
-   * Day/Week/Month/Year drops to a full-width centred second row.
+   * History: Live/History stay on the logo row.
+   * Day/Week/Month/Year uses a full-width centred second row.
    */
   .top {
     flex-wrap: wrap;
@@ -1375,36 +1397,24 @@ dialog::backdrop {
   }
 
   .header-toggles {
-    display: contents;
-  }
-
-  .live-page {
-    order: 2;
-  }
-
-  .mode-toggle {
-    order: 3;
+    display: flex;
     margin-left: auto;
+    width: auto;
+    flex: 0 0 auto;
   }
 
-  .live-page:not([hidden]) {
-    margin-left: auto;
-  }
-
-  .live-page:not([hidden]) ~ .mode-toggle {
+  .header-history-row:has(#history-range:not([hidden])) {
+    display: flex;
+    flex: 1 1 100%;
+    width: 100%;
+    justify-content: center;
     margin-left: 0;
-  }
-
-  #history-range:not([hidden]) {
-    order: 4;
-    flex: 1 1 100%;
-    justify-content: center;
-  }
-
-  #history-style:not([hidden]) {
     order: 5;
-    flex: 1 1 100%;
-    justify-content: center;
+  }
+
+  .brand-block,
+  .header-toggles {
+    order: 1;
   }
 
   .historic-view,
