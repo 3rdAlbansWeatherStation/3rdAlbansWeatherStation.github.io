@@ -48,6 +48,8 @@ body {
   max-height: 100vh;
   max-height: 100dvh;
   padding: 12px 16px;
+  /* Room for fixed bottom bar so charts / cards are not covered */
+  padding-bottom: calc(56px + env(safe-area-inset-bottom, 0px));
   display: grid;
   grid-template-rows: auto 1fr;
   gap: 8px;
@@ -1705,62 +1707,114 @@ button.card-help:active {
   gap: 0.35em;
 }
 
-/* Bottom-right FABs ? Privacy left of Info (Info matches Pi Power corner) */
-.fab-row {
+/* Cloud-only fixed bottom bar — keeps actions clear of charts */
+.bottom-bar {
   position: fixed;
-  right: 14px;
-  bottom: 12px;
+  left: 0;
+  right: 0;
+  bottom: 0;
   z-index: 5;
   display: flex;
-  gap: 10px;
   align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 52px;
+  padding: 8px 16px;
+  padding-bottom: max(8px, env(safe-area-inset-bottom, 0px));
+  box-sizing: border-box;
+  background: rgba(0, 28, 68, 0.94);
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 -8px 24px rgba(0, 16, 40, 0.35);
 }
 
-a.info-fab,
-button.privacy-fab,
-button.station-fab {
+.bottom-bar-meta {
+  margin: 0;
+  min-width: 0;
+  flex: 1 1 auto;
+  color: var(--muted);
+  font-size: 0.9rem;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.bottom-bar-actions {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 6px;
+}
+
+a.bottom-bar-btn,
+button.bottom-bar-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 44px;
-  min-width: 44px;
-  padding: 0 16px;
+  min-height: 36px;
+  padding: 0 12px;
   border-radius: 999px;
+  border: 1px solid rgba(255, 230, 39, 0.35);
+  background: transparent;
+  color: rgba(232, 238, 245, 0.92);
   font: inherit;
+  font-size: 0.88rem;
   font-weight: 700;
   text-decoration: none;
-  box-shadow: var(--shadow);
   cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  white-space: nowrap;
 }
 
-a.info-fab {
-  border: 1px solid rgba(116, 19, 220, 0.55);
-  background: var(--scout-purple);
-  color: #ffffff;
+a.bottom-bar-btn:hover,
+button.bottom-bar-btn:hover,
+a.bottom-bar-btn:focus-visible,
+button.bottom-bar-btn:focus-visible {
+  border-color: rgba(255, 230, 39, 0.85);
+  background: rgba(255, 230, 39, 0.1);
+  color: #fff;
+  outline: none;
 }
 
-button.privacy-fab {
-  border: 1px solid rgba(8, 132, 134, 0.65);
-  background: var(--scout-teal);
-  color: #ffffff;
-}
-
-button.station-fab {
-  border: 1px solid rgba(0, 109, 223, 0.65);
-  background: var(--scout-blue);
-  color: #ffffff;
-}
-
-a.info-fab:hover,
-button.privacy-fab:hover,
-button.station-fab:hover {
-  filter: brightness(1.08);
-}
-
-a.info-fab:active,
-button.privacy-fab:active,
-button.station-fab:active {
+a.bottom-bar-btn:active,
+button.bottom-bar-btn:active {
   transform: scale(0.98);
+}
+
+@media (max-width: 700px) {
+  body {
+    padding-bottom: calc(64px + env(safe-area-inset-bottom, 0px));
+  }
+
+  .bottom-bar {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 6px 10px;
+    padding: 8px 10px;
+    padding-bottom: max(8px, env(safe-area-inset-bottom, 0px));
+  }
+
+  .bottom-bar-meta {
+    flex: 1 1 100%;
+    text-align: center;
+    font-size: 0.82rem;
+  }
+
+  .bottom-bar-actions {
+    width: 100%;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  a.bottom-bar-btn,
+  button.bottom-bar-btn {
+    min-height: 34px;
+    padding: 0 10px;
+    font-size: 0.8rem;
+  }
 }
 
 /* Temporary soft gate — blur page until unlocked (session) */
@@ -1768,7 +1822,7 @@ body.is-gated .sky,
 body.is-gated .demo-banner,
 body.is-gated .top,
 body.is-gated main,
-body.is-gated .fab-row {
+body.is-gated .bottom-bar {
   filter: blur(10px);
   pointer-events: none;
   user-select: none;
@@ -1866,11 +1920,6 @@ body.is-gated .fab-row {
   .station-photo {
     max-height: min(42dvh, 280px);
     margin-bottom: 10px;
-  }
-
-  button.station-fab {
-    padding: 0 12px;
-    font-size: 0.88rem;
   }
 }
 

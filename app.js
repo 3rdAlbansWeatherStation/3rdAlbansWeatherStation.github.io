@@ -294,7 +294,10 @@ function renderCurrent(data) {
   const deg = data.wind?.directionDeg;
   const speed = data.wind?.speedMs;
 
-  $("updated").textContent = fmtUpdatedAt(data.updatedAt);
+  const updatedText = fmtUpdatedAt(data.updatedAt);
+  $("updated").textContent = updatedText;
+  const updatedBar = $("updated-bar");
+  if (updatedBar) updatedBar.textContent = updatedText;
 
   $("temp").textContent =
     data.outdoor?.tempC == null ? "--" : Number(data.outdoor.tempC).toFixed(1);
