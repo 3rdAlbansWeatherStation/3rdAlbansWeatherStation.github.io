@@ -1330,6 +1330,10 @@ dialog::backdrop {
     grid-template-columns: 1fr;
     grid-template-rows: none;
     height: auto;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
   }
 
   .rose-panel,
@@ -1340,6 +1344,10 @@ dialog::backdrop {
   .chart-temp-hum {
     grid-row: auto;
     grid-column: auto;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
   }
 
   .chart-body {
@@ -1355,6 +1363,71 @@ dialog::backdrop {
 
   .brand {
     display: none;
+  }
+
+  /* History has more header pills — keep them on-screen without sideways page scroll */
+  .top:has(#history-range:not([hidden])) {
+    flex-wrap: wrap;
+  }
+
+  .top:has(#history-range:not([hidden])) .header-toggles {
+    flex: 1 1 100%;
+    width: 100%;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+
+  .historic-view,
+  .history-layout {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    overflow-x: clip;
+  }
+
+  .rose-panel {
+    overflow: hidden;
+  }
+
+  .rose-canvas-wrap {
+    flex: none;
+    width: 100%;
+    height: min(58vw, 260px);
+  }
+
+  #wind-rose {
+    width: min(100%, 260px);
+    height: auto;
+    max-height: 100%;
+    margin-inline: auto;
+  }
+
+  .chart-card {
+    overflow: hidden;
+  }
+
+  .chart-side {
+    min-width: 0;
+    max-width: 3.1rem;
+    font-size: 0.78rem;
+  }
+
+  .chart-body {
+    gap: 4px;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .line-chart {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .history-note {
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow-wrap: anywhere;
   }
 
   .boxes {
