@@ -1446,10 +1446,12 @@ dialog::backdrop {
     overflow: hidden;
   }
 
-  /* Room for title + ? + min/max without overlapping the canvas */
-  .chart-side {
-    min-width: 4.4rem;
-    max-width: 4.75rem;
+  /* Single-side charts: keep a slim label column, graph takes the rest */
+  .chart-solar .chart-side,
+  .chart-rain .chart-side,
+  .chart-pressure .chart-side {
+    min-width: 4.2rem;
+    max-width: 4.6rem;
     gap: 2px;
     justify-content: flex-start;
   }
@@ -1492,6 +1494,48 @@ dialog::backdrop {
   .line-chart {
     width: 100%;
     max-width: 100%;
+  }
+
+  /*
+   * Wind + Temp/Humidity have labels on both sides — on phones that
+   * crushed the canvas. Put both label blocks on one row, graph full width under.
+   */
+  .chart-wind .chart-body,
+  .chart-temp-hum .chart-body {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto minmax(140px, 160px);
+    gap: 6px 10px;
+  }
+
+  .chart-wind .chart-side.left,
+  .chart-temp-hum .chart-side.left {
+    grid-column: 1;
+    grid-row: 1;
+    min-width: 0;
+    max-width: none;
+    width: auto;
+    justify-content: flex-start;
+    gap: 2px;
+  }
+
+  .chart-wind .chart-side.right,
+  .chart-temp-hum .chart-side.right {
+    grid-column: 2;
+    grid-row: 1;
+    min-width: 0;
+    max-width: none;
+    width: auto;
+    justify-content: flex-start;
+    gap: 2px;
+  }
+
+  .chart-wind .line-chart,
+  .chart-temp-hum .line-chart {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    width: 100%;
+    height: 100%;
+    min-height: 140px;
   }
 
   .history-note {
