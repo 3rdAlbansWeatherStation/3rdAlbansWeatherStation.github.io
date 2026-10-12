@@ -1,7 +1,7 @@
 {
   "source": "cloud",
   "range": "week",
-  "updatedAt": "2026-10-12T07:15:40.599Z",
+  "updatedAt": "2026-10-12T07:20:40.515Z",
   "summary": {
     "temp": {
       "high": 18.8,
@@ -1031,6 +1031,17 @@
       "gustMs": 1.5,
       "windDirDeg": 103,
       "wm2": 5.5,
+      "rainMm": 0
+    },
+    {
+      "t": "2026-10-12T06:30:00.000Z",
+      "tempC": 12.2,
+      "humidity": 82,
+      "pressureHpa": 1000.5,
+      "windMs": 0.1,
+      "gustMs": 1,
+      "windDirDeg": 71,
+      "wm2": 21.9,
       "rainMm": 0
     }
   ],
