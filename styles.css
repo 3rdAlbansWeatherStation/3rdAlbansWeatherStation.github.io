@@ -23,6 +23,8 @@
   --radius: 18px;
   --font-ui: "Nunito Sans", system-ui, sans-serif;
   --font-display: "Nunito Sans", system-ui, sans-serif;
+  /* Clearance for fixed bottom bar (history charts sit above it) */
+  --bottom-bar-space: 72px;
 }
 
 * {
@@ -49,7 +51,7 @@ body {
   max-height: 100dvh;
   padding: 12px 16px;
   /* Room for fixed bottom bar so charts / cards are not covered */
-  padding-bottom: calc(56px + env(safe-area-inset-bottom, 0px));
+  padding-bottom: calc(var(--bottom-bar-space) + env(safe-area-inset-bottom, 0px));
   display: grid;
   grid-template-rows: auto 1fr;
   gap: 8px;
@@ -1150,7 +1152,8 @@ dialog::backdrop {
   body {
     padding-top: max(16px, calc(env(safe-area-inset-top, 0px) + 12px));
     padding-right: max(12px, env(safe-area-inset-right, 0px));
-    padding-bottom: max(12px, env(safe-area-inset-bottom, 0px));
+    /* Keep bottom-bar clearance (was wiping it to 12px and clipping charts) */
+    padding-bottom: calc(var(--bottom-bar-space) + env(safe-area-inset-bottom, 0px));
     padding-left: max(12px, env(safe-area-inset-left, 0px));
     min-height: 100dvh;
     grid-template-rows: auto auto;
@@ -1803,8 +1806,9 @@ button.bottom-bar-btn:active {
 }
 
 @media (max-width: 700px) {
-  body {
-    padding-bottom: calc(64px + env(safe-area-inset-bottom, 0px));
+  :root {
+    /* Meta row + wrapped action pills */
+    --bottom-bar-space: 118px;
   }
 
   .bottom-bar {
@@ -1930,7 +1934,7 @@ body.is-gated .bottom-bar {
 
 .how-graphic {
   display: block;
-  height: min(52dvh, 480px);
+  height: min(56dvh, 520px);
   width: auto;
   max-width: none;
   object-fit: contain;
@@ -1966,30 +1970,39 @@ body.is-gated .bottom-bar {
 
 @media (max-width: 700px) {
   #how-dialog {
-    width: calc(100vw - 16px);
-    max-height: calc(100dvh - 16px);
+    width: calc(100vw - 12px);
+    max-height: calc(100dvh - 12px);
     margin: auto;
   }
 
   .how-card {
-    padding: 14px 12px 12px;
-    max-height: calc(100dvh - 16px);
+    padding: 12px 10px 10px;
+    max-height: calc(100dvh - 12px);
   }
 
   .how-card h2 {
-    font-size: 1.15rem;
+    margin-bottom: 4px;
+    font-size: 1.1rem;
   }
 
   .how-swipe-hint {
     display: block;
+    margin-bottom: 6px;
+    font-size: 0.8rem;
   }
 
+  /* Taller graphic → wider aspect → more sideways scroll, easier to read */
   .how-graphic {
-    height: min(38dvh, 260px);
+    height: min(58dvh, 400px);
   }
 
   .how-caption {
-    font-size: 0.85rem;
+    margin-top: 8px;
+    font-size: 0.82rem;
+  }
+
+  .how-card .welcome-actions {
+    margin-top: 8px;
   }
 }
 
