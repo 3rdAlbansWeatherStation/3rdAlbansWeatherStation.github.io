@@ -1189,28 +1189,33 @@ dialog::backdrop {
     display: grid !important;
   }
 
+  /* Logo + toggles on one row to keep vertical space for content */
   .top {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 10px;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
     padding-top: 2px;
   }
 
   .brand-block {
-    flex: 0 0 auto;
-    width: 100%;
+    flex: 0 1 auto;
+    width: auto;
+    min-width: 0;
+    gap: 8px;
   }
 
   .scout-logo {
-    height: 52px;
+    height: 44px;
   }
 
   .brand {
-    font-size: clamp(1.25rem, 3.2vw, 1.7rem);
+    font-size: clamp(1.1rem, 2.4vw, 1.45rem);
   }
 
   .brand-line {
     flex: 1;
+    min-width: 0;
   }
 
   .meta {
@@ -1219,44 +1224,48 @@ dialog::backdrop {
   }
 
   .header-toggles {
-    width: 100%;
-    justify-content: center;
+    width: auto;
+    flex: 0 1 auto;
+    justify-content: flex-end;
     flex-wrap: nowrap;
-    gap: 6px;
+    gap: 4px;
+    min-width: 0;
   }
 
   .view-toggle {
-    padding: 3px;
+    padding: 2px;
     flex-shrink: 1;
     min-width: 0;
   }
 
   .view-btn {
-    min-height: 40px;
-    padding: 0 10px;
-    font-size: 0.88rem;
+    min-height: 34px;
+    padding: 0 8px;
+    font-size: 0.8rem;
   }
 
   .history-range .view-btn {
     min-width: 0;
-    padding: 0 9px;
+    padding: 0 6px;
+    font-size: 0.72rem;
   }
 
   .history-style .view-btn {
+    min-width: 0;
+    padding: 0 6px;
+    font-size: 0.7rem;
+  }
+
+  .live-page .view-btn {
     min-width: 0;
     padding: 0 8px;
     font-size: 0.78rem;
   }
 
-  .live-page .view-btn {
-    min-width: 0;
-    padding: 0 10px;
-    font-size: 0.82rem;
-  }
-
   .mode-toggle .view-btn {
     min-width: 0;
-    padding: 0 10px;
+    padding: 0 8px;
+    font-size: 0.78rem;
   }
 
   .live-view {
@@ -1340,6 +1349,10 @@ dialog::backdrop {
 
 /* Phones: hide long title, one box per row; Windy after metric cards */
 @media (max-width: 700px) {
+  .brand-line {
+    display: none;
+  }
+
   .brand {
     display: none;
   }
@@ -1807,35 +1820,36 @@ button.bottom-bar-btn:active {
 
 @media (max-width: 700px) {
   :root {
-    /* Meta row + wrapped action pills */
-    --bottom-bar-space: 118px;
+    /* Timestamp + one action row ("How?" keeps pills on a single line) */
+    --bottom-bar-space: 92px;
   }
 
   .bottom-bar {
     flex-wrap: wrap;
     justify-content: center;
-    gap: 6px 10px;
-    padding: 8px 10px;
-    padding-bottom: max(8px, env(safe-area-inset-bottom, 0px));
+    gap: 4px 8px;
+    padding: 6px 8px;
+    padding-bottom: max(6px, env(safe-area-inset-bottom, 0px));
   }
 
   .bottom-bar-meta {
     flex: 1 1 100%;
     text-align: center;
-    font-size: 0.82rem;
+    font-size: 0.78rem;
   }
 
   .bottom-bar-actions {
     width: 100%;
     justify-content: center;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
+    gap: 4px;
   }
 
   a.bottom-bar-btn,
   button.bottom-bar-btn {
-    min-height: 34px;
-    padding: 0 10px;
-    font-size: 0.8rem;
+    min-height: 32px;
+    padding: 0 8px;
+    font-size: 0.72rem;
   }
 }
 
