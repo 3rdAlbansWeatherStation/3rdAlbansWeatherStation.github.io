@@ -1756,26 +1756,39 @@ button.bottom-bar-btn {
   min-height: 36px;
   padding: 0 12px;
   border-radius: 999px;
-  border: 1px solid rgba(255, 230, 39, 0.35);
-  background: transparent;
-  color: rgba(232, 238, 245, 0.92);
   font: inherit;
   font-size: 0.88rem;
   font-weight: 700;
   text-decoration: none;
+  color: #ffffff;
   cursor: pointer;
   appearance: none;
   -webkit-appearance: none;
   white-space: nowrap;
+  box-shadow: var(--shadow);
+}
+
+/* Match previous FAB brand colours */
+#btn-station {
+  border: 1px solid rgba(0, 109, 223, 0.65);
+  background: var(--scout-blue);
+}
+
+#btn-privacy {
+  border: 1px solid rgba(8, 132, 134, 0.65);
+  background: var(--scout-teal);
+}
+
+a.bottom-bar-btn {
+  border: 1px solid rgba(116, 19, 220, 0.55);
+  background: var(--scout-purple);
 }
 
 a.bottom-bar-btn:hover,
 button.bottom-bar-btn:hover,
 a.bottom-bar-btn:focus-visible,
 button.bottom-bar-btn:focus-visible {
-  border-color: rgba(255, 230, 39, 0.85);
-  background: rgba(255, 230, 39, 0.1);
-  color: #fff;
+  filter: brightness(1.08);
   outline: none;
 }
 
