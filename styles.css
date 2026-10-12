@@ -1446,14 +1446,45 @@ dialog::backdrop {
     overflow: hidden;
   }
 
+  /* Room for title + ? + min/max without overlapping the canvas */
   .chart-side {
-    min-width: 0;
-    max-width: 3.1rem;
-    font-size: 0.78rem;
+    min-width: 4.4rem;
+    max-width: 4.75rem;
+    gap: 2px;
+    justify-content: flex-start;
+  }
+
+  .chart-side-title-stack {
+    gap: 4px;
+    max-width: 100%;
+  }
+
+  .chart-side-name {
+    font-size: 0.82rem;
+  }
+
+  .chart-side-high,
+  .chart-side-low {
+    font-size: 0.88rem;
+    line-height: 1.15;
+  }
+
+  .chart-side-unit {
+    font-size: 0.7rem;
+  }
+
+  .chart-card button.card-help {
+    width: 13px !important;
+    height: 13px !important;
+    min-width: 13px !important;
+    min-height: 13px !important;
+    max-width: 13px !important;
+    max-height: 13px !important;
+    font-size: 9px !important;
   }
 
   .chart-body {
-    gap: 4px;
+    gap: 6px;
     width: 100%;
     max-width: 100%;
   }
