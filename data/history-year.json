@@ -1,7 +1,7 @@
 {
   "source": "cloud",
   "range": "year",
-  "updatedAt": "2026-10-18T15:19:04.451Z",
+  "updatedAt": "2026-10-18T15:20:36.414Z",
   "summary": {
     "temp": {
       "high": 14.2,
@@ -13,7 +13,7 @@
       "low": 59,
       "avg": 76
     },
-    "rainTotalMm": 2.5,
+    "rainTotalMm": 3,
     "solarHighWm2": 465.4,
     "wind": {
       "high": 5.6,
@@ -1054,6 +1054,17 @@
       "windDirDeg": 72,
       "wm2": 146.4,
       "rainMm": 0.2
+    },
+    {
+      "t": "2026-10-18T14:30:00.000Z",
+      "tempC": 9.6,
+      "humidity": 85,
+      "pressureHpa": 1016.1,
+      "windMs": 0.4,
+      "gustMs": 3.6,
+      "windDirDeg": 74,
+      "wm2": 127.9,
+      "rainMm": 0.5
     }
   ],
   "note": "Showing available history while the station archive fills (same recent data for Week / Month / Year until enough days exist). Day still shows today only."
