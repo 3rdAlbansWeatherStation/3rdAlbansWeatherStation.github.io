@@ -1,7 +1,7 @@
 {
   "source": "cloud",
   "range": "day",
-  "updatedAt": "2026-10-20T15:45:26.851Z",
+  "updatedAt": "2026-10-20T15:50:30.580Z",
   "summary": {
     "temp": {
       "high": 12,
@@ -682,22 +682,11 @@
       "rainMm": 0
     },
     {
-      "t": "2026-10-20T04:55:00.000Z",
-      "tempC": 12,
-      "humidity": 91,
-      "pressureHpa": 999.2,
-      "windMs": 0.4,
-      "gustMs": 1,
-      "windDirDeg": 66,
-      "wm2": 0,
-      "rainMm": 0
-    },
-    {
       "t": "2026-10-20T05:00:00.000Z",
       "tempC": 12,
       "humidity": 91,
       "pressureHpa": 999.1,
-      "windMs": 0.2,
+      "windMs": 0.4,
       "gustMs": 1,
       "windDirDeg": 82,
       "wm2": 0,
@@ -1012,6 +1001,17 @@
       "rainMm": 0
     },
     {
+      "t": "2026-10-20T07:25:00.000Z",
+      "tempC": 11.8,
+      "humidity": 90,
+      "pressureHpa": 997.5,
+      "windMs": 0.2,
+      "gustMs": 1,
+      "windDirDeg": 77,
+      "wm2": 9.8,
+      "rainMm": 0
+    },
+    {
       "t": "2026-10-20T07:30:00.000Z",
       "tempC": 11.8,
       "humidity": 90,
@@ -1019,7 +1019,7 @@
       "windMs": 0.4,
       "gustMs": 1.5,
       "windDirDeg": 80,
-      "wm2": 9.8,
+      "wm2": 8.3,
       "rainMm": 0
     },
     {
@@ -1342,22 +1342,11 @@
       "rainMm": 0
     },
     {
-      "t": "2026-10-20T10:00:00.000Z",
-      "tempC": 11.6,
-      "humidity": 90,
-      "pressureHpa": 995.2,
-      "windMs": 0.5,
-      "gustMs": 1.5,
-      "windDirDeg": 76,
-      "wm2": 91.5,
-      "rainMm": 0
-    },
-    {
       "t": "2026-10-20T10:05:00.000Z",
       "tempC": 11.6,
       "humidity": 90,
       "pressureHpa": 995.2,
-      "windMs": 0.4,
+      "windMs": 0.5,
       "gustMs": 1.5,
       "windDirDeg": 77,
       "wm2": 114.7,
@@ -1999,6 +1988,17 @@
       "gustMs": 0,
       "windDirDeg": 83,
       "wm2": 41.2,
+      "rainMm": 0
+    },
+    {
+      "t": "2026-10-20T15:35:00.000Z",
+      "tempC": 11.1,
+      "humidity": 91,
+      "pressureHpa": 991,
+      "windMs": 0.1,
+      "gustMs": 0.5,
+      "windDirDeg": 252,
+      "wm2": 38,
       "rainMm": 0
     }
   ]
