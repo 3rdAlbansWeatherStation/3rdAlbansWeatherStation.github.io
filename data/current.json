@@ -1,21 +1,21 @@
 {
   "source": "cloud",
   "station": "3rd Albans Weather",
-  "updatedAt": "2026-10-27T04:00:53.648Z",
+  "updatedAt": "2026-10-27T04:05:50.261Z",
   "outdoor": {
     "tempC": 15.6,
-    "humidity": 85,
+    "humidity": 84,
     "feelsLikeC": 15.6,
-    "dewPointC": 13.1
+    "dewPointC": 12.9
   },
   "indoor": {
     "tempC": 19.7,
     "humidity": 57
   },
   "wind": {
-    "speedMs": 1.1,
+    "speedMs": 1.9,
     "gustMs": 2.6,
-    "directionDeg": 286,
+    "directionDeg": 177,
     "dayMaxMs": null
   },
   "rain": {
@@ -28,8 +28,8 @@
     "yearMm": 67.8
   },
   "pressure": {
-    "absHpa": 989.8,
-    "relHpa": 989.8
+    "absHpa": 989.7,
+    "relHpa": 989.7
   },
   "solar": {
     "uvi": 0,
