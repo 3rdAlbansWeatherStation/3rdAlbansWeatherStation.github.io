@@ -1,7 +1,7 @@
 {
   "source": "cloud",
   "range": "day",
-  "updatedAt": "2026-10-30T15:20:22.793Z",
+  "updatedAt": "2026-10-30T15:31:07.335Z",
   "summary": {
     "temp": {
       "high": 17.1,
@@ -517,23 +517,12 @@
       "rainMm": 0
     },
     {
-      "t": "2026-10-30T03:45:00.000Z",
-      "tempC": 10.5,
-      "humidity": 94,
-      "pressureHpa": 1015.9,
-      "windMs": 0.1,
-      "gustMs": 1.5,
-      "windDirDeg": 68,
-      "wm2": 0,
-      "rainMm": 0
-    },
-    {
       "t": "2026-10-30T03:50:00.000Z",
       "tempC": 10.4,
       "humidity": 94,
       "pressureHpa": 1015.8,
-      "windMs": 0,
-      "gustMs": 0.5,
+      "windMs": 0.1,
+      "gustMs": 1.5,
       "windDirDeg": 112,
       "wm2": 0,
       "rainMm": 0
@@ -1012,13 +1001,13 @@
       "rainMm": 0
     },
     {
-      "t": "2026-10-30T07:35:00.000Z",
+      "t": "2026-10-30T07:30:00.000Z",
       "tempC": 9.7,
       "humidity": 94,
       "pressureHpa": 1016.8,
       "windMs": 0,
-      "gustMs": 0.5,
-      "windDirDeg": 46,
+      "gustMs": 0,
+      "windDirDeg": 44,
       "wm2": 26.7,
       "rainMm": 0
     },
@@ -1518,22 +1507,11 @@
       "rainMm": 0
     },
     {
-      "t": "2026-10-30T11:30:00.000Z",
-      "tempC": 15.5,
-      "humidity": 70,
-      "pressureHpa": 1016.9,
-      "windMs": 0.3,
-      "gustMs": 1,
-      "windDirDeg": 301,
-      "wm2": 260.2,
-      "rainMm": 0
-    },
-    {
       "t": "2026-10-30T11:35:00.000Z",
       "tempC": 15.6,
       "humidity": 69,
       "pressureHpa": 1016.9,
-      "windMs": 0.2,
+      "windMs": 0.3,
       "gustMs": 1,
       "windDirDeg": 233,
       "wm2": 260.5,
@@ -1999,6 +1977,28 @@
       "gustMs": 1.5,
       "windDirDeg": 58,
       "wm2": 33.5,
+      "rainMm": 0
+    },
+    {
+      "t": "2026-10-30T15:10:00.000Z",
+      "tempC": 14.9,
+      "humidity": 61,
+      "pressureHpa": 1016.1,
+      "windMs": 0.4,
+      "gustMs": 1.5,
+      "windDirDeg": 67,
+      "wm2": 33,
+      "rainMm": 0
+    },
+    {
+      "t": "2026-10-30T15:15:00.000Z",
+      "tempC": 14.8,
+      "humidity": 62,
+      "pressureHpa": 1016.1,
+      "windMs": 0.2,
+      "gustMs": 1,
+      "windDirDeg": 112,
+      "wm2": 32.8,
       "rainMm": 0
     }
   ]
