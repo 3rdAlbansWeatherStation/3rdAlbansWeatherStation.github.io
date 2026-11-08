@@ -1,7 +1,7 @@
 {
   "source": "cloud",
   "range": "day",
-  "updatedAt": "2026-11-08T15:20:25.614Z",
+  "updatedAt": "2026-11-08T15:25:23.529Z",
   "summary": {
     "temp": {
       "high": 10.3,
@@ -517,17 +517,6 @@
       "rainMm": 0
     },
     {
-      "t": "2026-11-08T03:45:00.000Z",
-      "tempC": 5.9,
-      "humidity": 94,
-      "pressureHpa": 1007.3,
-      "windMs": 0,
-      "gustMs": 0,
-      "windDirDeg": 236,
-      "wm2": 0,
-      "rainMm": 0
-    },
-    {
       "t": "2026-11-08T03:50:00.000Z",
       "tempC": 5.9,
       "humidity": 94,
@@ -672,6 +661,17 @@
     },
     {
       "t": "2026-11-08T04:55:00.000Z",
+      "tempC": 6.7,
+      "humidity": 94,
+      "pressureHpa": 1007.1,
+      "windMs": 0,
+      "gustMs": 0,
+      "windDirDeg": 236,
+      "wm2": 0,
+      "rainMm": 0
+    },
+    {
+      "t": "2026-11-08T05:00:00.000Z",
       "tempC": 6.7,
       "humidity": 94,
       "pressureHpa": 1007.1,
@@ -1012,17 +1012,6 @@
       "rainMm": 0
     },
     {
-      "t": "2026-11-08T07:35:00.000Z",
-      "tempC": 7,
-      "humidity": 94,
-      "pressureHpa": 1007.4,
-      "windMs": 0,
-      "gustMs": 0,
-      "windDirDeg": 236,
-      "wm2": 10.5,
-      "rainMm": 0
-    },
-    {
       "t": "2026-11-08T07:40:00.000Z",
       "tempC": 7.1,
       "humidity": 94,
@@ -1342,6 +1331,17 @@
       "rainMm": 0
     },
     {
+      "t": "2026-11-08T10:05:00.000Z",
+      "tempC": 8.8,
+      "humidity": 87,
+      "pressureHpa": 1007.7,
+      "windMs": 0,
+      "gustMs": 0,
+      "windDirDeg": 237,
+      "wm2": 99.6,
+      "rainMm": 0
+    },
+    {
       "t": "2026-11-08T10:10:00.000Z",
       "tempC": 9,
       "humidity": 86,
@@ -1507,17 +1507,6 @@
       "rainMm": 0
     },
     {
-      "t": "2026-11-08T11:25:00.000Z",
-      "tempC": 10,
-      "humidity": 82,
-      "pressureHpa": 1007.5,
-      "windMs": 0,
-      "gustMs": 0,
-      "windDirDeg": 251,
-      "wm2": 136.8,
-      "rainMm": 0
-    },
-    {
       "t": "2026-11-08T11:30:00.000Z",
       "tempC": 10.1,
       "humidity": 81,
@@ -1525,7 +1514,7 @@
       "windMs": 0,
       "gustMs": 1,
       "windDirDeg": 254,
-      "wm2": 118.4,
+      "wm2": 136.8,
       "rainMm": 0
     },
     {
@@ -1999,6 +1988,17 @@
       "gustMs": 0,
       "windDirDeg": 264,
       "wm2": 37.6,
+      "rainMm": 0
+    },
+    {
+      "t": "2026-11-08T15:10:00.000Z",
+      "tempC": 9.8,
+      "humidity": 80,
+      "pressureHpa": 1007.1,
+      "windMs": 0,
+      "gustMs": 0,
+      "windDirDeg": 264,
+      "wm2": 37.5,
       "rainMm": 0
     }
   ]
