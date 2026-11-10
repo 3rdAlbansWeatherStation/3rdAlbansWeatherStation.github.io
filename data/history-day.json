@@ -1,24 +1,36 @@
 {
   "source": "cloud",
   "range": "day",
-  "updatedAt": "2026-11-10T00:05:24.600Z",
+  "updatedAt": "2026-11-10T00:10:26.686Z",
   "summary": {
     "temp": {
-      "high": null,
-      "low": null,
-      "avg": null
+      "high": 5.4,
+      "low": 5.4,
+      "avg": 5.4
     },
     "humidity": {
-      "high": null,
-      "low": null,
-      "avg": null
+      "high": 94,
+      "low": 94,
+      "avg": 94
     },
-    "rainTotalMm": null,
+    "rainTotalMm": 0,
+    "solarHighWm2": 0,
     "wind": {
-      "high": null,
-      "avg": null
+      "high": 1.5,
+      "avg": 0.4
     }
   },
-  "points": [],
-  "note": "Cloud history is empty for this range (station may be newly online)."
+  "points": [
+    {
+      "t": "2026-11-10T00:00:00.000Z",
+      "tempC": 5.4,
+      "humidity": 94,
+      "pressureHpa": 1000.9,
+      "windMs": 0.4,
+      "gustMs": 1.5,
+      "windDirDeg": 66,
+      "wm2": 0,
+      "rainMm": 0
+    }
+  ]
 }
