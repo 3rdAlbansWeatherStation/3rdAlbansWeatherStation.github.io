@@ -1,12 +1,12 @@
 {
   "source": "cloud",
   "range": "day",
-  "updatedAt": "2026-11-11T20:15:55.606Z",
+  "updatedAt": "2026-11-11T20:57:54.536Z",
   "summary": {
     "temp": {
       "high": 9.8,
       "low": 7,
-      "avg": 8.1
+      "avg": 8
     },
     "humidity": {
       "high": 93,
@@ -110,15 +110,15 @@
       "rainMm": 0
     },
     {
-      "t": "2026-11-11T00:50:00.000Z",
-      "tempC": 7.7,
+      "t": "2026-11-11T00:55:00.000Z",
+      "tempC": 7.6,
       "humidity": 93,
       "pressureHpa": 991.1,
       "windMs": 0.4,
       "gustMs": 1,
-      "windDirDeg": 71,
+      "windDirDeg": 77,
       "wm2": 0,
-      "rainMm": 0
+      "rainMm": 0.3
     },
     {
       "t": "2026-11-11T01:00:00.000Z",
@@ -129,7 +129,7 @@
       "gustMs": 2.6,
       "windDirDeg": 75,
       "wm2": 0,
-      "rainMm": 0.3
+      "rainMm": 0
     },
     {
       "t": "2026-11-11T01:05:00.000Z",
@@ -143,13 +143,13 @@
       "rainMm": 0
     },
     {
-      "t": "2026-11-11T01:10:00.000Z",
+      "t": "2026-11-11T01:15:00.000Z",
       "tempC": 7.6,
       "humidity": 92,
       "pressureHpa": 991.1,
       "windMs": 0.5,
       "gustMs": 2,
-      "windDirDeg": 90,
+      "windDirDeg": 73,
       "wm2": 0,
       "rainMm": 0
     },
@@ -159,19 +159,8 @@
       "humidity": 92,
       "pressureHpa": 991.1,
       "windMs": 0.3,
-      "gustMs": 2,
+      "gustMs": 1,
       "windDirDeg": 73,
-      "wm2": 0,
-      "rainMm": 0
-    },
-    {
-      "t": "2026-11-11T01:25:00.000Z",
-      "tempC": 7.6,
-      "humidity": 92,
-      "pressureHpa": 991.2,
-      "windMs": 0.4,
-      "gustMs": 1.5,
-      "windDirDeg": 81,
       "wm2": 0,
       "rainMm": 0
     },
@@ -187,24 +176,24 @@
       "rainMm": 0
     },
     {
-      "t": "2026-11-11T01:40:00.000Z",
+      "t": "2026-11-11T01:35:00.000Z",
       "tempC": 7.5,
       "humidity": 92,
-      "pressureHpa": 991.1,
+      "pressureHpa": 991.2,
       "windMs": 0.9,
       "gustMs": 2.6,
-      "windDirDeg": 78,
+      "windDirDeg": 69,
       "wm2": 0,
       "rainMm": 0
     },
     {
-      "t": "2026-11-11T01:45:00.000Z",
+      "t": "2026-11-11T01:40:00.000Z",
       "tempC": 7.5,
       "humidity": 92,
-      "pressureHpa": 991.2,
-      "windMs": 0.4,
+      "pressureHpa": 991.1,
+      "windMs": 0.5,
       "gustMs": 1.5,
-      "windDirDeg": 73,
+      "windDirDeg": 78,
       "wm2": 0,
       "rainMm": 0
     },
@@ -213,20 +202,20 @@
       "tempC": 7.5,
       "humidity": 92,
       "pressureHpa": 991.2,
-      "windMs": 0.1,
-      "gustMs": 1,
+      "windMs": 0.4,
+      "gustMs": 1.5,
       "windDirDeg": 78,
       "wm2": 0,
       "rainMm": 0
     },
     {
-      "t": "2026-11-11T02:00:00.000Z",
+      "t": "2026-11-11T01:55:00.000Z",
       "tempC": 7.5,
       "humidity": 93,
       "pressureHpa": 991.1,
       "windMs": 0.4,
       "gustMs": 1.5,
-      "windDirDeg": 67,
+      "windDirDeg": 94,
       "wm2": 0,
       "rainMm": 0.2
     },
@@ -253,13 +242,13 @@
       "rainMm": 0
     },
     {
-      "t": "2026-11-11T02:20:00.000Z",
+      "t": "2026-11-11T02:15:00.000Z",
       "tempC": 7.5,
       "humidity": 93,
       "pressureHpa": 991.1,
       "windMs": 0.3,
       "gustMs": 1.5,
-      "windDirDeg": 73,
+      "windDirDeg": 83,
       "wm2": 0,
       "rainMm": 0
     },
@@ -268,7 +257,7 @@
       "tempC": 7.5,
       "humidity": 93,
       "pressureHpa": 991,
-      "windMs": 0.1,
+      "windMs": 0.2,
       "gustMs": 1,
       "windDirDeg": 101,
       "wm2": 0,
@@ -341,13 +330,13 @@
       "rainMm": 0
     },
     {
-      "t": "2026-11-11T03:10:00.000Z",
+      "t": "2026-11-11T03:15:00.000Z",
       "tempC": 7,
       "humidity": 93,
       "pressureHpa": 990.8,
-      "windMs": 0.3,
+      "windMs": 0.4,
       "gustMs": 1,
-      "windDirDeg": 75,
+      "windDirDeg": 79,
       "wm2": 0,
       "rainMm": 0
     },
@@ -396,13 +385,13 @@
       "rainMm": 0
     },
     {
-      "t": "2026-11-11T03:45:00.000Z",
+      "t": "2026-11-11T03:50:00.000Z",
       "tempC": 7,
       "humidity": 93,
-      "pressureHpa": 990.7,
-      "windMs": 0.3,
+      "pressureHpa": 990.6,
+      "windMs": 0.4,
       "gustMs": 1.5,
-      "windDirDeg": 83,
+      "windDirDeg": 74,
       "wm2": 0,
       "rainMm": 0
     },
@@ -411,7 +400,7 @@
       "tempC": 7,
       "humidity": 93,
       "pressureHpa": 990.7,
-      "windMs": 0.4,
+      "windMs": 0.2,
       "gustMs": 1.5,
       "windDirDeg": 84,
       "wm2": 0,
@@ -429,13 +418,13 @@
       "rainMm": 0
     },
     {
-      "t": "2026-11-11T04:05:00.000Z",
+      "t": "2026-11-11T04:10:00.000Z",
       "tempC": 7,
       "humidity": 92,
-      "pressureHpa": 990.6,
+      "pressureHpa": 990.7,
       "windMs": 0.5,
       "gustMs": 2,
-      "windDirDeg": 71,
+      "windDirDeg": 94,
       "wm2": 0,
       "rainMm": 0
     },
@@ -462,13 +451,13 @@
       "rainMm": 0
     },
     {
-      "t": "2026-11-11T04:25:00.000Z",
+      "t": "2026-11-11T04:30:00.000Z",
       "tempC": 7.1,
       "humidity": 92,
       "pressureHpa": 990.6,
       "windMs": 0.7,
       "gustMs": 2,
-      "windDirDeg": 76,
+      "windDirDeg": 79,
       "wm2": 0,
       "rainMm": 0
     },
@@ -484,24 +473,24 @@
       "rainMm": 0
     },
     {
-      "t": "2026-11-11T04:40:00.000Z",
-      "tempC": 7.1,
-      "humidity": 92,
-      "pressureHpa": 990.6,
-      "windMs": 0.4,
-      "gustMs": 1.5,
-      "windDirDeg": 79,
-      "wm2": 0,
-      "rainMm": 0
-    },
-    {
       "t": "2026-11-11T04:45:00.000Z",
       "tempC": 7.1,
       "humidity": 92,
       "pressureHpa": 990.6,
       "windMs": 0.5,
-      "gustMs": 1,
+      "gustMs": 1.5,
       "windDirDeg": 67,
+      "wm2": 0,
+      "rainMm": 0
+    },
+    {
+      "t": "2026-11-11T04:50:00.000Z",
+      "tempC": 7.1,
+      "humidity": 92,
+      "pressureHpa": 990.6,
+      "windMs": 0.8,
+      "gustMs": 1.5,
+      "windDirDeg": 68,
       "wm2": 0,
       "rainMm": 0
     },
@@ -510,22 +499,11 @@
       "tempC": 7.2,
       "humidity": 92,
       "pressureHpa": 990.6,
-      "windMs": 0.8,
+      "windMs": 0.4,
       "gustMs": 1.5,
       "windDirDeg": 83,
       "wm2": 0,
       "rainMm": 0.2
-    },
-    {
-      "t": "2026-11-11T05:00:00.000Z",
-      "tempC": 7.2,
-      "humidity": 92,
-      "pressureHpa": 990.6,
-      "windMs": 0.4,
-      "gustMs": 2.6,
-      "windDirDeg": 76,
-      "wm2": 0,
-      "rainMm": 0
     },
     {
       "t": "2026-11-11T05:05:00.000Z",
@@ -533,19 +511,19 @@
       "humidity": 92,
       "pressureHpa": 990.6,
       "windMs": 0.4,
-      "gustMs": 1.5,
+      "gustMs": 2.6,
       "windDirDeg": 79,
       "wm2": 0,
       "rainMm": 0
     },
     {
-      "t": "2026-11-11T05:15:00.000Z",
+      "t": "2026-11-11T05:10:00.000Z",
       "tempC": 7.2,
       "humidity": 92,
-      "pressureHpa": 990.7,
-      "windMs": 0.6,
-      "gustMs": 2.6,
-      "windDirDeg": 77,
+      "pressureHpa": 990.6,
+      "windMs": 0.2,
+      "gustMs": 1.5,
+      "windDirDeg": 74,
       "wm2": 0,
       "rainMm": 0
     },
@@ -554,7 +532,7 @@
       "tempC": 7.3,
       "humidity": 91,
       "pressureHpa": 990.6,
-      "windMs": 0.4,
+      "windMs": 0.6,
       "gustMs": 2.6,
       "windDirDeg": 69,
       "wm2": 0,
@@ -572,13 +550,13 @@
       "rainMm": 0
     },
     {
-      "t": "2026-11-11T05:35:00.000Z",
-      "tempC": 7.3,
+      "t": "2026-11-11T05:30:00.000Z",
+      "tempC": 7.2,
       "humidity": 91,
       "pressureHpa": 990.6,
       "windMs": 0.4,
-      "gustMs": 2,
-      "windDirDeg": 80,
+      "gustMs": 1.5,
+      "windDirDeg": 76,
       "wm2": 0,
       "rainMm": 0
     },
@@ -660,13 +638,13 @@
       "rainMm": 0
     },
     {
-      "t": "2026-11-11T06:25:00.000Z",
+      "t": "2026-11-11T06:30:00.000Z",
       "tempC": 7.3,
       "humidity": 91,
-      "pressureHpa": 990.7,
+      "pressureHpa": 990.8,
       "windMs": 0.6,
       "gustMs": 2,
-      "windDirDeg": 74,
+      "windDirDeg": 80,
       "wm2": 0,
       "rainMm": 0
     },
@@ -715,14 +693,14 @@
       "rainMm": 0
     },
     {
-      "t": "2026-11-11T07:00:00.000Z",
-      "tempC": 7.3,
+      "t": "2026-11-11T07:05:00.000Z",
+      "tempC": 7.2,
       "humidity": 91,
-      "pressureHpa": 990.8,
+      "pressureHpa": 990.9,
       "windMs": 0.3,
       "gustMs": 1.5,
       "windDirDeg": 75,
-      "wm2": 1.1,
+      "wm2": 1.8,
       "rainMm": 0
     },
     {
@@ -730,7 +708,7 @@
       "tempC": 7.2,
       "humidity": 91,
       "pressureHpa": 991,
-      "windMs": 0.2,
+      "windMs": 0.1,
       "gustMs": 1,
       "windDirDeg": 88,
       "wm2": 2.7,
@@ -748,14 +726,14 @@
       "rainMm": 0
     },
     {
-      "t": "2026-11-11T07:20:00.000Z",
+      "t": "2026-11-11T07:25:00.000Z",
       "tempC": 7.2,
       "humidity": 91,
       "pressureHpa": 991,
       "windMs": 0.2,
-      "gustMs": 1,
-      "windDirDeg": 85,
-      "wm2": 5.8,
+      "gustMs": 1.5,
+      "windDirDeg": 88,
+      "wm2": 7.4,
       "rainMm": 0
     },
     {
@@ -764,20 +742,9 @@
       "humidity": 91,
       "pressureHpa": 991,
       "windMs": 0.2,
-      "gustMs": 1.5,
+      "gustMs": 1,
       "windDirDeg": 83,
       "wm2": 8.6,
-      "rainMm": 0
-    },
-    {
-      "t": "2026-11-11T07:35:00.000Z",
-      "tempC": 7.2,
-      "humidity": 91,
-      "pressureHpa": 991,
-      "windMs": 0.3,
-      "gustMs": 1,
-      "windDirDeg": 74,
-      "wm2": 10.2,
       "rainMm": 0
     },
     {
@@ -785,10 +752,21 @@
       "tempC": 7.2,
       "humidity": 91,
       "pressureHpa": 991.1,
-      "windMs": 0.2,
+      "windMs": 0.3,
       "gustMs": 1,
       "windDirDeg": 79,
       "wm2": 12.7,
+      "rainMm": 0
+    },
+    {
+      "t": "2026-11-11T07:45:00.000Z",
+      "tempC": 7.2,
+      "humidity": 91,
+      "pressureHpa": 991.1,
+      "windMs": 0.4,
+      "gustMs": 1.5,
+      "windDirDeg": 93,
+      "wm2": 16,
       "rainMm": 0
     },
     {
@@ -803,36 +781,25 @@
       "rainMm": 0
     },
     {
-      "t": "2026-11-11T07:55:00.000Z",
-      "tempC": 7.2,
-      "humidity": 90,
-      "pressureHpa": 991.1,
-      "windMs": 0.2,
-      "gustMs": 1.5,
-      "windDirDeg": 80,
-      "wm2": 23.2,
-      "rainMm": 0
-    },
-    {
       "t": "2026-11-11T08:00:00.000Z",
       "tempC": 7.3,
       "humidity": 90,
       "pressureHpa": 991.2,
-      "windMs": 0.1,
-      "gustMs": 1,
+      "windMs": 0.2,
+      "gustMs": 1.5,
       "windDirDeg": 81,
       "wm2": 25.9,
       "rainMm": 0
     },
     {
-      "t": "2026-11-11T08:10:00.000Z",
+      "t": "2026-11-11T08:05:00.000Z",
       "tempC": 7.3,
       "humidity": 90,
-      "pressureHpa": 991.2,
+      "pressureHpa": 991.1,
       "windMs": 0.5,
       "gustMs": 1.5,
-      "windDirDeg": 88,
-      "wm2": 35.8,
+      "windDirDeg": 78,
+      "wm2": 30.2,
       "rainMm": 0
     },
     {
@@ -858,13 +825,13 @@
       "rainMm": 0
     },
     {
-      "t": "2026-11-11T08:30:00.000Z",
-      "tempC": 7.7,
+      "t": "2026-11-11T08:25:00.000Z",
+      "tempC": 7.6,
       "humidity": 89,
       "pressureHpa": 991.3,
       "windMs": 0.6,
       "gustMs": 2,
-      "windDirDeg": 93,
+      "windDirDeg": 85,
       "wm2": 50,
       "rainMm": 0
     },
@@ -876,7 +843,7 @@
       "windMs": 0.3,
       "gustMs": 2.6,
       "windDirDeg": 71,
-      "wm2": 44.8,
+      "wm2": 46.1,
       "rainMm": 0
     },
     {
@@ -891,14 +858,14 @@
       "rainMm": 0
     },
     {
-      "t": "2026-11-11T08:50:00.000Z",
+      "t": "2026-11-11T08:45:00.000Z",
       "tempC": 7.8,
       "humidity": 88,
       "pressureHpa": 991.4,
-      "windMs": 0.6,
+      "windMs": 0.4,
       "gustMs": 1.5,
-      "windDirDeg": 80,
-      "wm2": 51.8,
+      "windDirDeg": 72,
+      "wm2": 48.5,
       "rainMm": 0
     },
     {
@@ -906,7 +873,7 @@
       "tempC": 7.8,
       "humidity": 88,
       "pressureHpa": 991.4,
-      "windMs": 0.5,
+      "windMs": 0.6,
       "gustMs": 2,
       "windDirDeg": 78,
       "wm2": 54.2,
@@ -979,14 +946,14 @@
       "rainMm": 0
     },
     {
-      "t": "2026-11-11T09:40:00.000Z",
+      "t": "2026-11-11T09:45:00.000Z",
       "tempC": 8.2,
       "humidity": 87,
-      "pressureHpa": 991.5,
+      "pressureHpa": 991.6,
       "windMs": 0.9,
       "gustMs": 2.6,
-      "windDirDeg": 70,
-      "wm2": 78.4,
+      "windDirDeg": 82,
+      "wm2": 81.3,
       "rainMm": 0
     },
     {
@@ -1034,14 +1001,14 @@
       "rainMm": 0
     },
     {
-      "t": "2026-11-11T10:15:00.000Z",
+      "t": "2026-11-11T10:20:00.000Z",
       "tempC": 8.4,
       "humidity": 86,
-      "pressureHpa": 991.6,
-      "windMs": 0.7,
+      "pressureHpa": 991.7,
+      "windMs": 0.9,
       "gustMs": 3.1,
-      "windDirDeg": 78,
-      "wm2": 92.3,
+      "windDirDeg": 68,
+      "wm2": 92.7,
       "rainMm": 0
     },
     {
@@ -1049,10 +1016,10 @@
       "tempC": 8.5,
       "humidity": 86,
       "pressureHpa": 991.7,
-      "windMs": 0.9,
-      "gustMs": 2.6,
+      "windMs": 0.5,
+      "gustMs": 2,
       "windDirDeg": 87,
-      "wm2": 92.7,
+      "wm2": 92.3,
       "rainMm": 0
     },
     {
@@ -1067,13 +1034,13 @@
       "rainMm": 0
     },
     {
-      "t": "2026-11-11T10:35:00.000Z",
-      "tempC": 8.5,
+      "t": "2026-11-11T10:40:00.000Z",
+      "tempC": 8.6,
       "humidity": 86,
       "pressureHpa": 991.6,
       "windMs": 0.9,
       "gustMs": 2.6,
-      "windDirDeg": 75,
+      "windDirDeg": 73,
       "wm2": 91.5,
       "rainMm": 0
     },
@@ -1089,17 +1056,6 @@
       "rainMm": 0
     },
     {
-      "t": "2026-11-11T10:50:00.000Z",
-      "tempC": 8.7,
-      "humidity": 86,
-      "pressureHpa": 991.6,
-      "windMs": 0.5,
-      "gustMs": 2,
-      "windDirDeg": 73,
-      "wm2": 92.9,
-      "rainMm": 0
-    },
-    {
       "t": "2026-11-11T10:55:00.000Z",
       "tempC": 8.7,
       "humidity": 85,
@@ -1107,7 +1063,18 @@
       "windMs": 0.8,
       "gustMs": 2,
       "windDirDeg": 76,
-      "wm2": 92.6,
+      "wm2": 92.9,
+      "rainMm": 0
+    },
+    {
+      "t": "2026-11-11T11:00:00.000Z",
+      "tempC": 8.7,
+      "humidity": 85,
+      "pressureHpa": 991.6,
+      "windMs": 0.3,
+      "gustMs": 1.5,
+      "windDirDeg": 82,
+      "wm2": 87.3,
       "rainMm": 0
     },
     {
@@ -1118,18 +1085,7 @@
       "windMs": 0.3,
       "gustMs": 1.5,
       "windDirDeg": 76,
-      "wm2": 87.3,
-      "rainMm": 0
-    },
-    {
-      "t": "2026-11-11T11:10:00.000Z",
-      "tempC": 8.9,
-      "humidity": 85,
-      "pressureHpa": 991.6,
-      "windMs": 0.6,
-      "gustMs": 2,
-      "windDirDeg": 91,
-      "wm2": 81.4,
+      "wm2": 82.4,
       "rainMm": 0
     },
     {
@@ -1137,20 +1093,20 @@
       "tempC": 8.9,
       "humidity": 85,
       "pressureHpa": 991.6,
-      "windMs": 0.3,
+      "windMs": 0.6,
       "gustMs": 2,
       "windDirDeg": 90,
-      "wm2": 79.4,
+      "wm2": 81.4,
       "rainMm": 0
     },
     {
-      "t": "2026-11-11T11:25:00.000Z",
+      "t": "2026-11-11T11:20:00.000Z",
       "tempC": 8.9,
-      "humidity": 84,
+      "humidity": 85,
       "pressureHpa": 991.5,
       "windMs": 0.6,
       "gustMs": 2,
-      "windDirDeg": 63,
+      "windDirDeg": 73,
       "wm2": 78.7,
       "rainMm": 0
     },
@@ -1159,8 +1115,8 @@
       "tempC": 8.9,
       "humidity": 84,
       "pressureHpa": 991.4,
-      "windMs": 0.3,
-      "gustMs": 1.5,
+      "windMs": 0.5,
+      "gustMs": 2,
       "windDirDeg": 81,
       "wm2": 81.4,
       "rainMm": 0
@@ -1177,14 +1133,14 @@
       "rainMm": 0
     },
     {
-      "t": "2026-11-11T11:45:00.000Z",
-      "tempC": 9.1,
+      "t": "2026-11-11T11:40:00.000Z",
+      "tempC": 9,
       "humidity": 84,
-      "pressureHpa": 991.3,
-      "windMs": 0.6,
-      "gustMs": 2.6,
-      "windDirDeg": 74,
-      "wm2": 98,
+      "pressureHpa": 991.2,
+      "windMs": 0.5,
+      "gustMs": 1,
+      "windDirDeg": 86,
+      "wm2": 91.6,
       "rainMm": 0
     },
     {
@@ -1192,8 +1148,8 @@
       "tempC": 9.1,
       "humidity": 84,
       "pressureHpa": 991.2,
-      "windMs": 0.3,
-      "gustMs": 1,
+      "windMs": 0.6,
+      "gustMs": 2.6,
       "windDirDeg": 75,
       "wm2": 100,
       "rainMm": 0
@@ -1298,14 +1254,14 @@
       "rainMm": 0
     },
     {
-      "t": "2026-11-11T12:55:00.000Z",
-      "tempC": 9.5,
+      "t": "2026-11-11T13:00:00.000Z",
+      "tempC": 9.6,
       "humidity": 82,
-      "pressureHpa": 991.2,
+      "pressureHpa": 991.1,
       "windMs": 0.4,
       "gustMs": 2,
-      "windDirDeg": 87,
-      "wm2": 108.8,
+      "windDirDeg": 65,
+      "wm2": 109.6,
       "rainMm": 0
     },
     {
@@ -1331,13 +1287,13 @@
       "rainMm": 0
     },
     {
-      "t": "2026-11-11T13:15:00.000Z",
+      "t": "2026-11-11T13:20:00.000Z",
       "tempC": 9.6,
-      "humidity": 81,
-      "pressureHpa": 991.1,
+      "humidity": 82,
+      "pressureHpa": 991,
       "windMs": 0.6,
       "gustMs": 2.6,
-      "windDirDeg": 80,
+      "windDirDeg": 82,
       "wm2": 111.6,
       "rainMm": 0
     },
@@ -1349,17 +1305,17 @@
       "windMs": 0.3,
       "gustMs": 1,
       "windDirDeg": 82,
-      "wm2": 109.5,
+      "wm2": 103.3,
       "rainMm": 0
     },
     {
-      "t": "2026-11-11T13:30:00.000Z",
-      "tempC": 9.7,
+      "t": "2026-11-11T13:35:00.000Z",
+      "tempC": 9.6,
       "humidity": 81,
-      "pressureHpa": 991.1,
+      "pressureHpa": 991,
       "windMs": 0.5,
       "gustMs": 1.5,
-      "windDirDeg": 89,
+      "windDirDeg": 75,
       "wm2": 92.5,
       "rainMm": 0
     },
@@ -1371,7 +1327,7 @@
       "windMs": 0.6,
       "gustMs": 2,
       "windDirDeg": 81,
-      "wm2": 81.6,
+      "wm2": 79.2,
       "rainMm": 0
     },
     {
@@ -1386,14 +1342,14 @@
       "rainMm": 0
     },
     {
-      "t": "2026-11-11T13:50:00.000Z",
+      "t": "2026-11-11T13:55:00.000Z",
       "tempC": 9.6,
       "humidity": 79,
-      "pressureHpa": 991,
-      "windMs": 0.5,
-      "gustMs": 2,
-      "windDirDeg": 83,
-      "wm2": 77,
+      "pressureHpa": 990.9,
+      "windMs": 0.6,
+      "gustMs": 2.6,
+      "windDirDeg": 64,
+      "wm2": 80.4,
       "rainMm": 0
     },
     {
@@ -1402,20 +1358,9 @@
       "humidity": 79,
       "pressureHpa": 990.9,
       "windMs": 0.6,
-      "gustMs": 2.6,
+      "gustMs": 1.5,
       "windDirDeg": 75,
       "wm2": 87.5,
-      "rainMm": 0
-    },
-    {
-      "t": "2026-11-11T14:05:00.000Z",
-      "tempC": 9.7,
-      "humidity": 79,
-      "pressureHpa": 990.8,
-      "windMs": 0.2,
-      "gustMs": 1.5,
-      "windDirDeg": 79,
-      "wm2": 89.1,
       "rainMm": 0
     },
     {
@@ -1426,7 +1371,18 @@
       "windMs": 0.2,
       "gustMs": 1.5,
       "windDirDeg": 91,
-      "wm2": 85.9,
+      "wm2": 89.1,
+      "rainMm": 0
+    },
+    {
+      "t": "2026-11-11T14:15:00.000Z",
+      "tempC": 9.8,
+      "humidity": 79,
+      "pressureHpa": 991,
+      "windMs": 0.2,
+      "gustMs": 1,
+      "windDirDeg": 71,
+      "wm2": 79.8,
       "rainMm": 0
     },
     {
@@ -1437,18 +1393,7 @@
       "windMs": 0.4,
       "gustMs": 2,
       "windDirDeg": 72,
-      "wm2": 79.8,
-      "rainMm": 0
-    },
-    {
-      "t": "2026-11-11T14:25:00.000Z",
-      "tempC": 9.7,
-      "humidity": 78,
-      "pressureHpa": 991.1,
-      "windMs": 0.2,
-      "gustMs": 2,
-      "windDirDeg": 70,
-      "wm2": 55.6,
+      "wm2": 68.4,
       "rainMm": 0
     },
     {
@@ -1456,20 +1401,20 @@
       "tempC": 9.7,
       "humidity": 78,
       "pressureHpa": 991.1,
-      "windMs": 0.1,
-      "gustMs": 1.5,
+      "windMs": 0.2,
+      "gustMs": 2,
       "windDirDeg": 90,
-      "wm2": 49.9,
+      "wm2": 55.6,
       "rainMm": 0
     },
     {
-      "t": "2026-11-11T14:40:00.000Z",
+      "t": "2026-11-11T14:35:00.000Z",
       "tempC": 9.7,
       "humidity": 78,
-      "pressureHpa": 991.1,
-      "windMs": 0.4,
+      "pressureHpa": 991,
+      "windMs": 0.3,
       "gustMs": 2,
-      "windDirDeg": 75,
+      "windDirDeg": 61,
       "wm2": 46.1,
       "rainMm": 0
     },
@@ -1481,7 +1426,7 @@
       "windMs": 0.4,
       "gustMs": 2.6,
       "windDirDeg": 66,
-      "wm2": 43.8,
+      "wm2": 44.2,
       "rainMm": 0
     },
     {
@@ -1496,13 +1441,13 @@
       "rainMm": 0
     },
     {
-      "t": "2026-11-11T15:00:00.000Z",
+      "t": "2026-11-11T14:55:00.000Z",
       "tempC": 9.7,
       "humidity": 76,
       "pressureHpa": 991.1,
       "windMs": 0.3,
       "gustMs": 1,
-      "windDirDeg": 73,
+      "windDirDeg": 74,
       "wm2": 48.3,
       "rainMm": 0
     },
@@ -1514,7 +1459,7 @@
       "windMs": 0.2,
       "gustMs": 1,
       "windDirDeg": 88,
-      "wm2": 32.9,
+      "wm2": 42.8,
       "rainMm": 0
     },
     {
@@ -1584,10 +1529,10 @@
       "rainMm": 0
     },
     {
-      "t": "2026-11-11T15:50:00.000Z",
+      "t": "2026-11-11T15:55:00.000Z",
       "tempC": 9.2,
       "humidity": 83,
-      "pressureHpa": 991.3,
+      "pressureHpa": 991.2,
       "windMs": 0,
       "gustMs": 0,
       "windDirDeg": 66,
@@ -1602,7 +1547,7 @@
       "windMs": 0,
       "gustMs": 0,
       "windDirDeg": 65,
-      "wm2": 9.7,
+      "wm2": 8.1,
       "rainMm": 0
     },
     {
@@ -1617,10 +1562,10 @@
       "rainMm": 0
     },
     {
-      "t": "2026-11-11T16:10:00.000Z",
-      "tempC": 8.9,
+      "t": "2026-11-11T16:15:00.000Z",
+      "tempC": 8.8,
       "humidity": 85,
-      "pressureHpa": 991.3,
+      "pressureHpa": 991.2,
       "windMs": 0,
       "gustMs": 0,
       "windDirDeg": 65,
@@ -1635,18 +1580,7 @@
       "windMs": 0,
       "gustMs": 0,
       "windDirDeg": 65,
-      "wm2": 2.8,
-      "rainMm": 0
-    },
-    {
-      "t": "2026-11-11T16:25:00.000Z",
-      "tempC": 8.6,
-      "humidity": 85,
-      "pressureHpa": 991.3,
-      "windMs": 0,
-      "gustMs": 0,
-      "windDirDeg": 65,
-      "wm2": 1.2,
+      "wm2": 2,
       "rainMm": 0
     },
     {
@@ -1657,7 +1591,18 @@
       "windMs": 0,
       "gustMs": 0,
       "windDirDeg": 65,
-      "wm2": 0.7,
+      "wm2": 1.2,
+      "rainMm": 0
+    },
+    {
+      "t": "2026-11-11T16:35:00.000Z",
+      "tempC": 8.6,
+      "humidity": 84,
+      "pressureHpa": 991.1,
+      "windMs": 0,
+      "gustMs": 0,
+      "windDirDeg": 65,
+      "wm2": 0.3,
       "rainMm": 0
     },
     {
@@ -1668,14 +1613,14 @@
       "windMs": 0,
       "gustMs": 0.5,
       "windDirDeg": 65,
-      "wm2": 0.3,
+      "wm2": 0.1,
       "rainMm": 0
     },
     {
-      "t": "2026-11-11T16:45:00.000Z",
+      "t": "2026-11-11T16:50:00.000Z",
       "tempC": 8.5,
       "humidity": 84,
-      "pressureHpa": 991.2,
+      "pressureHpa": 991.1,
       "windMs": 0,
       "gustMs": 0,
       "windDirDeg": 66,
@@ -1705,8 +1650,8 @@
       "rainMm": 0
     },
     {
-      "t": "2026-11-11T17:05:00.000Z",
-      "tempC": 8.2,
+      "t": "2026-11-11T17:10:00.000Z",
+      "tempC": 8,
       "humidity": 85,
       "pressureHpa": 991.2,
       "windMs": 0,
@@ -1727,7 +1672,7 @@
       "rainMm": 0
     },
     {
-      "t": "2026-11-11T17:20:00.000Z",
+      "t": "2026-11-11T17:25:00.000Z",
       "tempC": 7.6,
       "humidity": 86,
       "pressureHpa": 991.2,
@@ -1738,10 +1683,10 @@
       "rainMm": 0
     },
     {
-      "t": "2026-11-11T17:25:00.000Z",
+      "t": "2026-11-11T17:30:00.000Z",
       "tempC": 7.6,
       "humidity": 86,
-      "pressureHpa": 991.2,
+      "pressureHpa": 991.3,
       "windMs": 0,
       "gustMs": 0,
       "windDirDeg": 66,
@@ -1760,17 +1705,6 @@
       "rainMm": 0
     },
     {
-      "t": "2026-11-11T17:40:00.000Z",
-      "tempC": 7.3,
-      "humidity": 86,
-      "pressureHpa": 991.3,
-      "windMs": 0,
-      "gustMs": 0,
-      "windDirDeg": 66,
-      "wm2": 0,
-      "rainMm": 0
-    },
-    {
       "t": "2026-11-11T17:45:00.000Z",
       "tempC": 7.2,
       "humidity": 87,
@@ -1782,10 +1716,10 @@
       "rainMm": 0
     },
     {
-      "t": "2026-11-11T17:55:00.000Z",
-      "tempC": 7.2,
+      "t": "2026-11-11T17:50:00.000Z",
+      "tempC": 7.1,
       "humidity": 87,
-      "pressureHpa": 991.2,
+      "pressureHpa": 991.3,
       "windMs": 0,
       "gustMs": 0,
       "windDirDeg": 66,
@@ -1815,10 +1749,10 @@
       "rainMm": 0
     },
     {
-      "t": "2026-11-11T18:15:00.000Z",
+      "t": "2026-11-11T18:10:00.000Z",
       "tempC": 7.1,
       "humidity": 88,
-      "pressureHpa": 991.4,
+      "pressureHpa": 991.3,
       "windMs": 0,
       "gustMs": 0,
       "windDirDeg": 66,
@@ -1903,10 +1837,10 @@
       "rainMm": 0
     },
     {
-      "t": "2026-11-11T19:05:00.000Z",
+      "t": "2026-11-11T19:10:00.000Z",
       "tempC": 7.5,
       "humidity": 90,
-      "pressureHpa": 991.3,
+      "pressureHpa": 991.4,
       "windMs": 0,
       "gustMs": 0,
       "windDirDeg": 67,
@@ -1936,13 +1870,13 @@
       "rainMm": 0
     },
     {
-      "t": "2026-11-11T19:25:00.000Z",
-      "tempC": 7.8,
-      "humidity": 90,
+      "t": "2026-11-11T19:30:00.000Z",
+      "tempC": 7.9,
+      "humidity": 89,
       "pressureHpa": 991.4,
       "windMs": 0.2,
-      "gustMs": 0.5,
-      "windDirDeg": 80,
+      "gustMs": 1,
+      "windDirDeg": 83,
       "wm2": 0,
       "rainMm": 0
     },
@@ -1952,19 +1886,8 @@
       "humidity": 89,
       "pressureHpa": 991.4,
       "windMs": 0.1,
-      "gustMs": 1,
+      "gustMs": 0.5,
       "windDirDeg": 93,
-      "wm2": 0,
-      "rainMm": 0
-    },
-    {
-      "t": "2026-11-11T19:40:00.000Z",
-      "tempC": 8,
-      "humidity": 89,
-      "pressureHpa": 991.4,
-      "windMs": 0.2,
-      "gustMs": 2,
-      "windDirDeg": 85,
       "wm2": 0,
       "rainMm": 0
     },
@@ -1973,15 +1896,15 @@
       "tempC": 8,
       "humidity": 88,
       "pressureHpa": 991.4,
-      "windMs": 0,
-      "gustMs": 1,
+      "windMs": 0.2,
+      "gustMs": 2,
       "windDirDeg": 85,
       "wm2": 0,
       "rainMm": 0
     },
     {
-      "t": "2026-11-11T19:55:00.000Z",
-      "tempC": 7.9,
+      "t": "2026-11-11T19:50:00.000Z",
+      "tempC": 8,
       "humidity": 89,
       "pressureHpa": 991.4,
       "windMs": 0,
@@ -1991,13 +1914,90 @@
       "rainMm": 0
     },
     {
-      "t": "2026-11-11T20:00:00.000Z",
+      "t": "2026-11-11T19:55:00.000Z",
       "tempC": 7.9,
       "humidity": 89,
       "pressureHpa": 991.4,
       "windMs": 0,
       "gustMs": 0.5,
-      "windDirDeg": 72,
+      "windDirDeg": 71,
+      "wm2": 0,
+      "rainMm": 0
+    },
+    {
+      "t": "2026-11-11T20:05:00.000Z",
+      "tempC": 7.8,
+      "humidity": 89,
+      "pressureHpa": 991.3,
+      "windMs": 0.1,
+      "gustMs": 1,
+      "windDirDeg": 88,
+      "wm2": 0,
+      "rainMm": 0
+    },
+    {
+      "t": "2026-11-11T20:10:00.000Z",
+      "tempC": 7.9,
+      "humidity": 89,
+      "pressureHpa": 991.3,
+      "windMs": 0,
+      "gustMs": 0.5,
+      "windDirDeg": 95,
+      "wm2": 0,
+      "rainMm": 0
+    },
+    {
+      "t": "2026-11-11T20:20:00.000Z",
+      "tempC": 7.8,
+      "humidity": 89,
+      "pressureHpa": 991.5,
+      "windMs": 0.1,
+      "gustMs": 0.5,
+      "windDirDeg": 83,
+      "wm2": 0,
+      "rainMm": 0
+    },
+    {
+      "t": "2026-11-11T20:25:00.000Z",
+      "tempC": 7.8,
+      "humidity": 89,
+      "pressureHpa": 991.5,
+      "windMs": 0,
+      "gustMs": 1,
+      "windDirDeg": 84,
+      "wm2": 0,
+      "rainMm": 0
+    },
+    {
+      "t": "2026-11-11T20:30:00.000Z",
+      "tempC": 7.7,
+      "humidity": 89,
+      "pressureHpa": 991.5,
+      "windMs": 0.1,
+      "gustMs": 1,
+      "windDirDeg": 78,
+      "wm2": 0,
+      "rainMm": 0
+    },
+    {
+      "t": "2026-11-11T20:40:00.000Z",
+      "tempC": 7.6,
+      "humidity": 89,
+      "pressureHpa": 991.5,
+      "windMs": 0.1,
+      "gustMs": 1,
+      "windDirDeg": 63,
+      "wm2": 0,
+      "rainMm": 0
+    },
+    {
+      "t": "2026-11-11T20:45:00.000Z",
+      "tempC": 7.5,
+      "humidity": 89,
+      "pressureHpa": 991.5,
+      "windMs": 0.1,
+      "gustMs": 1,
+      "windDirDeg": 65,
       "wm2": 0,
       "rainMm": 0
     }
