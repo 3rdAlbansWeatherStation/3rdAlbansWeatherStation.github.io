@@ -1,20 +1,20 @@
 {
   "source": "cloud",
   "range": "day",
-  "updatedAt": "2026-11-13T10:00:44.997Z",
+  "updatedAt": "2026-11-13T10:05:47.018Z",
   "summary": {
     "temp": {
-      "high": 2.8,
+      "high": 3.3,
       "low": -1.8,
       "avg": -0.2
     },
     "humidity": {
       "high": 91,
-      "low": 74,
+      "low": 73,
       "avg": 86
     },
     "rainTotalMm": 0,
-    "solarHighWm2": 37.8,
+    "solarHighWm2": 38.2,
     "wind": {
       "high": 1,
       "avg": 0
@@ -1328,6 +1328,17 @@
       "gustMs": 0.5,
       "windDirDeg": 278,
       "wm2": 37.8,
+      "rainMm": 0
+    },
+    {
+      "t": "2026-11-13T09:55:00.000Z",
+      "tempC": 3.3,
+      "humidity": 73,
+      "pressureHpa": 1004.5,
+      "windMs": 0,
+      "gustMs": 0,
+      "windDirDeg": 291,
+      "wm2": 38.2,
       "rainMm": 0
     }
   ]
