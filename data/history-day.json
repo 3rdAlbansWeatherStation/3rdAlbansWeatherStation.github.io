@@ -1,7 +1,7 @@
 {
   "source": "cloud",
   "range": "day",
-  "updatedAt": "2026-11-15T15:20:25.375Z",
+  "updatedAt": "2026-11-15T15:25:20.128Z",
   "summary": {
     "temp": {
       "high": 10.2,
@@ -517,17 +517,6 @@
       "rainMm": 0
     },
     {
-      "t": "2026-11-15T03:45:00.000Z",
-      "tempC": -0.3,
-      "humidity": 95,
-      "pressureHpa": 990,
-      "windMs": 0,
-      "gustMs": 0,
-      "windDirDeg": 215,
-      "wm2": 0,
-      "rainMm": 0
-    },
-    {
       "t": "2026-11-15T03:50:00.000Z",
       "tempC": -0.3,
       "humidity": 95,
@@ -672,6 +661,17 @@
     },
     {
       "t": "2026-11-15T04:55:00.000Z",
+      "tempC": -2,
+      "humidity": 95,
+      "pressureHpa": 989.5,
+      "windMs": 0,
+      "gustMs": 0,
+      "windDirDeg": 215,
+      "wm2": 0,
+      "rainMm": 0
+    },
+    {
+      "t": "2026-11-15T05:00:00.000Z",
       "tempC": -2,
       "humidity": 95,
       "pressureHpa": 989.5,
@@ -1012,17 +1012,6 @@
       "rainMm": 0
     },
     {
-      "t": "2026-11-15T07:35:00.000Z",
-      "tempC": -0.7,
-      "humidity": 95,
-      "pressureHpa": 987.6,
-      "windMs": 0,
-      "gustMs": 0,
-      "windDirDeg": 215,
-      "wm2": 8.6,
-      "rainMm": 0
-    },
-    {
       "t": "2026-11-15T07:40:00.000Z",
       "tempC": -0.6,
       "humidity": 95,
@@ -1342,6 +1331,17 @@
       "rainMm": 0
     },
     {
+      "t": "2026-11-15T10:05:00.000Z",
+      "tempC": 5.5,
+      "humidity": 95,
+      "pressureHpa": 985.6,
+      "windMs": 0,
+      "gustMs": 0.5,
+      "windDirDeg": 216,
+      "wm2": 79.2,
+      "rainMm": 0
+    },
+    {
       "t": "2026-11-15T10:10:00.000Z",
       "tempC": 5.6,
       "humidity": 95,
@@ -1505,17 +1505,6 @@
       "windDirDeg": 83,
       "wm2": 34.7,
       "rainMm": 0.3
-    },
-    {
-      "t": "2026-11-15T11:25:00.000Z",
-      "tempC": 7.1,
-      "humidity": 88,
-      "pressureHpa": 984.2,
-      "windMs": 0,
-      "gustMs": 0.5,
-      "windDirDeg": 83,
-      "wm2": 28.3,
-      "rainMm": 0
     },
     {
       "t": "2026-11-15T11:30:00.000Z",
@@ -1999,6 +1988,17 @@
       "gustMs": 0,
       "windDirDeg": 285,
       "wm2": 26.8,
+      "rainMm": 0
+    },
+    {
+      "t": "2026-11-15T15:10:00.000Z",
+      "tempC": 10,
+      "humidity": 91,
+      "pressureHpa": 981.1,
+      "windMs": 0,
+      "gustMs": 0,
+      "windDirDeg": 284,
+      "wm2": 25.8,
       "rainMm": 0
     }
   ]
