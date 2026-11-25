@@ -1,7 +1,7 @@
 {
   "source": "cloud",
   "range": "day",
-  "updatedAt": "2026-11-25T13:50:54.335Z",
+  "updatedAt": "2026-11-25T13:55:54.401Z",
   "summary": {
     "temp": {
       "high": 6.1,
@@ -1834,6 +1834,17 @@
       "gustMs": 2.6,
       "windDirDeg": 76,
       "wm2": 57.5,
+      "rainMm": 0
+    },
+    {
+      "t": "2026-11-25T13:45:00.000Z",
+      "tempC": 6.1,
+      "humidity": 72,
+      "pressureHpa": 1000.5,
+      "windMs": 0.8,
+      "gustMs": 2.6,
+      "windDirDeg": 74,
+      "wm2": 81.1,
       "rainMm": 0
     }
   ]
