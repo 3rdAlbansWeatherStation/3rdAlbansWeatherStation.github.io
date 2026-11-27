@@ -1,7 +1,7 @@
 {
   "source": "cloud",
   "range": "day",
-  "updatedAt": "2026-11-27T15:16:29.141Z",
+  "updatedAt": "2026-11-27T15:21:15.165Z",
   "summary": {
     "temp": {
       "high": 3.7,
@@ -9,7 +9,7 @@
       "avg": 2.1
     },
     "humidity": {
-      "high": 85,
+      "high": 86,
       "low": 78,
       "avg": 81
     },
@@ -682,23 +682,12 @@
       "rainMm": 0
     },
     {
-      "t": "2026-11-27T05:00:00.000Z",
-      "tempC": 0.8,
-      "humidity": 82,
-      "pressureHpa": 1004.7,
-      "windMs": 0.2,
-      "gustMs": 2,
-      "windDirDeg": 125,
-      "wm2": 0,
-      "rainMm": 0
-    },
-    {
       "t": "2026-11-27T05:05:00.000Z",
       "tempC": 0.9,
       "humidity": 82,
       "pressureHpa": 1004.6,
-      "windMs": 0.1,
-      "gustMs": 1.5,
+      "windMs": 0.2,
+      "gustMs": 2,
       "windDirDeg": 167,
       "wm2": 0,
       "rainMm": 0
@@ -1012,12 +1001,23 @@
       "rainMm": 0
     },
     {
+      "t": "2026-11-27T07:30:00.000Z",
+      "tempC": 1.6,
+      "humidity": 82,
+      "pressureHpa": 1005.1,
+      "windMs": 0.1,
+      "gustMs": 2,
+      "windDirDeg": 90,
+      "wm2": 0.8,
+      "rainMm": 0
+    },
+    {
       "t": "2026-11-27T07:35:00.000Z",
       "tempC": 1.6,
       "humidity": 82,
       "pressureHpa": 1005.2,
       "windMs": 0.3,
-      "gustMs": 2,
+      "gustMs": 1,
       "windDirDeg": 230,
       "wm2": 1.2,
       "rainMm": 0
@@ -1339,17 +1339,6 @@
       "gustMs": 1.5,
       "windDirDeg": 69,
       "wm2": 40.3,
-      "rainMm": 0
-    },
-    {
-      "t": "2026-11-27T10:05:00.000Z",
-      "tempC": 2.9,
-      "humidity": 80,
-      "pressureHpa": 1006.2,
-      "windMs": 0.3,
-      "gustMs": 1.5,
-      "windDirDeg": 136,
-      "wm2": 45,
       "rainMm": 0
     },
     {
@@ -1999,6 +1988,17 @@
       "gustMs": 0.5,
       "windDirDeg": 60,
       "wm2": 5.9,
+      "rainMm": 0
+    },
+    {
+      "t": "2026-11-27T15:05:00.000Z",
+      "tempC": 2.9,
+      "humidity": 86,
+      "pressureHpa": 1006.4,
+      "windMs": 0.4,
+      "gustMs": 1,
+      "windDirDeg": 62,
+      "wm2": 5.8,
       "rainMm": 0
     }
   ]
